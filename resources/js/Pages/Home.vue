@@ -7,7 +7,9 @@
         Welcome
     </h1>
     <SuratSuara />
+    <SuratSuaraContent />
 </template>
 <script setup>
 import SuratSuara from '../Shared/SuratSuara.vue';
+import SuratSuaraContent from '../Shared/SuratSuaraContent.vue';
 </script>

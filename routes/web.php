@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Calons;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
@@ -20,17 +21,33 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
+// Route::get('/calon', function () {
+//     return Inertia::render('Calon',[
+//         'users' => User::query()
+//         ->when(Request::input('search'), function($query, $search){
+//             $query->where('name', 'like', "%{$search}%");
+//         })
+//         ->paginate(10)
+//         ->withQueryString()
+//         ->through(fn($user) => [
+//             'id' => $user->id,
+//             'name' => $user->name
+//         ]),
+//         'filters' => Request::only(['search'])
+//     ]);
+// });
+
 Route::get('/calon', function () {
     return Inertia::render('Calon',[
-        'users' => User::query()
+        'users' => Calons::query()
         ->when(Request::input('search'), function($query, $search){
-            $query->where('name', 'like', "%{$search}%");
+            $query->where('nama', 'like', "%{$search}%");
         })
         ->paginate(10)
         ->withQueryString()
         ->through(fn($user) => [
             'id' => $user->id,
-            'name' => $user->name
+            'name' => $user->nama
         ]),
         'filters' => Request::only(['search'])
     ]);
