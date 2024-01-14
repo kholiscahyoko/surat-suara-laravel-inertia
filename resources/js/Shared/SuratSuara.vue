@@ -2,7 +2,7 @@
     <div class="flex flex-wrap justify-center">
         <Link v-for="surat_suara in surat_suaras" class="w-64 bg-white rounded-lg overflow-hidden mx-10 shadow-xl shadow-slate-600 mr-4 mb-10" :href="`/surat_suara/${surat_suara.action}`">
             <div>
-                <div class="bg-red-600 flex justify-between pt-5 px-5 min-h-20">
+                <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
                     <img v-bind:src="'assets/img/KPU_Logo.svg.webp'" class="w-10 h-11" alt="">
                     <img v-bind:src="'assets/img/Logo_Pemilu_2024.svg.webp'" class="w-10 h-14" alt="">
                 </div>
