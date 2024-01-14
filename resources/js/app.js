@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue'
-import { createInertiaApp, Link } from '@inertiajs/vue3'
+import { createInertiaApp, Link, Head } from '@inertiajs/vue3'
 import Layout from './Shared/Layout.vue';
 
 createInertiaApp({
@@ -13,9 +13,8 @@ createInertiaApp({
     // Whether the NProgress spinner will be shown...
     showSpinner: true,
   },
-  resolve: name => {
-    let pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-    let page = pages[`./Pages/${name}.vue`].default;
+  resolve: async name => {
+    let page = (await import(`./Pages/${name}.vue`)).default;
     page.layout ??= Layout;
     return page;
   },
@@ -23,6 +22,8 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .component("Link", Link)
+      .component("Head", Head)
       .mount(el)
   },
+  title: title => `My App - ${title}`
 })
