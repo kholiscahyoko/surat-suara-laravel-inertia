@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Home');
+});
+
+Route::get('/calon', function () {
+    return Inertia::render('Calon',[
+        'nama' => "Nama Calon Mu",
+        'time' => now()->toTimeString()
+    ]);
+});
+
+Route::get('/dapil', function () {
+    return Inertia::render('Dapil');
+});
+
+Route::post('/logout', function(){
+   dd(request('foo')); 
+});
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
 });
