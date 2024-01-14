@@ -1,5 +1,5 @@
 <template>
-    <Disclosure as="nav" class="bg-red-900" v-slot="{ open }">
+    <Disclosure as="nav" class="bg-red-600" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex-shrink-0">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="-mr-2 flex md:hidden">
                     <!-- Mobile menu button -->
-                    <DisclosureButton class="relative inline-flex items-center justify-center rounded-md bg-gray-100 p-2 text-red-950 hover:bg-gray-200 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-red-950">
+                    <DisclosureButton class="relative inline-flex items-center justify-center rounded-md bg-gray-100 p-2 text-red-700 hover:bg-gray-200 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-red-600">
                         <span class="absolute -inset-0.5" />
                         <span class="sr-only">Open main menu</span>
                         <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
