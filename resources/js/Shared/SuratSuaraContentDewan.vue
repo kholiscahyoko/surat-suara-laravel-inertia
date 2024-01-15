@@ -25,7 +25,7 @@
             <div v-for="surat_suara in surat_suaras" class="w-64 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950">
                 <div class="flex items-center px-4 py-4 border-b border-black">
                     <div class="font-bold w-10 h-5 text-3xl text-center">{{ surat_suara.no }}</div>
-                    <img v-bind:src="`assets/img/partai/${surat_suara.no}.webp`" class="w-20 h-20 mx-2" alt="">
+                    <img v-bind:src="`assets/img/partai/${surat_suara.no}.webp`" class="w-20 h-20 mx-2 object-contain" alt="">
                     <div class="font-semibold text-wrap text-sm">{{ surat_suara.name }}</div>
                 </div>
                 <table class="min-w-full">
@@ -50,6 +50,25 @@ let surat_suaras = [
     { name : 'PDI PERJUANGAN', no : 3 },
     { name : 'PARTAI GOLKAR', no : 4 },
     { name : 'Partai NasDem', no : 5 },
+    { name : 'PARTAI BURUH', no : 6 },
+    { name : 'PARTAI GELORA', no : 7 },
+    { name : 'PARTAI KEADILAN SEJAHTERA', no : 8 },
+    { name : 'PARTAI KEBANGKITAN NASIONAL', no : 9 },
+    { name : 'PARTAI HANURA', no : 10 },
+    { name : 'PARTAI GARUDA', no : 11 },
+    { name : 'PARTAI AMANAT NASIONAL', no : 12 },
+    { name : 'PARTAI BULAN BINTANG', no : 13 },
+    { name : 'PARTAI DEMOKRAT', no : 14 },
+    { name : 'PARTAI SOLIDARITAS INDONESIA', no : 15 },
+    { name : 'PARTAI PERINDO', no : 16 },
+    { name : 'PARTAI PERSATUAN PEMBANGUNAN', no : 17 },
+    { name : 'PARTAI NANGGROE ACEH', no : 18 },
+    { name : 'PARTAI BENDERA', no : 19 },
+    { name : 'PARTAI DARUL ACEH', no : 20 },
+    { name : 'PARTAI ACEH', no : 21 },
+    { name : 'PARTAI ADIL SEJAHTERA', no : 22 },
+    { name : 'PARTAI SIRA', no : 23 },
+    { name : 'PARTAI UMMAT', no : 24 },
 ]
 
 let calons = [
@@ -64,6 +83,5 @@ let calons = [
     { name : 'ANGELOS CHARISTEAS', no : 9 },
     { name : 'VASILLOS TSIARTAS', no : 10 },
     { name : 'DEMIS NIKOLAIDIS', no : 11 },
-    { name : 'LOREM IPSUM DOLOR SIT AMET ADIPISCING ELIT', no : 12 },
 ]
 </script>
