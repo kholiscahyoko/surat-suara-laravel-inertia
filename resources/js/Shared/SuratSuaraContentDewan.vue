@@ -11,7 +11,7 @@
                         TAHUN 2024
                     </h3>
                 </div>
-                <img v-bind:src="'assets/img/Logo_Pemilu_2024.svg.webp'" class="w-10 w-12 lg:w-20 lg:h-28" alt="">
+                <img v-bind:src="'assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg'" class="w-10 w-12 lg:w-20 lg:h-28" alt="">
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600">
                 <path d="M0 1c3.17.8 7.29-.38 10.04-.55 2.75-.17 9.25 1.47 12.67 1.3 3.43-.17 4.65-.84 7.05-.87 2.4-.02 5.52.88 5.52.88V0H0z" fill="%23ff0000"/>
@@ -21,14 +21,14 @@
                 GRESIK 1
             </h3>
         </div>
-        <div class="flex flex-wrap items-center justify-center mt-8">
-            <div v-for="surat_suara in surat_suaras" class="w-64 bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950">
+        <div class="flex flex-wrap items-start justify-center mt-8">
+            <div v-for="surat_suara in surat_suaras" class="w-64 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950">
                 <div class="flex items-center px-4 py-4 border-b border-black">
-                    <div class="font-bold w-5 h-5 text-2xl">{{ surat_suara.no }}</div>
+                    <div class="font-bold w-10 h-5 text-3xl text-center">{{ surat_suara.no }}</div>
                     <img v-bind:src="`assets/img/partai/${surat_suara.no}.webp`" class="w-20 h-20 mx-2" alt="">
                     <div class="font-semibold text-wrap text-sm">{{ surat_suara.name }}</div>
                 </div>
-                <table>
+                <table class="min-w-full">
                     <tbody class="divide-y divide-dashed divide-gray-600">
                         <tr v-for="calon in calons">
                             <td class="p-2 w-1/12">{{ calon.no }}.</td>
@@ -36,6 +36,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="min-w-64 bg-white overflow-hidden m-2 mb-10">
+                <img v-bind:src="'assets/img/sura_dan_sulu-01.webp'" alt="">
             </div>
         </div>
     </div>
@@ -61,5 +64,6 @@ let calons = [
     { name : 'ANGELOS CHARISTEAS', no : 9 },
     { name : 'VASILLOS TSIARTAS', no : 10 },
     { name : 'DEMIS NIKOLAIDIS', no : 11 },
+    { name : 'LOREM IPSUM DOLOR SIT AMET ADIPISCING ELIT', no : 12 },
 ]
 </script>
