@@ -13,9 +13,13 @@
             <slot />
         </main>
     </section>
+    <section>
+        <Footer />
+    </section>
 
 </template>
   
 <script setup>
 import Nav from './Nav.vue'
+import Footer from './Footer.vue'
 </script>

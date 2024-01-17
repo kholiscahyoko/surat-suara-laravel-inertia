@@ -24,22 +24,6 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-// Route::get('/calon', function () {
-//     return Inertia::render('Calon',[
-//         'users' => User::query()
-//         ->when(Request::input('search'), function($query, $search){
-//             $query->where('name', 'like', "%{$search}%");
-//         })
-//         ->paginate(10)
-//         ->withQueryString()
-//         ->through(fn($user) => [
-//             'id' => $user->id,
-//             'name' => $user->name
-//         ]),
-//         'filters' => Request::only(['search'])
-//     ]);
-// });
-
 Route::get('/calon', function () {
     return Inertia::render('Calon',[
         'users' => Calons::query()

@@ -72,16 +72,9 @@ let surat_suaras = [
 ]
 
 let calons = [
-    { name : 'ANTONIOS NIKOPOLIDIS', no : 1 },
-    { name : 'GIOURKAS SEITARIDIS', no : 2 },
-    { name : 'STYLIANOS VENETIDIS', no : 3 },
-    { name : 'NIKOS DABIZAS', no : 4 },
-    { name : 'TRAIANOS DELLAS', no : 5 },
-    { name : 'ANGELOS BASINAS', no : 6 },
-    { name : 'THEODOROS ZAGORAKIS', no : 7 },
-    { name : 'STELIOS GIANNAKOPOULOS', no : 8 },
-    { name : 'ANGELOS CHARISTEAS', no : 9 },
-    { name : 'VASILLOS TSIARTAS', no : 10 },
-    { name : 'DEMIS NIKOLAIDIS', no : 11 },
+    { name : 'LEONARDO', no : 1 },
+    { name : 'RAPHAEL', no : 2 },
+    { name : 'DONATELLO', no : 3 },
+    { name : 'MICHELANGELO', no : 4 },
 ]
 </script>

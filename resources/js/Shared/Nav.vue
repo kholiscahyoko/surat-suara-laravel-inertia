@@ -3,7 +3,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex-shrink-0">
-                    <div class="font-bold text-white text-xl">SuratSuara.com</div>
+                    <div class="font-bold text-white text-xl">Info Pemilu</div>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
@@ -45,9 +45,9 @@ imageUrl:
 }
 
 const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Calon', href: '/calon' },
-    { name: 'Dapil', href: '/dapil' },
+    { name: 'Halaman Utama', href: '/' },
     { name: 'Wilayah', href: '/wilayah' },
+    { name: 'Dapil', href: '/dapil' },
+    { name: 'Calon', href: '/calon' },
   ]
 </script>
