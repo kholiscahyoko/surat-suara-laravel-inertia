@@ -64,9 +64,13 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, value => {
-    router.get('/dapil', { search : value }, {
-        preserveState : true,
-        replace: true
-    });
+    if(value.length > 4){
+        router.get('/wilayah', { search : value }, {
+            preserveState : true,
+            replace: true
+        });
+    }else{
+        console.log("HARUS LEBIH DARI 4 KARAKTER");
+    }
 })
 </script>

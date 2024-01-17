@@ -58,13 +58,13 @@ let search = ref(props.filters.search);
 
 watch(search, value => {
 
-    if(value.length > 5){
+    if(value.length > 3){
         router.get('/wilayah', { search : value }, {
             preserveState : true,
             replace: true
         });
     }else{
-        console.log("HARUS LEBIH DARI 5 KARAKTER");
+        console.log("HARUS LEBIH DARI 3 KARAKTER");
     }
 })
 </script>
