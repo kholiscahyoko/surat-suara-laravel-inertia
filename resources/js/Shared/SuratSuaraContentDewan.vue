@@ -1,9 +1,9 @@
 <template>
     <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mr-4 mb-10 border border-2 border-slate-950">
         <div>
-            <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
-                <img v-bind:src="'assets/img/KPU_Logo.svg.webp'" class="object-contain w-10 w-12 lg:w-20 lg:h-20" alt="">
-                <div class="block text-center font-bold lg:text-xl">
+            <div class="bg-red-600 flex items-center justify-between pt-5 pb-2 px-5 min-h-20">
+                <img v-bind:src="'assets/img/KPU_Logo.svg.webp'" class="object-contain w-10 w-12 lg:w-28 lg:h-28" alt="">
+                <div class="block text-center font-bold lg:text-2xl">
                     <h3 class="text-white">
                         SURAT SUARA PEMILIHAN UMUM<br>
                         ANGGOTA DEWAN PERWAKILAN RAKYAT DAERAH<br>
@@ -11,12 +11,12 @@
                         TAHUN 2024
                     </h3>
                 </div>
-                <img v-bind:src="'assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg'" class="object-contain w-10 w-12 lg:w-20 lg:h-28" alt="">
+                <img v-bind:src="'assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg'" class="object-contain w-10 w-12 lg:w-28 lg:h-28" alt="">
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600 -mt-1">
                 <path d="M0 1c3.17.8 7.29-.38 10.04-.55 2.75-.17 9.25 1.47 12.67 1.3 3.43-.17 4.65-.84 7.05-.87 2.4-.02 5.52.88 5.52.88V0H0z" fill="%23ff0000"/>
             </svg>
-            <h3 class="text-center font-bold lg:text-xl">
+            <h3 class="text-center font-bold lg:text-2xl">
                 DAERAH PEMILIHAN<br>
                 GRESIK 1
             </h3>

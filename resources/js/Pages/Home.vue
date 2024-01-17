@@ -7,11 +7,11 @@
         Welcome
     </h1>
     <SuratSuara />
+    <SuratSuaraPilpres />
     <SuratSuaraContentDewan />
-    <SuratSuaraContentDpd />
 </template>
 <script setup>
 import SuratSuara from '../Shared/SuratSuara.vue';
 import SuratSuaraContentDewan from '../Shared/SuratSuaraContentDewan.vue';
-import SuratSuaraContentDpd from '../Shared/SuratSuaraContentDpd.vue';
+import SuratSuaraPilpres from '../Shared/SuratSuaraPilpres.vue';
 </script>

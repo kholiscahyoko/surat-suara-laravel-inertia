@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="mt-4">
-            <Pagination :users="users" />
+            <Pagination :data="users" />
         </div>
 
     </div>
