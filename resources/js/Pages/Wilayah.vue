@@ -58,7 +58,7 @@ let search = ref(props.filters.search);
 
 watch(search, value => {
 
-    if(value.length > 3){
+    if(value.length >= 3){
         router.get('/wilayah', { search : value }, {
             preserveState : true,
             replace: true

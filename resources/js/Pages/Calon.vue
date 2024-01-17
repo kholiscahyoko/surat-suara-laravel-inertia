@@ -66,7 +66,7 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, value => {
-    if(value.length > 4){
+    if(value.length >= 3){
         router.get('/calon', { search : value }, {
             preserveState : true,
             replace: true

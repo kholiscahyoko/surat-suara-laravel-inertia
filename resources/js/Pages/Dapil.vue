@@ -64,8 +64,8 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, value => {
-    if(value.length > 4){
-        router.get('/wilayah', { search : value }, {
+    if(value.length >= 3){
+        router.get('/dapil', { search : value }, {
             preserveState : true,
             replace: true
         });
