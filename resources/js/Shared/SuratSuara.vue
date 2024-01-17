@@ -3,7 +3,7 @@
         <Link v-for="surat_suara in surat_suaras" class="w-64 bg-white rounded-lg overflow-hidden mx-10 shadow-xl shadow-slate-600 mr-4 mb-10" :href="`/surat_suara/${surat_suara.action}`">
             <div>
                 <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
-                    <img v-bind:src="'/assets/img/logo-kpu.webp.webp'" class="object-contain w-10 h-11" alt="">
+                    <img v-bind:src="'/assets/img/logo-kpu.webp'" class="object-contain w-10 h-11" alt="">
                     <img v-bind:src="'/assets/img/Logo_Pemilu_2024.svg.webp'" class="object-contain w-10 h-14" alt="">
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600">

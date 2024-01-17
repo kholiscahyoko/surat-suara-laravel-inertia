@@ -2,7 +2,7 @@
     <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mr-4 mb-10 border border-2 border-slate-950">
         <div>
             <div class="bg-red-600 flex items-center justify-between pt-5 pb-2 px-5 min-h-20">
-                <img v-bind:src="'/assets/img/logo-kpu.webp.webp'" class="object-contain w-10 w-12 lg:w-28 lg:h-28" alt="">
+                <img v-bind:src="'/assets/img/logo-kpu.webp'" class="object-contain w-10 w-12 lg:w-28 lg:h-28" alt="">
                 <div class="block text-center font-bold lg:text-2xl">
                     <h3 class="text-white">
                         SURAT SUARA PEMILIHAN UMUM<br>
