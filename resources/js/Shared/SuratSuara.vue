@@ -6,7 +6,7 @@
                     <img v-bind:src="'/assets/img/logo-kpu.webp'" class="object-contain w-10 h-11" alt="">
                     <img v-bind:src="'/assets/img/Logo_Pemilu_2024.webp'" class="object-contain w-10 h-14" alt="">
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600 -mt-1">
                     <path d="M0 1c3.17.8 7.29-.38 10.04-.55 2.75-.17 9.25 1.47 12.67 1.3 3.43-.17 4.65-.84 7.05-.87 2.4-.02 5.52.88 5.52.88V0H0z" fill="%23ff0000"/>
                 </svg>
             </div>
