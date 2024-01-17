@@ -7,7 +7,7 @@
         Wilayah
     </h1>
     <div class="mt-4">
-        <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 min-w-full">
+        <input v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 min-w-full">
     </div>
     <div class="mt-4">
         <!-- table -->
@@ -57,9 +57,14 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 watch(search, value => {
-    router.get('/wilayah', { search : value }, {
-        preserveState : true,
-        replace: true
-    });
+
+    if(value.length > 5){
+        router.get('/wilayah', { search : value }, {
+            preserveState : true,
+            replace: true
+        });
+    }else{
+        console.log("HARUS LEBIH DARI 5 KARAKTER");
+    }
 })
 </script>
