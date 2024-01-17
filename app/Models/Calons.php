@@ -14,4 +14,9 @@ class Calons extends Model
     {
         return $this->belongsTo(Partais::class, 'partai_id');
     }
+
+    public function dapil(): BelongsTo
+    {
+        return $this->belongsTo(Dapils::class, 'kode_dapil', 'kode_dapil');
+    }
 }

@@ -26,7 +26,8 @@ Route::get('/', function () {
 
 Route::get('/calon', function () {
     return Inertia::render('Calon',[
-        'users' => Calons::query()
+        'users' => Calons::
+        query()->with('dapil')
         ->when(Request::input('search'), function($query, $search){
             $query->where('nama', 'like', "%{$search}%");
         })
@@ -34,7 +35,10 @@ Route::get('/calon', function () {
         ->withQueryString()
         ->through(fn($user) => [
             'id' => $user->id,
-            'name' => $user->nama
+            'name' => $user->nama,
+            'kode_dapil' => $user->kode_dapil,
+            'jenis_dewan' => $user->dapil->jenis_dewan,
+            'nama_dapil' => $user->dapil->nama_dapil,
         ]),
         'filters' => Request::only(['search'])
     ]);

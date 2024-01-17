@@ -25,5 +25,5 @@ createInertiaApp({
       .component("Head", Head)
       .mount(el)
   },
-  title: title => `My App - ${title}`
+  title: title => `Info Pemilu - ${title}`
 })

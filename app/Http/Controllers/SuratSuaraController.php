@@ -104,7 +104,9 @@ class SuratSuaraController extends Controller
         ->orWhere('kabkotas.nama', 'like', "%{$request->input('search')}%")
         ->orWhere('provinsis.nama', 'like', "%{$request->input('search')}%")
         ->select(['desas.id AS id_desa', 'desas.nama AS nama_desa', 'kecamatans.id AS id_kecamatan', 'kecamatans.nama AS nama_kecamatan', 'kabkotas.id AS id_kabkota', 'kabkotas.nama AS nama_kabkota', 'provinsis.id AS id_provinsi', 'provinsis.nama AS nama_provinsi', DB::raw("(CASE WHEN desas.kode_wilayah IS NOT NULL THEN desas.kode_wilayah WHEN kecamatans.kode_wilayah IS NOT NULL THEN kecamatans.kode_wilayah WHEN kabkotas.kode_wilayah IS NOT NULL THEN kabkotas.kode_wilayah ELSE provinsis.kode_wilayah END) AS kode_wilayah")])
-        ->paginate(20);
+        ->paginate(20)
+        ->withQueryString()
+        ;
         
         return Inertia::render('Wilayah',[
             'wilayahs' => $wilayahs,
@@ -127,6 +129,7 @@ class SuratSuaraController extends Controller
                 'nama' => $partai->nama,
                 'calons' => $partai->calons->map(function($calon){
                     return [
+                        'id' => $calon->id,
                         'nama' => $calon->nama,
                         'no_urut' => $calon->no_urut,
                     ];
