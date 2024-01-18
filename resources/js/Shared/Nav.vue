@@ -3,11 +3,11 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex-shrink-0">
-                    <Link href="/" class="font-bold text-white text-xl">Info Pemilu</Link>
+                    <Link :href="$setUrl('/')" class="font-bold text-white text-xl">Info Pemilu</Link>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <NavLink v-for="item in navigation" :key="item.name" :href="item.href" :active="$page.component === item.name">
+                        <NavLink v-for="item in navigation" :key="item.name" :href="$setUrl(item.href)" :active="$page.component === item.name">
                             {{ item.name }}
                         </NavLink>
                     </div>
@@ -26,7 +26,7 @@
 
         <DisclosurePanel class="md:hidden">
             <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
+            <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="$setUrl(item.href)" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
             </div>
         </DisclosurePanel>
     </Disclosure>
