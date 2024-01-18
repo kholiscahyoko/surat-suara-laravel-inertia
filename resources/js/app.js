@@ -23,7 +23,7 @@ createInertiaApp({
       .use(plugin)
       .component("Link", Link)
       .component("Head", Head);
-    vueApp.config.globalProperties.$makeUrl = function(path){
+    vueApp.config.globalProperties.$setUrl = function(path){
       return `${import.meta.env.VITE_APP_URL??''}${path}`
     };
     vueApp.mount(el);
