@@ -155,11 +155,14 @@ class SuratSuaraController extends Controller
         $id_dapil_dpr = null;
         $id_dapil_dpd = null;
 
+        $label_wilayah = null;
+
         switch ($tingkatan_wilayah) {
             case 'desa':
                 $wilayah = Desa::with(['kecamatan', 'kecamatan.kabkota' , 'kecamatan.kabkota.provinsi'])
                 ->where('kode_wilayah', $kode_wilayah)
                 ->first();
+                $label_wilayah = "DESA/KELURAHAN {$wilayah->nama}, KEC. {$wilayah->kecamatan->nama}, {$wilayah->kecamatan->kabkota->nama}, {$wilayah->kabkota->provinsi->nama}";
 
                 if($wilayah){
                     $id_dapil_dprdk = $wilayah->id_dapil_dprdk ?? $wilayah->kecamatan->id_dapil_dprdk;
@@ -173,6 +176,7 @@ class SuratSuaraController extends Controller
                 ->where('kode_wilayah', $kode_wilayah)
                 ->first();
 
+                $label_wilayah = "Kec. {$wilayah->nama}, {$wilayah->kabkota->nama}, {$wilayah->kabkota->provinsi->nama}";
                 if($wilayah){
                     $id_dapil_dprdk = $wilayah->id_dapil_dprdk;
                     $id_dapil_dprdp = $wilayah->id_dapil_dprdp ?? $wilayah->kabkota->id_dapil_dprdp;
@@ -187,6 +191,7 @@ class SuratSuaraController extends Controller
                 ->where('kode_wilayah', $kode_wilayah)
                 ->first();
 
+                $label_wilayah = "{$wilayah->nama}, {$wilayah->provinsi->nama}";
                 if($wilayah){
                     $id_dapil_dprdp = $wilayah->id_dapil_dprdp;
                     $id_dapil_dpr = $wilayah->id_dapil_dpr ?? $wilayah->provinsi->id_dapil_dpr;
@@ -199,6 +204,7 @@ class SuratSuaraController extends Controller
                 $wilayah = Provinsi::where('kode_wilayah', $kode_wilayah)
                 ->first();
 
+                $label_wilayah = "{$wilayah->provinsi->nama}";
                 if($wilayah){
                     $id_dapil_dpr = $wilayah->id_dapil_dpr;
                     $id_dapil_dpd = $wilayah->id_dapil_dpd;
@@ -227,7 +233,8 @@ class SuratSuaraController extends Controller
             'dprdk' => $dprdk,
             'dprdp' => $dprdp,
             'dpr' => $dpr,
-            'dpd' => $dpd
+            'dpd' => $dpd,
+            'label_wilayah' => $label_wilayah
         ];
 
     }
