@@ -28,7 +28,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-right text-sm font-medium">
-                                        <Link :href="`/surat-suara/${ wilayah.id_desa !== null ? 'desa' : ( wilayah.id_kecamatan !== null ? 'kecamatan' : (wilayah.id_kabkota !== null ? 'kabkota' : 'provinsi' )) }/${wilayah.kode_wilayah}`" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
+                                        <Link :href="$setUrl(`/surat-suara/${ wilayah.id_desa !== null ? 'desa' : ( wilayah.id_kecamatan !== null ? 'kecamatan' : (wilayah.id_kabkota !== null ? 'kabkota' : 'provinsi' )) }/${wilayah.kode_wilayah}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
                                     </td>
                                 </tr>
                             </tbody>

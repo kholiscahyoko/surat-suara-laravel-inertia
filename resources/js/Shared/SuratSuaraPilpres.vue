@@ -2,13 +2,13 @@
     <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mr-4 mb-10 border border-2 border-slate-950">
         <div>
             <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
-                <img v-bind:src="'/assets/img/logo-kpu.webp'" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="">
+                <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="">
                 <div class="block text-center font-bold lg:text-6xl">
                     <h3 class="text-white">
                         SURAT SUARA
                     </h3>
                 </div>
-                <img v-bind:src="'/assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg'" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="">
+                <img v-bind:src="$setUrl('/assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg')" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="">
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600 -mt-1">
                 <path d="M0 1c3.17.8 7.29-.38 10.04-.55 2.75-.17 9.25 1.47 12.67 1.3 3.43-.17 4.65-.84 7.05-.87 2.4-.02 5.52.88 5.52.88V0H0z" fill="%23ff0000"/>
@@ -23,7 +23,7 @@
         <div class="flex flex-wrap items-start justify-center mt-8">
             <PilpresBlock v-for="calon in calons" :calon="calon"/>
             <div class="min-w-32 bg-white overflow-hidden m-2 mb-10">
-                <img v-bind:src="'/assets/img/sura_dan_sulu-01.webp'" alt="">
+                <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="">
             </div>
         </div>
     </div>
