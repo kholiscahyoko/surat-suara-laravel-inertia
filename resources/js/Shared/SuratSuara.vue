@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-wrap justify-center">
-        <Link v-for="surat_suara in surat_suaras" class="w-64 bg-white rounded-lg overflow-hidden mx-10 shadow-xl shadow-slate-600 mr-4 mb-10" :href="`/surat_suara/${surat_suara.action}`">
+        <div v-for="surat_suara in surat_suaras" class="w-64 bg-white rounded-lg overflow-hidden mx-10 shadow-xl shadow-slate-600 mr-4 mb-10">
             <div>
                 <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
                     <img v-bind:src="'/assets/img/logo-kpu.webp'" class="object-contain w-10 h-11" alt="">
@@ -19,7 +19,7 @@
                 </h2>
             </div>
             <div class="min-h-14" :class="surat_suara.color"></div>
-        </Link>
+        </div>
     </div>
 </template>
 <script setup>
