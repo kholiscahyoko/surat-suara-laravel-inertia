@@ -19,11 +19,14 @@ createInertiaApp({
     return page;
   },
   setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
+    const vueApp = createApp({ render: () => h(App, props) })
       .use(plugin)
       .component("Link", Link)
-      .component("Head", Head)
-      .mount(el)
+      .component("Head", Head);
+    vueApp.config.globalProperties.$makeUrl = function(path){
+      return `${import.meta.env.VITE_APP_URL??''}${path}`
+    };
+    vueApp.mount(el);
   },
-  title: title => `Info Pemilu - ${title}`
+  title: title => `${import.meta.env.VITE_APP_NAME} - ${title}`
 })
