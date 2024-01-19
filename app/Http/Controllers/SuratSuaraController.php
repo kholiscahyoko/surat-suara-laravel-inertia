@@ -208,7 +208,7 @@ class SuratSuaraController extends Controller
         return Inertia::render($template, $data);
     }
 
-    public function wilayah_dapil(string $tingkatan_wilayah, string $kode_wilayah, bool $sampul = true)
+    public function wilayah_dapil(string $tingkatan_wilayah, string $nama_wilayah, string $kode_wilayah, bool $sampul = true)
     {
         $id_dapil_dprdk = null;
         $id_dapil_dprdp = null;

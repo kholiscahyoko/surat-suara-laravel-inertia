@@ -77,7 +77,11 @@ Route::get('/wilayah', [SuratSuaraController::class, 'wilayah']);
 //     return Inertia::render('SuratSuaraPilpres');
 // });
 
-Route::get('/surat-suara/{tingkatan_wilayah}/{kode_wilayah}', [SuratSuaraController::class, 'wilayah_dapil', 1, 2])->where('tingkatan_wilayah', '(desa|kecamatan|kabkota|provinsi)');
+Route::get('/surat-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [SuratSuaraController::class, 'wilayah_dapil'])->where([
+    'tingkatan_wilayah' => '(desa|kecamatan|kabkota|provinsi)',
+    'nama_wilayah' => '[a-z-]+',
+    'kode_wilayah' => '[0-9]+',
+]);
 
 // Route::get('/surat-suara/{tingkatan_wilayah}/{kode_wilayah}/buka', function ($tingkatan_wilayah, $kode_wilayah) {
 //     return Inertia::render('SuratSuaraBuka',  (new SuratSuaraController)->wilayah_dapil($tingkatan_wilayah, $kode_wilayah));
