@@ -162,7 +162,7 @@ class SuratSuaraController extends Controller
                 $wilayah = Desa::with(['kecamatan', 'kecamatan.kabkota' , 'kecamatan.kabkota.provinsi'])
                 ->where('kode_wilayah', $kode_wilayah)
                 ->first();
-                $label_wilayah = "DESA/KELURAHAN {$wilayah->nama}, KEC. {$wilayah->kecamatan->nama}, {$wilayah->kecamatan->kabkota->nama}, {$wilayah->kabkota->provinsi->nama}";
+                $label_wilayah = "DESA/KELURAHAN {$wilayah->nama}, KEC. {$wilayah->kecamatan->nama}, {$wilayah->kecamatan->kabkota->nama}, {$wilayah->kecamatan->kabkota->provinsi->nama}";
 
                 if($wilayah){
                     $id_dapil_dprdk = $wilayah->id_dapil_dprdk ?? $wilayah->kecamatan->id_dapil_dprdk;
