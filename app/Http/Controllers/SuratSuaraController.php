@@ -17,6 +17,7 @@ use Inertia\Inertia;
 
 class SuratSuaraController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -88,6 +89,8 @@ class SuratSuaraController extends Controller
                 'jenis_dewan' => $data->jenis_dewan,
             ]);
 
+        $this->meta->setMeta(config('app.meta')['dapil']);
+
         return Inertia::render('Dapil',[
             'dapils' => $dapils,
             'filters' => $request->only(['search'])
@@ -107,7 +110,9 @@ class SuratSuaraController extends Controller
         ->paginate(20)
         ->withQueryString()
         ;
-        
+
+        $this->meta->setMeta(config('app.meta')['wilayah']);
+
         return Inertia::render('Wilayah',[
             'wilayahs' => $wilayahs,
             'filters' => $request->only(['search'])
@@ -115,40 +120,95 @@ class SuratSuaraController extends Controller
 
     }
 
-    public function dewan(string $kode_dapil)
+    public function jenis(string $jenis, string $kode_dapil = "")
     {
-        $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
-            $query->where('kode_dapil', $kode_dapil)->orderBy('calons.no_urut');
-        }])
-        ->orderBy('partais.no_urut')
-        ->get()
-        ->map(function($partai){
-            return count($partai->calons) > 0 ? [
-                'id' => $partai->id,
-                'no_urut' => $partai->no_urut,
-                'nama' => $partai->nama,
-                'calons' => $partai->calons->map(function($calon){
-                    return [
-                        'id' => $calon->id,
-                        'nama' => $calon->nama,
-                        'no_urut' => $calon->no_urut,
-                    ];
-                }),
-            ] : false;
-        })
-        ->reject(function ($partai) {
-            return empty($partai);
-        })
-        ->toArray();
-        return [
-            'partais' => $partais,
-            'dapil' => Dapils::query()
+        if(!empty(config('app.meta')['surat-suara'][$jenis]['description'])){
+            $meta_desc = config('app.meta')['surat-suara'][$jenis]['description'];
+            $this->meta->setTitle(config('app.meta')['surat-suara'][$jenis]['title']);
+        }
+
+        if($jenis === "pilpres"){
+            $metadata = ['description' => $meta_desc] ;
+            $this->meta->setMeta($metadata);
+            return Inertia::render('SuratSuaraPilpres');
+            exit();
+        }elseif($jenis === "dpd"){
+            $dapil = Dapils::query()
             ->where('kode_dapil', $kode_dapil)
-            ->first()
-        ];
+            ->first();
+
+            $template = "SuratSuaraDpd";
+
+            $data = [
+                'calons' => Calons::where('kode_dapil', $kode_dapil)
+                ->orderBy('no_urut')
+                ->get(),
+                'dapil' => $dapil
+            ];
+        }else{
+            $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
+                $query->where('kode_dapil', $kode_dapil)->orderBy('calons.no_urut');
+            }])
+            ->orderBy('partais.no_urut')
+            ->get()
+            ->map(function($partai){
+                return count($partai->calons) > 0 ? [
+                    'id' => $partai->id,
+                    'no_urut' => $partai->no_urut,
+                    'nama' => $partai->nama,
+                    'calons' => $partai->calons->map(function($calon){
+                        return [
+                            'id' => $calon->id,
+                            'nama' => $calon->nama,
+                            'no_urut' => $calon->no_urut,
+                        ];
+                    }),
+                ] : false;
+            })
+            ->reject(function ($partai) {
+                return empty($partai);
+            })
+            ->toArray();
+            $dapil = Dapils::query()
+            ->where('kode_dapil', $kode_dapil)
+            ->first();
+
+            switch ($jenis) {
+                case 'dpr':
+                    $template = "SuratSuaraDpr";
+                    break;
+                
+                case 'dprdp':
+                    $template = "SuratSuaraDprdp";
+                    break;
+                
+                case 'dprdk':
+                    $template = "SuratSuaraDprdk";
+                    break;
+                
+                default:
+                    abort(404);
+                    exit();
+                    break;
+            }
+    
+                $data = [
+                'partais' => $partais,
+                'dapil' => $dapil
+            ];
+        }
+
+        // $metadata = ['description' => "Surat Suara Pemilu di Wilayah {$label_wilayah}"] ;
+        $meta_desc = preg_replace('/\[nama_dapil\]/', $dapil->nama_dapil, $meta_desc);
+        $meta_desc = preg_replace('/\[nama_wilayah\]/', $dapil->nama_dapil, $meta_desc);
+        $metadata = ['description' => $meta_desc ];
+
+        $this->meta->setMeta($metadata);
+
+        return Inertia::render($template, $data);
     }
 
-    public function wilayah_dapil(string $tingkatan_wilayah, string $kode_wilayah, bool $sampul = false)
+    public function wilayah_dapil(string $tingkatan_wilayah, string $kode_wilayah, bool $sampul = true)
     {
         $id_dapil_dprdk = null;
         $id_dapil_dprdp = null;
@@ -229,14 +289,20 @@ class SuratSuaraController extends Controller
             $dpd = $id_dapil_dpd ? $this->get_surat_suara_by_id_dapil($id_dapil_dpd, true) : null;
         }
 
-        return [
+        $label_wilayah = ucwords(strtolower($label_wilayah));
+
+        $metadata = ['description' => "Surat Suara Pemilu di Wilayah {$label_wilayah}"] ;
+
+        $this->meta->setMeta($metadata);
+        $this->meta->setTitle("Surat Suara Wilayah");
+
+        return Inertia::render('SuratSuaraSampul',  [
             'dprdk' => $dprdk,
             'dprdp' => $dprdp,
             'dpr' => $dpr,
             'dpd' => $dpd,
-            'label_wilayah' => ucwords(strtolower($label_wilayah))
-        ];
-
+            'label_wilayah' => $label_wilayah
+        ]);
     }
 
     private function get_surat_suara_by_id_dapil(Int $id_dapil, bool $dpd = false){
@@ -274,9 +340,11 @@ class SuratSuaraController extends Controller
             ->toArray();
         }
 
+        $dapil = Dapils::find($id_dapil);
+
         return [
             'surat_suara' => $result,
-            'dapil' => Dapils::find($id_dapil)
+            'dapil' => $dapil
         ];
     }
 }

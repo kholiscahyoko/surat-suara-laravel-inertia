@@ -185,4 +185,18 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+
+    // custom config
+    'meta' => [
+        'calon' => ["title" => "Cari Nama Calon", "description" => "Temukan Nama Calon Legislatif Pilihanmu Disini"],
+        'dapil' => ["title" => "Cari Berdasarkan Dapil", "description" => "Cari Surat Suara Berdasarkan Nama Daerah Pemilihan Disini"],
+        'wilayah' => ["title" => "Cari Berdasarkan Wilayah", "description" => "Cari Surat Suara Berdasarkan Wilayahmu Disini"],
+        'surat-suara' => [
+            'pilpres' => ["title" => "Surat Suara Capres dan Cawapres", "description" => "Surat Suara Pemilihan Umum Presiden dan Wakil Presiden Republik Indonesia Tahun 2024"],
+            'dpd' => ["title" => "Surat Suara Dewan Perwakilan Daerah", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Daerah Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dpr' => ["title" => "Surat Suara Dewan Perwakilan Rakyat", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dprdp' => ["title" => "Surat Suara Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dprdk' => ["title" => "Surat Suara Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+        ],
+    ],
 ];
