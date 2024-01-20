@@ -55,38 +55,24 @@ Route::get('/calon', function () {
 //     ]);
 // });
 
-Route::get('/surat-suara/{jenis}/{kode_dapil?}', [SuratSuaraController::class, 'jenis', 1, 2])->where('jenis', '(pilpres|dpd|dpr|dprdp|dprdk)');
-
-// Route::get('/surat-suara/dpr/{kode_dapil}', function ($kode_dapil) {
-//     return Inertia::render('SuratSuaraDpr',  (new SuratSuaraController)->dewan($kode_dapil));
-// });
-
-// Route::get('/surat-suara/dprdp/{kode_dapil}', function ($kode_dapil) {
-//     return Inertia::render('SuratSuaraDprdp',  (new SuratSuaraController)->dewan($kode_dapil));
-// });
-
-// Route::get('/surat-suara/dprdk/{kode_dapil}', function ($kode_dapil) {
-//     return Inertia::render('SuratSuaraDprdk',  (new SuratSuaraController)->dewan($kode_dapil));
-// });
-
 Route::get('/dapil', [SuratSuaraController::class, 'dapil']);
 
 Route::get('/wilayah', [SuratSuaraController::class, 'wilayah']);
 
-// Route::get('/surat-suara/pilpres', function(){
-//     return Inertia::render('SuratSuaraPilpres');
-// });
-
-Route::get('/surat-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [SuratSuaraController::class, 'wilayah_dapil'])->where([
+Route::get('/surat-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [SuratSuaraController::class, 'wilayah_dapil'])
+->where([
     'tingkatan_wilayah' => '(desa|kecamatan|kabkota|provinsi)',
     'nama_wilayah' => '[a-z-]+',
     'kode_wilayah' => '[0-9]+',
 ]);
 
-// Route::get('/surat-suara/{tingkatan_wilayah}/{kode_wilayah}/buka', function ($tingkatan_wilayah, $kode_wilayah) {
-//     return Inertia::render('SuratSuaraBuka',  (new SuratSuaraController)->wilayah_dapil($tingkatan_wilayah, $kode_wilayah));
-// }
-// );
+Route::get('/surat-suara/{jenis}/{nama_dapil?}/{kode_dapil?}', [SuratSuaraController::class, 'jenis'])
+->where([
+    'jenis', '(pilpres|dpd|dpr|dprdp|dprdk)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+',
+]);
+
 
 Route::post('/logout', function(){
    dd(request('foo')); 

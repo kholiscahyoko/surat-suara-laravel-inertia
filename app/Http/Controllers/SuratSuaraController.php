@@ -120,7 +120,7 @@ class SuratSuaraController extends Controller
 
     }
 
-    public function jenis(string $jenis, string $kode_dapil = "")
+    public function jenis(string $jenis, string $nama_dapil = "", string $kode_dapil = "")
     {
         if(!empty(config('app.meta')['surat-suara'][$jenis]['description'])){
             $meta_desc = config('app.meta')['surat-suara'][$jenis]['description'];
