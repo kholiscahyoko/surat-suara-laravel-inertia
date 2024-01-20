@@ -31,7 +31,7 @@ export default{
     },
     computed:{
         creatorImage(){
-            return this.imageError ? this.defaultImage : `/assets/img/dpd_foto/compressed/${this.calon.foto.split('/').slice(-1).join().split('.').slice(0,-1).join().replace(/[^\p{L}\d]+/gu, '-').normalize('NFKD').replace(/[\u0300-\u036F]/g, '').replace(/[^-\w]+/g, '').trim().replace(/[\W_]+/g, ' ').trim().replace(/\s/g, '-')}.webp`
+            return this.imageError ? this.defaultImage : `/assets/img/dpd_foto/compressed/${this.calon.foto.split('/').slice(-1).join().split('.').slice(0,-1).join().replace(/[^\p{L}\d]+/gu, '-').normalize('NFKD').replace(/[\u0300-\u036F]/g, '').replace(/[^-\w]+/g, '').trim().replace(/[\W_]+/g, ' ').trim().replace(/\s/g, '-').toLowerCase()}.webp`
         }
     },
     methods:{
