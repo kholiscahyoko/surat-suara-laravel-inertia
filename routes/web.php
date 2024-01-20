@@ -44,17 +44,6 @@ Route::get('/calon', function () {
     ]);
 });
 
-// Route::get('/surat-suara/dpd/{kode_dapil}', function ($kode_dapil) {
-//     return Inertia::render('SuratSuaraDpd',[
-//         'calons' => Calons::where('kode_dapil', $kode_dapil)
-//         ->orderBy('no_urut')
-//         ->get(),
-//         'dapil' => Dapils::query()
-//         ->where('kode_dapil', $kode_dapil)
-//         ->first()
-//     ]);
-// });
-
 Route::get('/dapil', [SuratSuaraController::class, 'dapil']);
 
 Route::get('/wilayah', [SuratSuaraController::class, 'wilayah']);
