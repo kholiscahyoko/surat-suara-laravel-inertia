@@ -31,13 +31,11 @@ export default{
     },
     computed:{
         creatorImage(){
-            return this.imageError ? this.defaultImage : `/assets/img/dpd_foto/compressed/${this.calon.foto.split('/').slice(-1).join().split('.').slice(0,-1).join().replace(/[^\p{L}\d]+/gu, '-').normalize('NFKD').replace(/[\u0300-\u036F]/g, '').replace(/[^-\w]+/g, '').trim().replace(/-+/g, '-').toLowerCase()}.webp`
+            return this.imageError ? this.defaultImage : `/assets/img/dpd_foto/compressed/${this.calon.foto.split('/').slice(-1).join().split('.').slice(0,-1).join().replace(/[^\p{L}\d]+/gu, '-').normalize('NFKD').replace(/[\u0300-\u036F]/g, '').replace(/[^-\w]+/g, '').trim().replace(/[\W_]+/g, ' ').trim().replace(/\s/g, '-')}.webp`
         }
     },
     methods:{
         checkId : function(calonId) {
-            // queryParams = new URLSearchParams(window.location.search);
-            // calon_id = queryParams.get('calon_id');
             if(this.calon_id == calonId){
                 console.log(calonId)
                 window.location.replace( `#calon-${calonId}`);
