@@ -9,6 +9,9 @@
     <h2 class="text-xl font-bold tracking-tight text-gray-900 mb-4">
         {{ label_wilayah }}
     </h2>
+    <h2 class="text-lg text-center font-bold tracking-tight text-gray-900 mb-4">
+        ( Klik / sentuh surat suara untuk membuka )
+    </h2>
     <div class="flex flex-wrap justify-center">
         <SuratSuaraSampul :surat_suara="null" :jenis="`pilpres`"/>
         <SuratSuaraSampul v-if="dpd" :surat_suara="dpd" :jenis="`dpd`"/>
