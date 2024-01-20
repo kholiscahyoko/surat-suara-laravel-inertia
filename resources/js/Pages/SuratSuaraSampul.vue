@@ -9,7 +9,7 @@
     <h2 class="text-xl font-bold tracking-tight text-gray-900 mb-4">
         {{ label_wilayah }}
     </h2>
-    <h2 class="text-lg text-center font-bold tracking-tight text-gray-900 mb-4">
+    <h2 class="lg:text-lg md:text-md sm:text-sm text-xs text-center font-bold tracking-tight text-gray-900 mb-4">
         ( Klik / sentuh surat suara untuk membuka )
     </h2>
     <div class="flex flex-wrap justify-center">
