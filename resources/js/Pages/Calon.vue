@@ -18,7 +18,7 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr v-for="user in users.data" :key="user.id">
-                                    <td class="px-6 py-4">
+                                    <td class="px-1 lg:px-6 py-4">
                                         <div class="flex items-center">
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">
@@ -27,7 +27,18 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-1 lg:px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div>
+                                                <div v-if="user.jenis_dewan === 'dpd'" class="text-sm font-medium text-gray-900 rounded-lg bg-red-600 p-1 text-white">DPD RI</div>
+                                                <div v-else-if="user.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1">DPR RI</div>
+                                                <div v-else-if="user.jenis_dewan === 'dprdp'" class="text-sm font-medium text-gray-900 rounded-lg bg-blue-600 p-1 text-white">DPRD Provinsi</div>
+                                                <div v-else-if="user.jenis_dewan === 'dprdk'" class="text-sm font-medium text-gray-900 rounded-lg bg-green-600 p-1 text-white">DPRD Kab/Kota</div>
+                                                <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1">Tidak Diketahui</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-1 lg:px-6 py-4">
                                         <div class="flex items-center">
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">
@@ -36,7 +47,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 text-right text-sm font-medium">
+                                    <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium">
                                         <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
                                     </td>
                                 </tr>

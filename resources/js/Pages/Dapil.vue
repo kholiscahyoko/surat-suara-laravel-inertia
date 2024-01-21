@@ -30,7 +30,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div>
-                                                <div class="text-sm font-medium text-gray-900" v-html="dapil.jenis_dewan === 'dpd' ? 'DPD RI' : (dapil.jenis_dewan === 'dpr' ? 'DPR RI' : (dapil.jenis_dewan === 'dprdp' ? 'DPRD Provinsi' : (dapil.jenis_dewan === 'dprdk' ? 'DPRD Kab/Kota' : 'Tidak Diketahui')))"></div>
+                                                <div v-if="dapil.jenis_dewan === 'dpd'" class="text-sm font-medium text-gray-900 rounded-lg bg-red-600 p-1 text-white">DPD RI</div>
+                                                <div v-else-if="dapil.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1">DPR RI</div>
+                                                <div v-else-if="dapil.jenis_dewan === 'dprdp'" class="text-sm font-medium text-gray-900 rounded-lg bg-blue-600 p-1 text-white">DPRD Provinsi</div>
+                                                <div v-else-if="dapil.jenis_dewan === 'dprdk'" class="text-sm font-medium text-gray-900 rounded-lg bg-green-600 p-1 text-white">DPRD Kab/Kota</div>
+                                                <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1">Tidak Diketahui</div>
                                             </div>
                                         </div>
                                     </td>
