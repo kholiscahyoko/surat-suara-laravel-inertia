@@ -301,6 +301,10 @@ class SuratSuaraController extends Controller
         $this->meta->setMeta($metadata);
         $this->meta->setTitle("Surat Suara Wilayah");
 
+        $this->meta->addMetaKeywords([
+            "surat suara pemilu di ".trim(strtolower(str_replace(',', '', $label_wilayah))),
+        ]);
+
         return Inertia::render('SuratSuaraSampul',  [
             'dprdk' => $dprdk,
             'dprdp' => $dprdp,
