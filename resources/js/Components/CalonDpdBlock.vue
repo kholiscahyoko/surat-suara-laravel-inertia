@@ -15,19 +15,17 @@
 export default{
     props: {
         calon : Object,
-
+        calon_id: String
     },
     data(){
         return {
             imageError: false,
             defaultImage: `/assets/img/kpu_monochrome.webp`,
             queryParams : null,
-            calon_id : null
         }
     },
     mounted(){
         this.queryParams = new URLSearchParams(window.location.search);
-        this.calon_id = this.queryParams.get('calon_id');
     },
     computed:{
         creatorImage(){

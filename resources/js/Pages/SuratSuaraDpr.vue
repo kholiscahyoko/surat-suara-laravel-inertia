@@ -6,7 +6,7 @@
     <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-4 drop-shadow-md shadow-black">
         Calon DPR RI
     </h1>
-    <SuratSuaraContentDpr :partais="partais" :dapil="dapil"/>
+    <SuratSuaraContentDpr :partais="partais" :dapil="dapil" :calon_id="calon_id"/>
 </template>
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
@@ -15,6 +15,7 @@ import SuratSuaraContentDpr from '../Shared/SuratSuaraContentDpr.vue';
 defineProps({
     'partais' : Object,
     'dapil' : Object,
+    'calon_id' : String,
 });
 
 onMounted(() => {

@@ -106,7 +106,7 @@ class SuratSuaraController extends Controller
 
     }
 
-    public function jenis(string $jenis, string $nama_dapil = "", string $kode_dapil = "")
+    public function jenis(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
     {
         switch ($jenis) {
             case 'dprd-provinsi':
@@ -142,9 +142,7 @@ class SuratSuaraController extends Controller
             ->where('kode_dapil', $kode_dapil)
             ->first();
 
-            $this->meta->addMetaKeywords([
-                "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil)),
-            ]);
+            $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil));
 
             $template = "SuratSuaraDpd";
 
@@ -185,23 +183,17 @@ class SuratSuaraController extends Controller
             switch ($jenis) {
                 case 'dpr':
                     $template = "SuratSuaraDpr";
-                    $this->meta->addMetaKeywords([
-                        "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil)),
-                    ]);
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 case 'dprdp':
                     $template = "SuratSuaraDprdp";
-                    $this->meta->addMetaKeywords([
-                        "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($dapil->nama_dapil)))." dapil ".trim(strtolower($dapil->nama_dapil)),
-                    ]);
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($dapil->nama_dapil)))." dapil ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 case 'dprdk':
                     $template = "SuratSuaraDprdk";
-                    $this->meta->addMetaKeywords([
-                        "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil)),
-                    ]);
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 default:
@@ -219,6 +211,22 @@ class SuratSuaraController extends Controller
         $meta_desc = preg_replace('/\[nama_dapil\]/', $dapil->nama_dapil, $meta_desc);
         $meta_desc = preg_replace('/\[nama_wilayah\]/', $dapil->nama_dapil, $meta_desc);
         $metadata = ['description' => $meta_desc ];
+
+        if(!empty($calon_keyword)){
+            $this->meta->addMetaKeywords([
+                $calon_keyword,
+            ]);
+        }
+
+        if(!empty($data['dapil']) && is_numeric($calon_id)){
+            if($calon = Calons::find($calon_id)){
+                $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
+                $this->meta->addMetaKeywords([
+                    strtolower(str_replace(",", ".", $calon->nama))
+                ]);
+                $data['calon_id'] = $calon_id;
+            }
+        }
 
         $this->meta->setMeta($metadata);
 

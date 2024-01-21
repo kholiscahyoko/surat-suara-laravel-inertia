@@ -17,12 +17,12 @@
 </template>
 
 <script setup>
-defineProps({
-    partai: Object
+const props = defineProps({
+    partai: Object,
+    calon_id: String
 });
 
-const queryParams = new URLSearchParams(window.location.search);
-const calon_id = queryParams.get('calon_id');
+const calon_id = props.calon_id;
 let checkId = function(calonId, partaiNoUrut) {
     if(calon_id == calonId){
         window.location.replace( `#partai${partaiNoUrut}`);
