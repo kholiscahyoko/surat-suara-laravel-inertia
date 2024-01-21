@@ -23,55 +23,27 @@ class SuratSuaraController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Home');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function calon(Request $request){
+        return Inertia::render('Calon',[
+            'users' => Calons::
+            query()->with('dapil')
+            ->when($request->input('search'), function($query, $search){
+                $query->where('nama', 'like', "%{$search}%");
+            })
+            ->paginate(20)
+            ->withQueryString()
+            ->through(fn($user) => [
+                'id' => $user->id,
+                'name' => $user->nama,
+                'kode_dapil' => $user->kode_dapil,
+                'jenis_dewan' => $user->dapil->jenis_dewan,
+                'nama_dapil' => $user->dapil->nama_dapil,
+            ]),
+            'filters' => $request->only(['search'])
+        ]);
     }
 
     public function dapil(Request $request)

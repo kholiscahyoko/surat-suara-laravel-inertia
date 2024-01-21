@@ -1,12 +1,7 @@
 <?php
 
 use App\Http\Controllers\SuratSuaraController;
-use App\Models\User;
-use App\Models\Dapils;
-use App\Models\Calons;
-use App\Models\Partais;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
 /*
@@ -20,29 +15,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
+Route::get('/', [SuratSuaraController::class, 'index']);
 
-Route::get('/calon', function () {
-    return Inertia::render('Calon',[
-        'users' => Calons::
-        query()->with('dapil')
-        ->when(Request::input('search'), function($query, $search){
-            $query->where('nama', 'like', "%{$search}%");
-        })
-        ->paginate(20)
-        ->withQueryString()
-        ->through(fn($user) => [
-            'id' => $user->id,
-            'name' => $user->nama,
-            'kode_dapil' => $user->kode_dapil,
-            'jenis_dewan' => $user->dapil->jenis_dewan,
-            'nama_dapil' => $user->dapil->nama_dapil,
-        ]),
-        'filters' => Request::only(['search'])
-    ]);
-});
+Route::get('/calon', [SuratSuaraController::class, 'calon']);
 
 Route::get('/dapil', [SuratSuaraController::class, 'dapil']);
 
