@@ -11,7 +11,6 @@ use App\Models\Dapils;
 use App\Models\Kabkota;
 use App\Models\Kecamatan;
 use App\Models\Provinsi;
-use Brick\Math\BigInteger;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -27,6 +26,15 @@ class SuratSuaraController extends Controller
     }
 
     public function calon(Request $request){
+        $this->meta->setMeta(config('app.meta')['calon']);
+        $this->meta->addMetaKeywords([
+            "cari calon anggota legislatif",
+            "cari caleg dpr",
+            "cari caleg dpd",
+            "cari caleg dprd provinsi",
+            "cari caleg dprd kabupaten",
+            "cari caleg dprd kota",
+        ]);
         return Inertia::render('Calon',[
             'users' => Calons::
             query()->with('dapil')
@@ -62,6 +70,9 @@ class SuratSuaraController extends Controller
             ]);
 
         $this->meta->setMeta(config('app.meta')['dapil']);
+        $this->meta->addMetaKeywords([
+            "surat suara berdasarkan daerah pemilihan",
+        ]);
 
         return Inertia::render('Dapil',[
             'dapils' => $dapils,
@@ -84,6 +95,9 @@ class SuratSuaraController extends Controller
         ;
 
         $this->meta->setMeta(config('app.meta')['wilayah']);
+        $this->meta->addMetaKeywords([
+            "surat suara berdasarkan wilayah",
+        ]);
 
         return Inertia::render('Wilayah',[
             'wilayahs' => $wilayahs,
@@ -102,12 +116,23 @@ class SuratSuaraController extends Controller
         if($jenis === "pilpres"){
             $metadata = ['description' => $meta_desc] ;
             $this->meta->setMeta($metadata);
+            $this->meta->addMetaKeywords([
+                "capres dan cawapres",
+                "calon presiden dan calon wakil presiden",
+                "anies rasyid baswedan dan muhaimin iskanda",
+                "prabowo soebianto dan gibran rakabuming raka",
+                "ganjar pranowo dan mahfud md",
+            ]);
             return Inertia::render('SuratSuaraPilpres');
             exit();
         }elseif($jenis === "dpd"){
             $dapil = Dapils::query()
             ->where('kode_dapil', $kode_dapil)
             ->first();
+
+            $this->meta->addMetaKeywords([
+                "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil)),
+            ]);
 
             $template = "SuratSuaraDpd";
 
@@ -148,14 +173,23 @@ class SuratSuaraController extends Controller
             switch ($jenis) {
                 case 'dpr':
                     $template = "SuratSuaraDpr";
+                    $this->meta->addMetaKeywords([
+                        "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil)),
+                    ]);
                     break;
                 
                 case 'dprdp':
                     $template = "SuratSuaraDprdp";
+                    $this->meta->addMetaKeywords([
+                        "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($dapil->nama_dapil)))." dapil ".trim(strtolower($dapil->nama_dapil)),
+                    ]);
                     break;
                 
                 case 'dprdk':
                     $template = "SuratSuaraDprdk";
+                    $this->meta->addMetaKeywords([
+                        "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil)),
+                    ]);
                     break;
                 
                 default:
@@ -170,7 +204,6 @@ class SuratSuaraController extends Controller
             ];
         }
 
-        // $metadata = ['description' => "Surat Suara Pemilu di Wilayah {$label_wilayah}"] ;
         $meta_desc = preg_replace('/\[nama_dapil\]/', $dapil->nama_dapil, $meta_desc);
         $meta_desc = preg_replace('/\[nama_wilayah\]/', $dapil->nama_dapil, $meta_desc);
         $metadata = ['description' => $meta_desc ];
@@ -318,5 +351,32 @@ class SuratSuaraController extends Controller
             'surat_suara' => $result,
             'dapil' => $dapil
         ];
+    }
+
+    private function replaceLastWord($inputString) {
+        // Regular expression to match a word with 4 or fewer letters at the end of the string
+        $regex = "/\b\d+\b$/";
+    
+        // Find the last word in the string
+        preg_match($regex, $inputString, $lastWordMatch);
+    
+        if ($lastWordMatch) {
+            $lastWord = $lastWordMatch[0];
+    
+            if (!is_nan($lastWord)) {
+            $modifiedString = preg_replace($regex, '', $inputString);
+            return trim($modifiedString);
+            }
+        }
+    
+      return $inputString;
+    }
+    
+    private function prependIfNot($wordToCheck, $originalString, $prefix){
+        $words = explode(" ", trim($originalString));
+        if (count($words) > 0 && strtolower($words[0]) !== strtolower($wordToCheck)) {
+          return "{$prefix}{$originalString}";
+        }
+        return $originalString;
     }
 }
