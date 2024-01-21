@@ -3,7 +3,7 @@
         <title>Calon DPR RI</title>
         <meta name="description" content="DPD Information" head-key="meta-description">
     </Head>
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-4 drop-shadow-md shadow-black">
         Calon DPR RI
     </h1>
     <SuratSuaraContentDpr :partais="partais" :dapil="dapil"/>

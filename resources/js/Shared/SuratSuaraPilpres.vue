@@ -23,7 +23,7 @@
         <div class="flex flex-wrap items-start justify-center mt-8">
             <PilpresBlock v-for="calon in calons" :calon="calon"/>
             <div class="min-w-32 bg-white overflow-hidden m-2 mb-10">
-                <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="">
+                <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="Sura dan Sulu">
             </div>
         </div>
     </div>

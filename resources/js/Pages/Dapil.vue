@@ -1,10 +1,10 @@
 <template>
     <Head>
-        <title>Dapil</title>
+        <title>Cari Berdasarkan Dapil</title>
         <meta name="description" content="Dapil Information" head-key="meta-description">
     </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-        Dapil
+        Cari Surat Suara Berdasarkan Dapil
     </h1>
     <div class="mt-4">
         <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 min-w-full">

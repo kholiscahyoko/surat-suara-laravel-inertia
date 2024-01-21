@@ -8,18 +8,18 @@
         </div>
         <div class="text-xs flex justify-between my-4 text-center">
             <div class="w-1/2">
-                <div class="text-gray-600">CALON PRESIDEN</div>
-                <div class="font-bold text-black">{{ calon.capres }}</div>
+                <h4 class="text-gray-600">CALON PRESIDEN</h4>
+                <h5 class="font-bold text-black">{{ calon.capres }}</h5>
             </div>
             <div class="w-1/2">
-                <div class="text-gray-600">CALON WAKIL PRESIDEN</div>
-                <div class="font-bold text-black">{{ calon.cawapres }}</div>
+                <h4 class="text-gray-600">CALON WAKIL PRESIDEN</h4>
+                <h5 class="font-bold text-black">{{ calon.cawapres }}</h5>
             </div>
         </div>
         <div class="min-h-24 text-xs">
-            <div class="text-black font-bold text-center">
+            <h4 class="text-black font-bold text-center">
                 GABUNGAN PARTAI POLITIK PENGUSUL
-            </div>
+            </h4>
             <div class="flex justify-center mt-2">
                 <img v-for="no_partai in calon.partai " :src="$setUrl(`/assets/img/partai/${no_partai}.webp`)" class="w-9 object-contain mx-1">
             </div>
