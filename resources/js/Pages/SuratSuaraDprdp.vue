@@ -3,7 +3,7 @@
         <title>Calon DPRD Provinsi</title>
         <meta name="description" content="DPD Information" head-key="meta-description">
     </Head>
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-4 drop-shadow-md shadow-black">
         Calon DPRD Provinsi
     </h1>
     <SuratSuaraContentDprdp :partais="partais" :dapil="dapil" :calon_id="calon_id"/>
