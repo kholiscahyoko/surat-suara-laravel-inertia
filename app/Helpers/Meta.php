@@ -7,6 +7,7 @@ class Meta {
     private array $meta;
     private array $meta_property_keys = ['type', 'site_name', 'title', 'image', 'description', 'url', 'image:type', 'image:width', 'image:heigth'];
     private array $meta_name_keys = ['description'];
+    private array $meta_robot_keys = ['robots', 'googlebot', 'googlebot-news'];
     private array $meta_keywords = [
         "pemilu 2024","surat suara", "pemilihan umum republik indonesia",
     ];
@@ -16,6 +17,9 @@ class Meta {
     public function __construct(array $meta = []) {
         $this->meta = [
             'type' => 'article',
+            'robots' => ['index', 'follow'],
+            'googlebot' => ['index', 'follow'],
+            'googlebot-news' => ['index', 'follow'],
             'site_name' => config('app.name'),
             'title' => config('app.name'),
             'image' => asset('assets/img/logo-kpu.webp'),
@@ -28,7 +32,7 @@ class Meta {
     }
 
     public function generate() {
-        return $this->generate_meta_names().$this->generate_meta_properties().$this->generate_meta_keywords().$this->generate_title();
+        return $this->generate_meta_names().$this->generate_meta_properties().$this->generate_meta_keywords().$this->generate_meta_robots().$this->generate_title();
     }
 
     public function generate_meta_properties() {
@@ -50,6 +54,21 @@ class Meta {
                     $content = $this->meta[$key];
                 }
                 $str .= "<meta name=\"{$key}\" content=\"{$content}\" itemprop=\"{$key}\"/>";
+            }
+        }
+        return $str;
+    }
+
+    public function generate_meta_robots() {
+        $str = "";
+        foreach ($this->meta_robot_keys as $key) {
+            if(isset($this->meta[$key])){
+                if(is_array($this->meta[$key])){
+                    $content = implode(", ", $this->meta[$key]);
+                }else{
+                    $content = $this->meta[$key];
+                }
+                $str .= "<meta name=\"{$key}\" content=\"{$content}\"/>";
             }
         }
         return $str;
