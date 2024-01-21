@@ -13,7 +13,7 @@
             <slot />
         </main>
     </section>
-    <section>
+    <section class="p-0">
         <Footer />
     </section>
 
