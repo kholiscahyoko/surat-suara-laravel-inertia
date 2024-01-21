@@ -9,5 +9,14 @@
     <SuratSuaraPilpres />
 </template>
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
 import SuratSuaraPilpres from '../Shared/SuratSuaraPilpres.vue';
+
+onMounted(() => {
+  document.body.classList.add('bg-gradient-to-tl', 'from-gray-600', 'to-white');
+})
+onUnmounted(() => {
+  document.body.classList.remove('bg-gradient-to-tl', 'from-gray-600', 'to-white');
+})
+
 </script>

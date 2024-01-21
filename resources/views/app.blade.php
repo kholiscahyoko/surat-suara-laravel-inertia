@@ -9,7 +9,7 @@
     @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/nprogress.css'])
     @inertiaHead
   </head>
-  <body class="h-full">
+  <body class="min-h-full">
     @inertia
   </body>
 </html>

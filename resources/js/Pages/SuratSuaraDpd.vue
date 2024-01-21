@@ -9,10 +9,18 @@
     <SuratSuaraContentDpd :calons="calons" :dapil="dapil"/>
 </template>
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
 import SuratSuaraContentDpd from '../Shared/SuratSuaraContentDpd.vue';
 
 defineProps({
     'calons' : Object,
     'dapil' : Object,
 });
+onMounted(() => {
+  document.body.classList.add('bg-gradient-to-tl', 'from-red-600', 'to-white');
+})
+onUnmounted(() => {
+  document.body.classList.remove('bg-gradient-to-tl', 'from-red-600', 'to-white');
+})
+
 </script>

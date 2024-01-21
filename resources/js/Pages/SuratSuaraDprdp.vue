@@ -9,10 +9,19 @@
     <SuratSuaraContentDprdp :partais="partais" :dapil="dapil"/>
 </template>
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
 import SuratSuaraContentDprdp from '../Shared/SuratSuaraContentDprdp.vue';
 
 defineProps({
     'partais' : Object,
     'dapil' : Object,
 });
+
+onMounted(() => {
+  document.body.classList.add('bg-gradient-to-tl', 'from-blue-600', 'to-white');
+})
+onUnmounted(() => {
+  document.body.classList.remove('bg-gradient-to-tl', 'from-blue-600', 'to-white');
+})
+
 </script>
