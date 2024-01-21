@@ -16,8 +16,8 @@
         <SuratSuaraSampul :surat_suara="null" :jenis="`pilpres`"/>
         <SuratSuaraSampul v-if="dpd" :surat_suara="dpd" :jenis="`dpd`"/>
         <SuratSuaraSampul v-if="dpr" :surat_suara="dpr" :jenis="`dpr`"/>
-        <SuratSuaraSampul v-if="dprdp" :surat_suara="dprdp" :jenis="`dprdp`"/>
-        <SuratSuaraSampul v-if="dprdk" :surat_suara="dprdk" :jenis="`dprdk`"/>
+        <SuratSuaraSampul v-if="dprdp" :surat_suara="dprdp" :jenis="`dprd-provinsi`"/>
+        <SuratSuaraSampul v-if="dprdk" :surat_suara="dprdk" :jenis="`dprd-kabkota`"/>
     </div>
 </template>
 <script setup>

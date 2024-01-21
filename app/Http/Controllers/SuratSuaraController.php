@@ -108,6 +108,18 @@ class SuratSuaraController extends Controller
 
     public function jenis(string $jenis, string $nama_dapil = "", string $kode_dapil = "")
     {
+        switch ($jenis) {
+            case 'dprd-provinsi':
+                $jenis = "dprdp";
+                break;
+
+                case 'dprd-kabkota':
+                    $jenis = "dprdk";
+                break;
+            
+            default:
+                break;
+        }
         if(!empty(config('app.meta')['surat-suara'][$jenis]['description'])){
             $meta_desc = config('app.meta')['surat-suara'][$jenis]['description'];
             $this->meta->setTitle(config('app.meta')['surat-suara'][$jenis]['title']);

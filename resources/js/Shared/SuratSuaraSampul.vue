@@ -36,11 +36,11 @@ let configs = {
     'dpr' : {
         label : 'DEWAN PERWAKILAN RAKYAT REPUBLIK INDONESIA', color : 'bg-yellow-500' 
     },
-    'dprdp' : {
-        label : 'DEWAN PERWAKILAN RAKYAT DAERAH PROVINSI', color : 'bg-blue-600' 
+    'dprd-provinsi' : {
+        label : 'DEWAN PERWAKILAN RAKYAT DAERAH PROVINSI', color : 'bg-blue-600', segment : 'dprd-provinsi' 
     },
-    'dprdk' : {
-        label : 'DEWAN PERWAKILAN RAKYAT DAERAH KABUPATEN/KOTA', color : 'bg-green-600' 
+    'dprd-kabkota' : {
+        label : 'DEWAN PERWAKILAN RAKYAT DAERAH KABUPATEN/KOTA', color : 'bg-green-600', segment : 'dprd-kabkota' 
     },
 }
 </script>

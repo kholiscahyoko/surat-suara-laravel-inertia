@@ -37,7 +37,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-right text-sm font-medium">
-                                        <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}?calon_id=${user.id}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
+                                        <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}?calon_id=${user.id}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
                                     </td>
                                 </tr>
                             </tbody>

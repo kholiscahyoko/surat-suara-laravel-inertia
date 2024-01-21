@@ -32,7 +32,7 @@ Route::get('/surat-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [Su
 
 Route::get('/surat-suara/{jenis}/{nama_dapil?}/{kode_dapil?}', [SuratSuaraController::class, 'jenis'])
 ->where([
-    'jenis', '(pilpres|dpd|dpr|dprdp|dprdk)',
+    'jenis', '(pilpres|dpd|dpr|dprd-provinsi|dprd-kabkota)',
     'nama_dapil' => '[a-z0-9-]+',
     'kode_dapil' => '[0-9]+',
 ]);
