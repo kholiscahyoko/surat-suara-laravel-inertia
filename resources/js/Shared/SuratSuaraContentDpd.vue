@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mr-4 mb-10 border border-2 border-slate-950">
+    <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border border-2 border-slate-950">
         <div>
             <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
                 <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="object-contain w-10 w-12 lg:w-28 lg:h-28 md:w-24 md:h-24 sm:w-20 sm:h-20" alt="Komisi Pemilihan Umum">
