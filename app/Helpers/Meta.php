@@ -22,7 +22,7 @@ class Meta {
             'googlebot-news' => ['index', 'follow'],
             'site_name' => config('app.name'),
             'title' => config('app.name'),
-            'image' => asset('assets/img/logo-kpu.webp'),
+            'image' => asset('assets/img/logo-fist.webp'),
             'description' => "Website Info Pemilu, cek pilihanmu disini!",
             'url' => url()->current(),
             'image:type' => 'image/webp',
