@@ -7,7 +7,7 @@
             </h3>
         </div>
         <div class="w-full flex justify-center">
-            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4">
+            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4" loading="lazy">
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">

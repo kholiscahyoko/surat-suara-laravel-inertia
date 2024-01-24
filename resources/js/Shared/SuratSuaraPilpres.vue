@@ -2,7 +2,7 @@
     <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border border-2 border-slate-950">
         <div>
             <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
-                <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="Komisi Pemilihan Umum">
+                <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="Komisi Pemilihan Umum" loading="lazy">
                 <div class="block text-center font-bold lg:text-6xl">
                     <h3 class="text-white">
                         SURAT SUARA
@@ -23,7 +23,7 @@
         <div class="flex flex-wrap items-start justify-center mt-8">
             <PilpresBlock v-for="calon in calons" :calon="calon"/>
             <div class="min-w-32 bg-white overflow-hidden m-2 mb-10">
-                <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="Sura dan Sulu">
+                <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="Sura dan Sulu" loading="lazy">
             </div>
         </div>
     </div>

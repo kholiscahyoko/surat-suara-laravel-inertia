@@ -4,7 +4,7 @@
             {{ calon.no_urut }}
         </div>
         <div>
-            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="h-48 object-cover w-full">
+            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="h-48 object-cover w-full" loading="lazy">
         </div>
         <h4 class="text-center px-4 py-4 min-h-24 text-sm text-wrap break-words">
             {{ calon.nama }}

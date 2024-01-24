@@ -4,7 +4,7 @@
             {{ calon.no }}
         </div>
         <div>
-            <img ref="image" :src="$setUrl(`/assets/img/pilpres/${calon.no}.webp`)" :alt="calon.capres + ' - ' + calon.cawapres" class="h-auto object-cover w-full">
+            <img ref="image" :src="$setUrl(`/assets/img/pilpres/${calon.no}.webp`)" :alt="calon.capres + ' - ' + calon.cawapres" class="h-auto object-cover w-full" loading="lazy">
         </div>
         <div class="text-xs flex justify-between my-4 text-center">
             <div class="w-1/2">
@@ -21,7 +21,7 @@
                 GABUNGAN PARTAI POLITIK PENGUSUL
             </h4>
             <div class="flex justify-center mt-2">
-                <img v-for="no_partai in calon.partai " :src="$setUrl(`/assets/img/partai/${no_partai}.webp`)" class="w-9 object-contain mx-1">
+                <img v-for="no_partai in calon.partai " :src="$setUrl(`/assets/img/partai/${no_partai}.webp`)" class="w-9 object-contain mx-1" loading="lazy">
             </div>
         </div>
     </div>
