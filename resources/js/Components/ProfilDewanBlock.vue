@@ -1,5 +1,5 @@
 <template>
-    <div class="w-80 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950 duration-300 cursor-pointer p-4">
+    <div class="w-80 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 duration-300 cursor-pointer p-4">
         <div class="flex items-center px-4 py-4 border-b border-black">
             <div class="font-bold w-10 text-4xl text-center">{{ calon.partai.no_urut }}</div>
             <img v-bind:src="$setUrl(`/assets/img/partai/${calon.partai.no_urut}.webp`)" class="w-20 h-20 mx-2 object-contain" :alt="calon.partai.nama">
@@ -12,7 +12,7 @@
             </h3>
         </div>
         <div class="w-full flex justify-center">
-            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="h-auto object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4">
+            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4">
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">

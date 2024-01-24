@@ -1,5 +1,5 @@
 <template>
-    <div class="w-80 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950 duration-300 cursor-pointer p-4">
+    <div class="w-80 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 duration-300 cursor-pointer p-4">
         <div class="items-center font-bold mb-4">
             <h3 class="text-xl text-center">
                 NO URUT
@@ -7,7 +7,7 @@
             </h3>
         </div>
         <div class="w-full flex justify-center">
-            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="h-auto object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4">
+            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4">
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">

@@ -1,15 +1,15 @@
 <template>
-    <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border border-2 border-slate-950">
+    <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border-2 border-slate-950">
         <div>
             <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
-                <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="Komisi Pemilihan Umum">
+                <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="z-20 object-contain w-12 lg:w-32 lg:h-32" alt="Komisi Pemilihan Umum">
                 <div class="block text-center font-bold lg:text-4xl">
                     <h2 class="text-white">
                         PROFIL CALON
                         <span class="block lg:text-3xl" v-html="header_title " />
                     </h2>
                 </div>
-                <img v-bind:src="$setUrl('/assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg')" class="z-20 object-contain w-10 w-12 lg:w-32 lg:h-32" alt="Pemilu Sarana Integrasi Bangsa">
+                <img v-bind:src="$setUrl('/assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg')" class="z-20 object-contain w-12 lg:w-32 lg:h-32" alt="Pemilu Sarana Integrasi Bangsa">
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.28 2.17" preserveAspectRatio="none" class="fill-current text-red-600 -mt-1">
                 <path d="M0 1c3.17.8 7.29-.38 10.04-.55 2.75-.17 9.25 1.47 12.67 1.3 3.43-.17 4.65-.84 7.05-.87 2.4-.02 5.52.88 5.52.88V0H0z" fill="%23ff0000"/>
@@ -23,7 +23,7 @@
             <ProfilDewanBlock :calon="calon"/>
             <div class="w-full px-3 text-sm">
             </div>
-            <div class="w-full min-h-max rounded-lg bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950 duration-300 cursor-pointer p-4">
+            <div class="w-full min-h-max rounded-lg bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 duration-300 cursor-pointer p-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center mb-4">
                     <div v-if="calon.profil_data && calon.profil_data.tempat_lahir" class="text-center p-1">
                         <h5 class="font-bold">Tempat Lahir</h5>

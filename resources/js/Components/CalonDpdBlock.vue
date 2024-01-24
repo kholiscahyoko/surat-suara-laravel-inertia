@@ -1,5 +1,5 @@
 <template>
-    <Link :href="$setUrl(`/profil-calon/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}/${$slugify(calon.nama)}/${calon.id}`)" class="w-32 min-h-[380px] bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer " :id="`calon-${calon.id}`" :class="checkId(calon.id) ? 'bg-yellow-400' : ''">
+    <Link :href="$setUrl(`/profil-calon/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}/${$slugify(calon.nama)}/${calon.id}`)" class="w-32 min-h-[380px] bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer " :id="`calon-${calon.id}`" :class="checkId(calon.id) ? 'bg-yellow-400' : ''">
         <div class="text-center px-4 py-4 font-bold text-4xl">
             {{ calon.no_urut }}
         </div>

@@ -12,7 +12,7 @@
     <Component
       :is="data.next_page_url ? 'Link' : 'span'"
       :href="data.next_page_url"
-      class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50"
+      class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50"
       :class="data.next_page_url ? 'text-gray-700 bg-white' : 'text-gray-500 bg-gray-200'"
       >
       Selanjutnya
