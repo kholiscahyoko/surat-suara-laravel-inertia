@@ -8,8 +8,10 @@
         <table class="min-w-full">
             <tbody class="divide-y divide-dashed divide-gray-600">
                 <tr v-for="calon in partai.calons" :class="checkId(calon.id, partai.no_urut) ? 'bg-yellow-300' : ''">
-                    <td class="p-2 w-1/12">{{ calon.no_urut }}.</td>
-                    <td class="p-2"><h5 class="text-sm">{{ calon.nama }}</h5></td>
+                    <Link :href="$setUrl(`/profil-calon/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}/${$slugify(calon.nama)}/${calon.id}`)">
+                        <td class="p-2 w-1/12">{{ calon.no_urut }}.</td>
+                        <td class="p-2"><h5 class="text-sm">{{ calon.nama }}</h5></td>
+                    </Link>
                 </tr>
             </tbody>
         </table>
@@ -19,7 +21,8 @@
 <script setup>
 const props = defineProps({
     partai: Object,
-    calon_id: String
+    calon_id: String,
+    dapil: Object
 });
 
 const calon_id = props.calon_id;

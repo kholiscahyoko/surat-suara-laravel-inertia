@@ -28,14 +28,12 @@
                                         </div>
                                     </td>
                                     <td class="px-1 lg:px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div>
-                                                <div v-if="user.jenis_dewan === 'dpd'" class="text-sm font-medium text-gray-900 rounded-lg bg-red-600 p-1 text-white">DPD RI</div>
-                                                <div v-else-if="user.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1">DPR RI</div>
-                                                <div v-else-if="user.jenis_dewan === 'dprdp'" class="text-sm font-medium text-gray-900 rounded-lg bg-blue-600 p-1 text-white">DPRD Provinsi</div>
-                                                <div v-else-if="user.jenis_dewan === 'dprdk'" class="text-sm font-medium text-gray-900 rounded-lg bg-green-600 p-1 text-white">DPRD Kab/Kota</div>
-                                                <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1">Tidak Diketahui</div>
-                                            </div>
+                                        <div class="flex justify-center">
+                                            <div v-if="user.jenis_dewan === 'dpd'" class="text-sm font-medium text-gray-900 rounded-lg bg-red-600 p-1 text-white text-wrap text-center">DPD RI</div>
+                                            <div v-else-if="user.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1 text-wrap text-center">DPR RI</div>
+                                            <div v-else-if="user.jenis_dewan === 'dprdp'" class="text-sm font-medium text-gray-900 rounded-lg bg-blue-600 p-1 text-white text-wrap text-center">DPRD Provinsi</div>
+                                            <div v-else-if="user.jenis_dewan === 'dprdk'" class="text-sm font-medium text-gray-900 rounded-lg bg-green-600 p-1 text-white text-wrap text-center">DPRD Kab/Kota</div>
+                                            <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1 text-wrap text-center">Tidak Diketahui</div>
                                         </div>
                                     </td>
                                     <td class="px-1 lg:px-6 py-4">
@@ -48,7 +46,10 @@
                                         </div>
                                     </td>
                                     <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium">
-                                        <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
+                                        <div class="flex items-center">
+                                            <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1  text-center">Surat Suara</Link>
+                                            <Link :href="$setUrl(`/profil-calon/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Profil</Link>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -86,4 +87,23 @@ watch(search, value => {
         console.log("HARUS LEBIH DARI 4 KARAKTER");
     }
 })
+
+let toProfil = function(hashId){
+    var f = $("<form target='_blank' method='POST' style='display:none;'></form>").attr({
+        action: 'https://infopemilu.kpu.go.id/Pemilu/Dct_dpd/profil'
+    }).appendTo(document.body);
+    $('<input type="hidden" />').attr({
+                name: 'ID_CANDIDATE',
+                value: hashId
+            }).appendTo(f);
+    $('<input type="hidden" />').attr({
+                name: 'pilihan_publikasi',
+                value: 'BERSEDIA'
+            }).appendTo(f);
+
+    f.submit();
+
+    f.remove();
+}
+
 </script>

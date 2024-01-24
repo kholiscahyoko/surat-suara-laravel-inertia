@@ -22,7 +22,7 @@
             </h3>
         </div>
         <div class="flex flex-wrap items-start justify-center mt-8">
-            <CalonDewanBlock v-for="partai in partais" :partai="partai" :calon_id="calon_id" />
+            <CalonDewanBlock v-for="partai in partais" :partai="partai" :calon_id="calon_id" :dapil="dapil"/>
             <div class="min-w-64 bg-white overflow-hidden m-2 mb-10">
                 <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="Sura dan Sulu">
             </div>

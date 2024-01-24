@@ -233,6 +233,90 @@ class SuratSuaraController extends Controller
         return Inertia::render($template, $data);
     }
 
+    public function profil(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
+    {
+        if(is_numeric($calon_id)){
+            if($calon = Calons::with('partai', 'dapil')->find($calon_id)){
+                $this->meta->addMetaKeywords([
+                    strtolower(str_replace(",", ".", $calon->nama))
+                ]);
+            }else{
+                abort(404);
+                exit();
+            }
+        }else{
+            abort(404);
+            exit();
+        }
+
+        switch ($jenis) {
+            case 'dprd-provinsi':
+                $jenis = "dprdp";
+                break;
+
+                case 'dprd-kabkota':
+                    $jenis = "dprdk";
+                break;
+            
+            default:
+                break;
+        }
+        if(!empty(config('app.meta')['surat-suara'][$jenis]['description'])){
+            $meta_desc = config('app.meta')['surat-suara'][$jenis]['description'];
+        }
+        $this->meta->setTitle("Profil {$calon->nama}");
+
+        if($jenis === "dpd"){
+            $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($calon->dapil->nama_dapil));
+            $template = "ProfilDpd";
+            $header_title_dewan = "DEWAN PERWAKILAN DAERAH<br>REPUBLIK INDONESIA";
+        }else{
+            $calon_keyword = "calon anggota legislatif";
+
+            $template = "ProfilDewan";
+
+            switch ($jenis) {
+                case 'dpr':
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($calon->dapil->nama_dapil));
+                    $header_title_dewan = "DEWAN PERWAKILAN RAKYAT<br>REPUBLIK INDONESIA";
+                    break;
+                
+                case 'dprdp':
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($calon->dapil->nama_dapil)))." dapil ".trim(strtolower($calon->dapil->nama_dapil));
+                    $header_title_dewan = "DEWAN PERWAKILAN RAKYAT DAERAH<br>PROVINSI ".preg_replace('/\W\w+\s*(\W*)$/', '$1', $calon->dapil->nama_dapil);
+                    break;
+                
+                case 'dprdk':
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($calon->dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($calon->dapil->nama_dapil));
+                    $header_title_dewan = "DEWAN PERWAKILAN RAKYAT DAERAH<br>".(strpos($calon->dapil->nama_dapil, "KOTA") !== 0 ? "KABUPATEN ": "").preg_replace('/\W\w+\s*(\W*)$/', '$1', $calon->dapil->nama_dapil);
+                    break;
+                
+                default:
+                    abort(404);
+                    exit();
+                    break;
+            }
+        }
+        $data = [
+            'calon' => $calon,
+            'header_title' => $header_title_dewan
+        ];
+
+        $meta_desc = preg_replace('/\[nama_dapil\]/', $calon->dapil->nama_dapil, $meta_desc);
+        $meta_desc = preg_replace('/\[nama_wilayah\]/', $calon->dapil->nama_dapil, $meta_desc);
+        $metadata = ['description' => $meta_desc ];
+
+        $this->meta->addMetaKeywords([
+            $calon_keyword,
+        ]);
+
+        $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Profil Calon Anggota Legislatif Disini.";
+
+        $this->meta->setMeta($metadata);
+
+        return Inertia::render($template, $data);
+    }
+
     public function wilayah_dapil(string $tingkatan_wilayah, string $nama_wilayah, string $kode_wilayah, bool $sampul = true)
     {
         $id_dapil_dprdk = null;
