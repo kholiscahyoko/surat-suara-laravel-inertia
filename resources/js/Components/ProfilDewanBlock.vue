@@ -12,7 +12,7 @@
             </h3>
         </div>
         <div class="w-full flex justify-center">
-            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 h-40 rounded-full shadow-lg shadow-black mb-4" loading="lazy">
+            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy">
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">
