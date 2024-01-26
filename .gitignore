@@ -4,6 +4,7 @@
 /public/data
 /public/hot
 /public/storage
+/public/assets/img/img/dpd_foto/original
 /storage/*.key
 /vendor
 .env
