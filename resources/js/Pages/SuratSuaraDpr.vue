@@ -20,9 +20,9 @@ defineProps({
 
 onMounted(() => {
 //   document.body.classList.add('bg-yellow-400');
-  document.body.classList.add('bg-gradient-to-tl', 'from-yellow-500', 'to-white');
+  document.body.classList.add('bg-gradient-to-tl', 'from-yellow-400', 'to-white');
 })
 onUnmounted(() => {
-  document.body.classList.remove('bg-gradient-to-tl', 'from-yellow-500', 'to-white');
+  document.body.classList.remove('bg-gradient-to-tl', 'from-yellow-400', 'to-white');
 })
 </script>
