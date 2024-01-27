@@ -57,7 +57,7 @@ let surat_suaras = [
             { label : "DAERAH PEMILIHAN", class: "text-xs mt-3" },
             { label : "[NAMA_DAERAH_PEMILIHAN]", class: "font-bold text-sm" },
         ],
-        footer : { label : "DPR RI", class: "bg-yellow-500 text-black text-lg" }
+        footer : { label : "DPR RI", class: "bg-yellow-400 text-black text-lg" }
     },
     {
         jenis : 'dprd-provinsi',

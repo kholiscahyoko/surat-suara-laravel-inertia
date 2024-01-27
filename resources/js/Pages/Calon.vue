@@ -30,10 +30,10 @@
                                     <td class="px-1 lg:px-6 py-4 whitespace-nowrap">
                                         <div class="flex justify-center">
                                             <div v-if="user.jenis_dewan === 'dpd'" class="text-sm font-medium rounded-lg bg-red-600 p-1 text-white text-wrap text-center">DPD RI</div>
-                                            <div v-else-if="user.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1 text-wrap text-center">DPR RI</div>
+                                            <div v-else-if="user.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">DPR RI</div>
                                             <div v-else-if="user.jenis_dewan === 'dprdp'" class="text-sm font-medium rounded-lg bg-blue-600 p-1 text-white text-wrap text-center">DPRD Provinsi</div>
                                             <div v-else-if="user.jenis_dewan === 'dprdk'" class="text-sm font-medium rounded-lg bg-green-600 p-1 text-white text-wrap text-center">DPRD Kab/Kota</div>
-                                            <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-500 p-1 text-wrap text-center">Tidak Diketahui</div>
+                                            <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">Tidak Diketahui</div>
                                         </div>
                                     </td>
                                     <td class="px-1 lg:px-6 py-4">

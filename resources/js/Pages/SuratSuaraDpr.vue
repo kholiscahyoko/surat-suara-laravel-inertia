@@ -19,7 +19,7 @@ defineProps({
 });
 
 onMounted(() => {
-//   document.body.classList.add('bg-yellow-500');
+//   document.body.classList.add('bg-yellow-400');
   document.body.classList.add('bg-gradient-to-tl', 'from-yellow-500', 'to-white');
 })
 onUnmounted(() => {
