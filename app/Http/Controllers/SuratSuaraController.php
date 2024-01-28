@@ -22,24 +22,30 @@ class SuratSuaraController extends Controller
      */
     public function index()
     {
-        $jenis_kelamin_summary = Calons::groupBy('jenis_kelamin')->select('jenis_kelamin', DB::raw('count(1) as jumlah'))->get();
-        $jenis_dewan_result = DB::table('calons')
-        ->join('dapils', 'calons.kode_dapil', '=', 'dapils.kode_dapil')
-        ->select('dapils.jenis_dewan', DB::raw('count(calons.id) as jumlah'))
-        ->groupBy('dapils.jenis_dewan')
-        ->get();
+        // $jenis_kelamin_summary = Calons::groupBy('jenis_kelamin')->select('jenis_kelamin', DB::raw('count(1) as jumlah'))->get();
+        // $jenis_dewan_result = DB::table('calons')
+        // ->join('dapils', 'calons.kode_dapil', '=', 'dapils.kode_dapil')
+        // ->select('dapils.jenis_dewan', DB::raw('count(calons.id) as jumlah'))
+        // ->groupBy('dapils.jenis_dewan')
+        // ->get();
 
-        $jenis_dewan_summary = [];
-        foreach($jenis_dewan_result as $jenis_dewan){
-            $jenis_dewan_summary[$jenis_dewan->jenis_dewan] = number_format($jenis_dewan->jumlah);
-        }
+        // $jenis_dewan_summary = [];
+        // foreach($jenis_dewan_result as $jenis_dewan){
+        //     $jenis_dewan_summary[$jenis_dewan->jenis_dewan] = number_format($jenis_dewan->jumlah);
+        // }
 
-        return Inertia::render('Home', [
-            'summary' => [
-                'jenis_kelamin' => $jenis_kelamin_summary,
-                'jenis_dewan' => $jenis_dewan_summary,
-            ]
-        ]);
+        // $data = [
+        //     'summary' => [
+        //         'jenis_kelamin' => $jenis_kelamin_summary,
+        //         'jenis_dewan' => $jenis_dewan_summary,
+        //     ]
+        // ];
+
+        $data_json = '{"summary":{"jenis_kelamin":[{"jenis_kelamin":"LAKI - LAKI","jumlah":163174},{"jenis_kelamin":"PEREMPUAN","jumlah":95136}],"jenis_dewan":{"dpr":"9,917","dpd":"668","dprdp":"32,873","dprdk":"214,852"}}}';
+
+        $data = json_decode($data_json, TRUE);
+
+        return Inertia::render('Home',  $data);
     }
 
     public function calon(Request $request){
