@@ -22,7 +22,24 @@ class SuratSuaraController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Home');
+        $jenis_kelamin_summary = Calons::groupBy('jenis_kelamin')->select('jenis_kelamin', DB::raw('count(1) as jumlah'))->get();
+        $jenis_dewan_result = DB::table('calons')
+        ->join('dapils', 'calons.kode_dapil', '=', 'dapils.kode_dapil')
+        ->select('dapils.jenis_dewan', DB::raw('count(calons.id) as jumlah'))
+        ->groupBy('dapils.jenis_dewan')
+        ->get();
+
+        $jenis_dewan_summary = [];
+        foreach($jenis_dewan_result as $jenis_dewan){
+            $jenis_dewan_summary[$jenis_dewan->jenis_dewan] = number_format($jenis_dewan->jumlah);
+        }
+
+        return Inertia::render('Home', [
+            'summary' => [
+                'jenis_kelamin' => $jenis_kelamin_summary,
+                'jenis_dewan' => $jenis_dewan_summary,
+            ]
+        ]);
     }
 
     public function calon(Request $request){
