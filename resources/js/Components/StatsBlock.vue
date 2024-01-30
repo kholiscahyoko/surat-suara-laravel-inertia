@@ -1,5 +1,5 @@
 <template>
-<div class="md:flex justify-center">
+<div class="md:flex justify-center mb-10">
     <div class="rounded-lg p-4 md:p-6 m-3 shadow-xl shadow-slate-600 bg-white">
         <h3 class="text-center font-bold text-lg">Proporsi jumlah calon berdasarkan jenis kelamin</h3>
         <!-- Pie Chart Jenis Kelamin -->
