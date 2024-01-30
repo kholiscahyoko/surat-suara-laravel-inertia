@@ -12,16 +12,9 @@
         <Link :href="$setUrl('/calon')" class="block my-5 mx-20 lg:mx-2 text-center text-lg lg:text-xl lg:w-50 p-2 align-middle lg:p-5 bg-blue-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cari Nama Calon Disini</Link>
     </div>
     <StatsBlock v-if="summary" :summary="summary"/>
-    <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-4">Contoh Surat Suara</h2>
-    <SuratSuara />
-    <SuratSuaraPilpres />
-    <SuratSuaraContentDewan />
 </template>
 <script setup>
 import StatsBlock from '../Components/StatsBlock.vue';
-import SuratSuara from '../Shared/SuratSuara.vue';
-import SuratSuaraContentDewan from '../Shared/SuratSuaraContentDewan.vue';
-import SuratSuaraPilpres from '../Shared/SuratSuaraPilpres.vue';
 
 let props = defineProps({
     summary : Object
