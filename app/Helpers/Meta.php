@@ -23,7 +23,7 @@ class Meta {
             'site_name' => config('app.name'),
             'title' => config('app.name'),
             'image' => asset('assets/img/infopemilu-square-1.webp'),
-            'description' => "Website Info Pemilu, cek pilihanmu disini!",
+            'description' => "Website Info Pemilu, daftar calon anggota legislatif terlengkap di seluruh Indonesia. Cari tahu pilihanmu disini!",
             'url' => url()->current(),
             'image:type' => 'image/webp',
             'image:width' => 366,
