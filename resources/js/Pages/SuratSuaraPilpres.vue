@@ -1,8 +1,4 @@
 <template>
-    <Head>
-        <title>Capres dan Cawapres</title>
-        <meta name="description" content="DPD Information" head-key="meta-description">
-    </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-4 drop-shadow-md shadow-black">
         Surat Suara Capres dan Cawapres
     </h1>

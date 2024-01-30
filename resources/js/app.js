@@ -22,7 +22,6 @@ createInertiaApp({
     const vueApp = createApp({ render: () => h(App, props) })
       .use(plugin)
       .component("Link", Link)
-      .component("Head", Head);
     vueApp.config.globalProperties.$slugify = function(str){
       return String(str)
         .normalize('NFKD') // split accented characters into their base characters and diacritical marks
