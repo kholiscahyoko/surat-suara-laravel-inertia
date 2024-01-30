@@ -4,7 +4,7 @@
     <div class="w-full h-[500px] ">
       <l-map ref="map" v-model:zoom="zoom" :center="center" :use-global-leaflet="false">
         <l-tile-layer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}"
           layer-type="base"
           name="OpenStreetMap"
         ></l-tile-layer>

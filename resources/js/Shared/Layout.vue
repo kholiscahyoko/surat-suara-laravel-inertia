@@ -1,8 +1,4 @@
 <template>
-    <Head>
-        <title>My App</title>
-        <meta name="description" content="Surat Suara Information" head-key="meta-description">
-    </Head>
     <section class="p-0">
         <header class="bg-white shadow">
             <Nav />
