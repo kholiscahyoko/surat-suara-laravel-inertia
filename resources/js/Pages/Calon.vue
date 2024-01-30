@@ -1,4 +1,8 @@
 <template>
+    <Head>
+        <title>Cari Nama Calon</title>
+        <meta name="description" content="Calon Information" head-key="meta-description">
+    </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         Cari Nama Calon Legislatif
     </h1>

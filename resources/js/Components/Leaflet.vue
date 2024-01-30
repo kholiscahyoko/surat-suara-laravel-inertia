@@ -21,7 +21,8 @@
   
 <script setup>
 import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
+import { ref, onMounted, onUnmounted } from 'vue'
+import { LMap, LTileLayer, LGeoJson, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 
 let props = defineProps({
   data_provinsi: Array,

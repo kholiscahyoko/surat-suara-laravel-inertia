@@ -1,4 +1,8 @@
 <template>
+    <Head>
+        <title>Cari Berdasarkan Dapil</title>
+        <meta name="description" content="Dapil Information" head-key="meta-description">
+    </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         Cari Surat Suara Berdasarkan Dapil
     </h1>

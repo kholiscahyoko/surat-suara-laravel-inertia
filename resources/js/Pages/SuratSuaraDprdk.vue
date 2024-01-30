@@ -1,4 +1,8 @@
 <template>
+    <Head>
+        <title>Calon DPRD Kabupaten - Kota</title>
+        <meta name="description" content="DPD Information" head-key="meta-description">
+    </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-4 drop-shadow-md shadow-black">
         Calon DPRD Kabupaten / Kota
     </h1>

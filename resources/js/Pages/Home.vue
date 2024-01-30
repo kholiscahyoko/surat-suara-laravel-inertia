@@ -1,4 +1,8 @@
 <template>
+    <Head>
+        <title>Halaman Utama</title>
+        <meta name="description" content="Home Information" head-key="meta-description">
+    </Head>
     <h1 class="text-4xl font-bold tracking-tight text-gray-900 mb-4">
         Temukan Siapa Calon Pilihanmu
     </h1>

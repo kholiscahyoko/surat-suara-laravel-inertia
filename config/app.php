@@ -188,7 +188,6 @@ return [
 
     // custom config
     'meta' => [
-        'home' => ["title" => "Website daftar calon legislatif terlengkap"],
         'calon' => ["title" => "Cari Nama Calon", "description" => "Temukan Nama Calon Legislatif Pilihanmu Disini"],
         'dapil' => ["title" => "Cari Berdasarkan Dapil", "description" => "Cari Surat Suara Berdasarkan Nama Daerah Pemilihan Disini"],
         'wilayah' => ["title" => "Cari Berdasarkan Wilayah", "description" => "Cari Surat Suara Berdasarkan Wilayahmu Disini"],

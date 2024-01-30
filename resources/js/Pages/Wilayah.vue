@@ -1,4 +1,8 @@
 <template>
+    <Head>
+        <title>Cari Berdasarkan Wilayah</title>
+        <meta name="description" content="Wilayah Information" head-key="meta-description">
+    </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         Cari Surat Suara Berdasarkan Wilayah
     </h1>
