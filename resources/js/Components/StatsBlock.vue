@@ -30,11 +30,14 @@
 </div>
 </template>
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import ApexCharts from 'apexcharts'
 var props = defineProps({
     summary : Object
 })
+
+
+var chart = null;
 
 let configs_jenis_kelamin = {
     'LAKI - LAKI' : {
@@ -129,11 +132,16 @@ let render_jenis_kelamin = function(){
             },
         },
     }
-    let chart = new ApexCharts(document.getElementById("jenis-kelamin"), options);
+    chart = new ApexCharts(document.getElementById("jenis-kelamin"), options);
     chart.render();
 }
 
 onMounted(() => {
     render_jenis_kelamin();
 })
+
+onUnmounted(() => {
+    chart.destroy();
+})
+
 </script>
