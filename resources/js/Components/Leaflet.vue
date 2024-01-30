@@ -8,9 +8,9 @@
           layer-type="base"
           name="OpenStreetMap"
         ></l-tile-layer>
-        <l-marker v-for="provinsi in data_provinsi" :lat-lng="geoprovinsi[provinsi.kode_wilayah].koordinat" class="bg-red-600">
+        <l-marker v-for="provinsi in data_provinsi" :lat-lng="geo_provinsi[provinsi.kode_wilayah].koordinat" class="bg-red-600">
           <l-popup class="text-center">
-             <span class="font-bold">{{ geoprovinsi[provinsi.kode_wilayah].nama }}</span><br>
+             <span class="font-bold">{{ geo_provinsi[provinsi.kode_wilayah].nama }}</span><br>
              Jumlah DCT : {{ provinsi.jumlah_caleg.toLocaleString() }}
           </l-popup>
         </l-marker>
@@ -19,41 +19,16 @@
   </div>
 </template>
   
-  <script>
-  import "leaflet/dist/leaflet.css";
-  import { LMap, LTileLayer, LGeoJson, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-  
-  export default {
-    props:{
-      data_provinsi: Array
-    },
-    components: {
-      LMap,
-      LTileLayer,
-      LGeoJson,
-      LMarker,
-      LPopup
-    },
-    data() {
-      return {
-        zoom: 5, // Initial zoom level
-        center: [-2.5489, 118.0149],
-        geoprovinsi: null,
-      };
-    },
-    async created () {
-      const response = await fetch('/assets/json/lat_lng.json');
-      this.geoprovinsi = await response.json();
-    },
-    methods: {
-      showPopup(event) {
-        console.log("POPUP SHOWED");
-      },
-      hidePopup() {
-        console.log("POPUP SHOWED");
-      },
-    },
-  };
-  </script>
-  
-  <style></style>
+<script setup>
+import "leaflet/dist/leaflet.css";
+import { ref, onMounted, onUnmounted } from 'vue'
+import { LMap, LTileLayer, LGeoJson, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
+
+let props = defineProps({
+  data_provinsi: Array,
+  geo_provinsi: Object,
+})
+
+let zoom = 5; // Initial zoom level
+let center = [-2.5489, 118.0149];
+</script>
