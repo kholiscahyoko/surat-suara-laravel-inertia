@@ -10,6 +10,12 @@ class Calons extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'tempat_lahir', 'tgl_lahir', 'agama', 'perkawinan', 'disabilitas', 'status_hukum',
+        'motivasi', 'riwayat_pekerjaan', 'riwayat_pendidikan', 'riwayat_organisasi',
+        'riwayat_kursus_diklat', 'riwayat_penghargaan', 'created_at', 'updated_at'
+    ];
+
     public function partai(): BelongsTo
     {
         return $this->belongsTo(Partais::class, 'partai_id');
