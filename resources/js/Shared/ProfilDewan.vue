@@ -51,7 +51,7 @@
                     </div>
                     <div v-if="calon.profil_data && calon.profil_data.perkawinan" class="text-center p-1">
                         <div class="font-bold">Status Perkawinan</div>
-                        <h4>{{ calon.profil_data.perkawinan }}</h4>
+                        <h4>{{ calon.profil_data.perkawinan == 'S' ? 'Sudah' : calon.profil_data.perkawinan == 'P' ? 'Pernah' : calon.profil_data.perkawinan }}</h4>
                     </div>
                     <div v-if="calon.profil_data && calon.profil_data.disabilitas" class="text-center p-1">
                         <h5 class="font-bold">Disabilitas</h5>
