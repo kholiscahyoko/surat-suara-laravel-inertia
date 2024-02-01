@@ -70,7 +70,7 @@ class SuratSuaraController extends Controller
         ]);
         return Inertia::render('Calon',[
             'users' => Calons::
-            query()->with('dapil')
+            query()->with(['dapil', 'partai'])
             ->when($request->input('search'), function($query, $search){
                 $query->where('nama', 'like', "%{$search}%");
             })
@@ -80,6 +80,7 @@ class SuratSuaraController extends Controller
                 'id' => $user->id,
                 'name' => $user->nama,
                 'kode_dapil' => $user->kode_dapil,
+                'nama_partai' => $user->partai && $user->partai->nama ? $user->partai->nama : "Non Partai",
                 'jenis_dewan' => $user->dapil->jenis_dewan,
                 'nama_dapil' => $user->dapil->nama_dapil,
             ]),

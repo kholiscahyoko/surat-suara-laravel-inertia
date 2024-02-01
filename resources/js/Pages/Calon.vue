@@ -36,6 +36,13 @@
                                             <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">Tidak Diketahui</div>
                                         </div>
                                     </td>
+                                    <td class="px-1 lg:px-6 py-4 whitespace-nowrap">
+                                        <div class="flex justify-center">
+                                            <div class="text-sm font-medium p-1 text-wrap text-center">
+                                                {{ partai_aliases[user.nama_partai] ? partai_aliases[user.nama_partai] : user.nama_partai }}
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td class="px-1 lg:px-6 py-4">
                                         <div class="flex items-center">
                                             <div>
@@ -77,6 +84,32 @@ let props = defineProps({
 
 let search = ref(props.filters.search);
 
+let partai_aliases = {
+    'PDI PERJUANGAN' : "PDIP",
+    'PARTAI KEBANGKITAN NASIONAL' : "PKN",
+    'PARTAI KEBANGKITAN BANGSA' : "PKB",
+    'PARTAI PERSATUAN PEMBANGUNAN' : "PPP",
+    'PARTAI SOLIDARITAS INDONESIA' : "PSI",
+    'PARTAI DEMOKRAT' : "Demokrat",
+    'PARTAI KEADILAN SEJAHTERA' : "PKS",
+    'Partai NasDem' : "NasDem",
+    'PARTAI HANURA' : "HANURA",
+    'PARTAI UMMAT' : "UMMAT",
+    'PARTAI BURUH' : "BURUH",
+    'PARTAI PERINDO' : "PERINDO",
+    'PARTAI AMANAT NASIONAL' : "PAN",
+    'PARTAI GELORA' : "GELORA",
+    'PARTAI GERINDRA' : "GERINDRA",
+    'PARTAI GOLKAR' : "GOLKAR",
+    'PARTAI BULAN BINTANG' : "PBB",
+    'PARTAI ADIL SEJAHTERA' : "PAS",
+    'PARTAI DARUL ACEH' : "PDA",
+    'PARTAI SIRA' : "SIRA",
+    'PARTAI NANGGROE ACEH' : "PNA",
+    'PARTAI BENDERA' : "BENDERA",
+    'PARTAI GARUDA' : "GARUDA",
+}
+
 watch(search, value => {
     if(value.length >= 3){
         router.get('/calon', { search : value }, {
@@ -87,23 +120,4 @@ watch(search, value => {
         console.log("HARUS LEBIH DARI 4 KARAKTER");
     }
 })
-
-let toProfil = function(hashId){
-    var f = $("<form target='_blank' method='POST' style='display:none;'></form>").attr({
-        action: 'https://infopemilu.kpu.go.id/Pemilu/Dct_dpd/profil'
-    }).appendTo(document.body);
-    $('<input type="hidden" />').attr({
-                name: 'ID_CANDIDATE',
-                value: hashId
-            }).appendTo(f);
-    $('<input type="hidden" />').attr({
-                name: 'pilihan_publikasi',
-                value: 'BERSEDIA'
-            }).appendTo(f);
-
-    f.submit();
-
-    f.remove();
-}
-
 </script>
