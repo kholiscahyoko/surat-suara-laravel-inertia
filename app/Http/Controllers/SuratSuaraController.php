@@ -142,12 +142,28 @@ class SuratSuaraController extends Controller
     public function jenis(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
     {
         switch ($jenis) {
+            case 'dprdp':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-provinsi/{$nama_dapil}/{$kode_dapil}";
+                if(strlen($nama_calon)>0 && is_numeric($calon_id)){
+                    $url_redirect .= "/{$nama_calon}/{$calon_id}";
+                }
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprdk':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-kabkota/{$nama_dapil}/{$kode_dapil}";
+                if(strlen($nama_calon)>0 && is_numeric($calon_id)){
+                    $url_redirect .= "/{$nama_calon}/{$calon_id}";
+                }
+                return redirect($url_redirect, 301);
+                break;
+
             case 'dprd-provinsi':
                 $jenis = "dprdp";
                 break;
 
-                case 'dprd-kabkota':
-                    $jenis = "dprdk";
+            case 'dprd-kabkota':
+                $jenis = "dprdk";
                 break;
             
             default:
@@ -268,6 +284,29 @@ class SuratSuaraController extends Controller
 
     public function profil(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
     {
+        switch ($jenis) {
+            case 'dprdp':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-provinsi/{$nama_dapil}/{$kode_dapil}/{$nama_calon}/{$calon_id}";
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprdk':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-kabkota/{$nama_dapil}/{$kode_dapil}/{$nama_calon}/{$calon_id}";
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprd-provinsi':
+                $jenis = "dprdp";
+                break;
+
+                case 'dprd-kabkota':
+                    $jenis = "dprdk";
+                break;
+            
+            default:
+                break;
+        }
+
         if(is_numeric($calon_id)){
             if($calon = Calons::with('partai', 'dapil')->find($calon_id)){
                 $this->meta->addMetaKeywords([
@@ -282,18 +321,6 @@ class SuratSuaraController extends Controller
             exit();
         }
 
-        switch ($jenis) {
-            case 'dprd-provinsi':
-                $jenis = "dprdp";
-                break;
-
-                case 'dprd-kabkota':
-                    $jenis = "dprdk";
-                break;
-            
-            default:
-                break;
-        }
         if(!empty(config('app.meta')['surat-suara'][$jenis]['description'])){
             $meta_desc = config('app.meta')['surat-suara'][$jenis]['description'];
         }
@@ -563,5 +590,13 @@ class SuratSuaraController extends Controller
             "96": { "nama": "Papua Barat Daya", "koordinat": [-0.8424344, 131.3005577] }
           }
           ';
+    }
+
+    private function detectProxy()
+    {
+        // You can implement your own logic to detect the proxy
+        // For example, check if there is a specific header indicating the proxy
+        // If no proxy, return an empty string
+        return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? '/proxy' : '';
     }
 }
