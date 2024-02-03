@@ -464,7 +464,7 @@ class SuratSuaraController extends Controller
         $metadata = ['description' => "Surat Suara Pemilu di Wilayah {$label_wilayah}"] ;
 
         $this->meta->setMeta($metadata);
-        $this->meta->setTitle("Surat Suara Wilayah");
+        $this->meta->setTitle("Surat Suara Wilayah {$wilayah->nama}");
 
         $this->meta->addMetaKeywords([
             "surat suara pemilu di ".trim(strtolower(str_replace(',', '', $label_wilayah))),
