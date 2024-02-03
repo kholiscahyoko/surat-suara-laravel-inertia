@@ -1,8 +1,4 @@
 <template>
-    <Head>
-        <title>Profil Calon Anggota DPR</title>
-        <meta name="description" content="Profil Calon Anggota Dewan Perwakilan Daerah" head-key="meta-description">
-    </Head>
     <ProfilDewan :calon="calon" :header_title="header_title" />
 </template>
 

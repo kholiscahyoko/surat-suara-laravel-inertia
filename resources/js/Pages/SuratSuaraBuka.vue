@@ -1,8 +1,4 @@
 <template>
-    <Head>
-        <title>Surat Suara Wilayah</title>
-        <meta name="description" content="Surat Suara Wilayah Information" head-key="meta-description">
-    </Head>
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         Surat Suara Wilayah
     </h1>
