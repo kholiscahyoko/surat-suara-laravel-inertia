@@ -49,7 +49,7 @@ var wilayah_list = ref(null);
 const setUrl = inject('$setUrl');
 
 let get_list_wilayah = function(){
-    if(this.wilayah_list == null){
+    if(typeof this.wilayah_list === 'undefined' || this.wilayah_list == null){
         let url = setUrl(`/get_list_wilayah_by_dapil?kode_dapil=${props.kode_dapil}`);
         axios.get(url)
          .then(response => {
