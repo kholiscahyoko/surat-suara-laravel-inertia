@@ -26,7 +26,7 @@ Route::get('/wilayah', [SuratSuaraController::class, 'wilayah']);
 Route::get('/surat-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [SuratSuaraController::class, 'wilayah_dapil'])
 ->where([
     'tingkatan_wilayah' => '(desa|kecamatan|kabkota|provinsi)',
-    'nama_wilayah' => '[a-z-]+',
+    'nama_wilayah' => '[a-z0-9-]+',
     'kode_wilayah' => '[0-9]+',
 ]);
 
