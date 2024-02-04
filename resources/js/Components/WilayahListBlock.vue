@@ -45,16 +45,16 @@ let props = defineProps({
     'kode_dapil' : String
 })
 
-var wilayah_list = ref(null);
+const wilayah_list = ref(null);
 const setUrl = inject('$setUrl');
 
 let get_list_wilayah = function(){
-    if(typeof this.wilayah_list === 'undefined' || this.wilayah_list == null){
+    if(wilayah_list.value == null){
         let url = setUrl(`/get_list_wilayah_by_dapil?kode_dapil=${props.kode_dapil}`);
         axios.get(url)
          .then(response => {
             if(response.status == 200){
-                this.wilayah_list = response.data[0];
+                wilayah_list.value = response.data[0];
             }
          })
          .catch(function (error) {
