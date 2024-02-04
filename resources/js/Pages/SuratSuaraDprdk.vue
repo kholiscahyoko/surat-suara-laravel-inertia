@@ -1,12 +1,16 @@
 <template>
+  <div class="md:flex md:justify-between">
     <h1 class="text-3xl font-bold tracking-tight text-gray-900 mb-4 drop-shadow-md shadow-black">
         Calon DPRD Kabupaten / Kota
     </h1>
-    <SuratSuaraContentDprdk :partais="partais" :dapil="dapil" :calon_id="calon_id"/>
+    <WilayahListVue :kode_dapil="dapil.kode_dapil"/>
+  </div>
+  <SuratSuaraContentDprdk :partais="partais" :dapil="dapil" :calon_id="calon_id"/>
 </template>
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import SuratSuaraContentDprdk from '../Shared/SuratSuaraContentDprdk.vue';
+import WilayahListVue from '../Components/WilayahListBlock.vue'
 
 defineProps({
     'partais' : Object,

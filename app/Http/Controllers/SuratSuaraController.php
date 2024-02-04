@@ -11,6 +11,7 @@ use App\Models\Dapils;
 use App\Models\Kabkota;
 use App\Models\Kecamatan;
 use App\Models\Provinsi;
+use App\Models\Wilayah;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -138,6 +139,32 @@ class SuratSuaraController extends Controller
             'filters' => $request->only(['search'])
         ]);
 
+    }
+
+    public function get_list_wilayah_by_dapil(Request $request){
+        if(!is_numeric($request->input('kode_dapil'))){
+            return response()->json([
+                'message' => "kode dapil is required"
+            ], 404);
+        }
+
+        $result = Wilayah::where('kode_dapil', '=', $request->input('kode_dapil'))
+        ->select(['tingkatan_wilayah', 'nama_wilayah'])
+        ->get();
+
+        if($result->isEmpty()){
+            return response()->json([
+                'message' => "dapil tidak ditemukan"
+            ], 404);
+        }else{
+            $wilayahs = [];
+            foreach($result as $wilayah){
+                $wilayahs[$wilayah->tingkatan_wilayah][] = ucwords(strtolower($wilayah->nama_wilayah));
+            }
+            return response()->json([
+                $wilayahs
+            ], 200);
+        }
     }
 
     public function jenis(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
