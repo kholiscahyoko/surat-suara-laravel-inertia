@@ -9,21 +9,25 @@
         <h3 class="text-center font-bold text-lg">Jumlah calon legislatif berdasarkan kategori</h3>
         <!-- Line Chart Jenis Dewan-->
         <div class="flex flex-wrap items-center justify-center max-w-md mx-auto">
-            <div class="min-w-36 lg:min-w-52 bg-red-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
-                <h3 class="text-sm">DPD RI</h3>
+            <div class="text-sm min-w-36 lg:min-w-52 bg-red-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
+                <h3>DPD RI</h3>
                 <h4 class="text-2xl">{{ summary.jenis_dewan.dpd }}</h4>
+                <div>Calon</div>
             </div>
-            <div class="min-w-36 lg:min-w-52 bg-yellow-400 p-4 m-1 text-center text-black rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
-                <h3 class="text-sm">DPR RI</h3>
+            <div class="text-sm min-w-36 lg:min-w-52 bg-yellow-400 p-4 m-1 text-center text-black rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
+                <h3>DPR RI</h3>
                 <h4 class="text-2xl">{{ summary.jenis_dewan.dpr }}</h4>
+                <div>Calon</div>
             </div>
-            <div class="min-w-36 lg:min-w-52 bg-blue-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
-                <h3 class="text-sm">DPRD Provinsi</h3>
+            <div class="text-sm min-w-36 lg:min-w-52 bg-blue-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
+                <h3>DPRD Provinsi</h3>
                 <h4 class="text-2xl">{{ summary.jenis_dewan.dprdp }}</h4>
+                <div>Calon</div>
             </div>
-            <div class="min-w-36 lg:min-w-52 bg-green-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
-                <h3 class="text-sm">DPRD Kab/Kota</h3>
+            <div class="text-sm min-w-36 lg:min-w-52 bg-green-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
+                <h3>DPRD Kab/Kota</h3>
                 <h4 class="text-2xl">{{ summary.jenis_dewan.dprdk }}</h4>
+                <div>Calon</div>
             </div>
         </div>
     </div>
