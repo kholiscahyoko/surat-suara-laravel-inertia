@@ -12,7 +12,14 @@
             </h3>
         </div>
         <div class="w-full flex justify-center">
-            <img ref="image" :src="$setUrl(creatorImage)" @error="imageError = true" :alt="calon.nama" class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy">
+            <img
+                v-if="loaded"
+                :src="imageSrc"
+                @load="handleImageLoad"
+                class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy"
+                :alt="calon.nama" 
+                />
+            <img v-else :src="$setUrl(`/assets/img/kpu_monochrome.webp`)" class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy" :alt="calon.nama" />
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">
@@ -28,14 +35,28 @@ export default{
     },
     data() {
         return {
-            imageError: false,
-            defaultImage: `/assets/img/kpu_monochrome.webp`,
-            queryParams: null,
+            loaded: false,
+            imageSrc: this.calon.foto,
         };
     },
-    computed: {
-        creatorImage() {
-            return this.imageError ? this.defaultImage : this.calon.foto
-        }
-    }
+    methods:{
+        handleImageLoad() {
+            this.loaded = true;
+        },
+    },
+    mounted() {
+        const actualImage = new Image();
+        actualImage.src = this.imageSrc;
+
+        actualImage.onload = () => {
+            // Actual image has loaded, switch to it
+            this.loaded = true;
+        };
+
+        actualImage.onerror = () => {
+            // Handle error if the image fails to load
+            console.error('Error loading actual image');
+        };
+    },
+
 };</script>
