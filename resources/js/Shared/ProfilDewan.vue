@@ -6,7 +6,7 @@
                 <div class="block text-center font-bold lg:text-4xl">
                     <h2 class="text-white">
                         PROFIL CALON
-                        <span class="block lg:text-3xl" v-html="header_title " />
+                        <span class="block lg:text-3xl" v-html="header_title" />
                     </h2>
                 </div>
                 <img v-bind:src="$setUrl('/assets/img/Logo_Pemilu_Sarana_Integrasi_Bangsa_2024.svg')" class="z-20 object-contain w-12 lg:w-32 lg:h-32" alt="Pemilu Sarana Integrasi Bangsa" loading="lazy">
