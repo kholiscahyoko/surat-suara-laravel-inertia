@@ -35,6 +35,10 @@ createInertiaApp({
     vueApp.config.globalProperties.$setUrl = function(path){
       return `${import.meta.env.VITE_APP_URL??''}${path}`
     };
+
+    // Provide the $setUrl function to components
+    vueApp.provide('$setUrl', vueApp.config.globalProperties.$setUrl);
+
     vueApp.mount(el);
   },
   title: title => `${import.meta.env.VITE_APP_NAME} - ${title}`

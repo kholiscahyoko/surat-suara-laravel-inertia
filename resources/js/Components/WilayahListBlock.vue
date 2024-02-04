@@ -37,7 +37,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import axios from 'axios';
 import { initModals } from 'flowbite';
 
@@ -46,17 +46,16 @@ let props = defineProps({
 })
 
 var wilayah_list = ref(null);
+const setUrl = inject('$setUrl');
 
 let get_list_wilayah = function(){
     if(this.wilayah_list == null){
-        let url = `http://127.0.0.1:8000/get_list_wilayah_by_dapil?kode_dapil=${props.kode_dapil}`
+        let url = setUrl(`/get_list_wilayah_by_dapil?kode_dapil=${props.kode_dapil}`);
         axios.get(url)
          .then(response => {
             if(response.status == 200){
                 this.wilayah_list = response.data[0];
-                console.log("RESPONSE IS OK");
             }
-         console.log(response.data);
          })
          .catch(function (error) {
             if (error.response) {
