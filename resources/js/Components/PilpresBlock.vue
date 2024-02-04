@@ -1,5 +1,5 @@
 <template>
-    <div class="w-80 md:w-56 lg:w-80 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border border-2 border-slate-950 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
+    <div class="w-80 md:w-56 lg:w-80 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">
         <div class="text-center px-4 py-4 font-bold text-6xl">
             {{ calon.no }}
         </div>
