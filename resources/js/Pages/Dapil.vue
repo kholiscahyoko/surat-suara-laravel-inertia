@@ -3,7 +3,7 @@
         Cari Surat Suara Berdasarkan Dapil
     </h1>
     <div class="mt-4">
-        Mungkin yang kamu maksud wilayah ? <Link :href="$setUrl('/wilayah')" class="text-indigo-600 font-semibold hover:text-indigo-900">Cek disini</Link>
+        Mungkin yang kamu maksud wilayah ? <Link :href="$setUrl('/wilayah')" class="text-indigo-600 font-semibold hover:text-indigo-900 text-nowrap">Cek disini</Link>
     </div>
     <div class="mt-4">
         <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 min-w-full">
