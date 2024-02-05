@@ -5,6 +5,9 @@
     <h2 class="text-xl font-bold tracking-tight text-gray-900 mb-4">
         {{ label_wilayah }}
     </h2>
+    <div class="mt-2 mb-2">
+        Cari Surat Suara Wilayah Lain <Link :href="$setUrl('/wilayah')" class="text-indigo-600 font-semibold hover:text-indigo-900">disini</Link>
+    </div>
     <div class="lg:text-lg md:text-md sm:text-sm text-xs text-center font-bold tracking-tight text-gray-900 mb-4">
         ( Klik / sentuh surat suara untuk membuka )
     </div>
