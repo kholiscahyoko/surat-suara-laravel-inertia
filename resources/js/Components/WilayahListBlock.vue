@@ -37,7 +37,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, inject } from 'vue';
+import { onMounted, onUnmounted, ref, inject } from 'vue';
 import axios from 'axios';
 import { initModals } from 'flowbite';
 
@@ -81,6 +81,11 @@ let get_list_wilayah = function(){
 
 onMounted(() => {
     initModals();
+})
+
+onUnmounted(() => {
+    document.querySelector("body > div[modal-backdrop]")?.remove();
+    document.querySelector("body").classList.remove("overflow-hidden");
 })
 
 
