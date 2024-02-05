@@ -95,7 +95,7 @@ class SuratSuaraController extends Controller
             ->when($request->input('search'), function($query, $search){
                 $query->where('nama_dapil', 'like', "%{$search}%");
             })
-            ->paginate(10)
+            ->paginate(20)
             ->withQueryString()
             ->through(fn($data) => [
                 'id' => $data->id,
