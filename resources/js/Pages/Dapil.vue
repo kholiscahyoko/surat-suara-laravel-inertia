@@ -80,7 +80,7 @@ watch(search, value => {
                 preserveState : true,
                 replace: true
             });
-        }, 1000); // 300 milliseconds = 0.3 seconds
+        }, 500); // 500 milliseconds = 0.5 seconds
     }else{
         console.log("HARUS LEBIH DARI 4 KARAKTER");
     }
