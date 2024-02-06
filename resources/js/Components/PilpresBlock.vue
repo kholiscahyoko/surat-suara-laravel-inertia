@@ -23,6 +23,9 @@
             <div class="flex justify-center mt-2">
                 <img v-for="no_partai in calon.partai " :src="$setUrl(`/assets/img/partai/${no_partai}.webp`)" class="w-9 md:w-7 lg:w-9 object-contain mx-[1px] lg:mx-1" loading="lazy">
             </div>
+            <div class="flex justify-center mt-2 mb-4">
+                <a :href="calon.pdf" class="font-semibold p-2 bg-blue-600 text-white rounded-md" target="_blank">BACA VISI DAN MISI</a>
+            </div>
         </div>
     </div>
 </template>

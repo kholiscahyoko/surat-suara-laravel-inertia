@@ -32,8 +32,8 @@
 import PilpresBlock from '../Components/PilpresBlock.vue';
 
 let calons = [
-    { no: 1, capres : 'H. ANIES RASYID BASWEDAN, Ph.D', cawapres : 'H. A. MUHAIMIN ISKANDAR, Dr. (H.C.)', partai : [5, 1, 8] },
-    { no: 2, capres : 'H. PRABOWO SUBIANTO', cawapres : 'GIBRAN RAKABUMING RAKA', partai : [2, 4, 14, 12, 15, 13, 11] },
-    { no: 3, capres : 'H. GANJAR PRANOWO, S.H., M.I.P.', cawapres : 'Prof. Dr. H. M. MAHFUD MD', partai : [3, 17, 10, 16] }
+    { no: 1, capres : 'H. ANIES RASYID BASWEDAN, Ph.D', cawapres : 'H. A. MUHAIMIN ISKANDAR, Dr. (H.C.)', partai : [5, 1, 8], pdf : 'https://mmc.tirto.id/documents/2023/10/20/1241-amin-visi-misi-program.pdf?x=2676' },
+    { no: 2, capres : 'H. PRABOWO SUBIANTO', cawapres : 'GIBRAN RAKABUMING RAKA', partai : [2, 4, 14, 12, 15, 13, 11], pdf : 'https://mmc.tirto.id/documents/2023/10/26/1276-visi-misi-indonesia-maju-2024-final.pdf?x=2676' },
+    { no: 3, capres : 'H. GANJAR PRANOWO, S.H., M.I.P.', cawapres : 'Prof. Dr. H. M. MAHFUD MD', partai : [3, 17, 10, 16], pdf : 'https://visimisiganjarmahfud.id/assets/docs/Buku-Visi-Misi-Ganjar-Mahfud.pdf?v=3' }
 ]
 </script>
