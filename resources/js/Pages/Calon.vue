@@ -107,7 +107,7 @@ let partai_aliases = {
 }
 
 watch(search, value => {
-    if(value.length >= 3){
+    if(value.length >= 3 && value.charAt(value.length - 1) !== ' '){
         router.get('/calon', { search : value }, {
             preserveState : true,
             replace: true
