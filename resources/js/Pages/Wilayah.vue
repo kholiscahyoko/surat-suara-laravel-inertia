@@ -52,13 +52,21 @@ let props = defineProps({
 
 let search = ref(props.filters.search);
 
-watch(search, value => {
+// Debounce function to delay processing
+let timeoutId;
+const debounce = (func, delay) => {
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(func, delay);
+};
 
+watch(search, value => {
     if(value.length >= 3 && value.charAt(value.length - 1) !== ' '){
-        router.get('/wilayah', { search : value }, {
-            preserveState : true,
-            replace: true
-        });
+        debounce(function(){
+            router.get('/wilayah', { search : value }, {
+                preserveState : true,
+                replace: true
+            });
+        }, 1000); // 300 milliseconds = 0.3 seconds
     }else{
         console.log("HARUS LEBIH DARI 3 KARAKTER");
     }
