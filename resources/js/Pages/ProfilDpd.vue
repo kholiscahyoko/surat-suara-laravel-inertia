@@ -5,7 +5,7 @@
 <script setup>
 import CryptoJS from 'crypto-js'
 import axios from 'axios';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import ProfilDpd from '../Shared/ProfilDpd.vue';
 
 let props = defineProps({
@@ -14,6 +14,8 @@ let props = defineProps({
 })
 
 onMounted(() => {
+    document.body.classList.add('bg-gradient-to-tl', 'from-red-600', 'to-white');
+
     let url = `http://127.0.0.1:8000/data/${props.calon.dapil.jenis_dewan}/dct/${props.calon.kode_dapil}/${CryptoJS.MD5('../'+props.calon.foto)}.json`
     axios.get(url)
      .then(response => {
@@ -84,4 +86,9 @@ onMounted(() => {
 //             ]
 //         }
 //     }
+
+onUnmounted(() => {
+  document.body.classList.remove('bg-gradient-to-tl', 'from-red-600', 'to-white');
+})
+
 </script>
