@@ -32,7 +32,7 @@ class Meta {
     }
 
     public function generate() {
-        return $this->generate_meta_names().$this->generate_meta_properties().$this->generate_meta_keywords().$this->generate_meta_robots().$this->generate_title();
+        return $this->generate_meta_names().$this->generate_meta_properties().$this->generate_meta_keywords().$this->generate_meta_robots().$this->generate_canonical().$this->generate_title();
     }
 
     public function generate_meta_properties() {
@@ -81,6 +81,10 @@ class Meta {
     public function generate_meta_keywords() {
         $keywords_str = count($this->meta_keywords) > $this->limit_keywords ? implode(',', array_slice($this->meta_keywords, 0, $this->limit_keywords)) :  implode(',', $this->meta_keywords);
         return "<meta name=\"keywords\" content=\"{$keywords_str}\" itemprop=\"keywords\"/>";
+    }
+
+    public function generate_canonical(){
+        return "<link rel=\"canonical\" href=\"".url()->current()."\" />";
     }
 
     public function addMetaKeywords(array $data = []) : void{
