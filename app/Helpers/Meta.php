@@ -23,7 +23,7 @@ class Meta {
             'site_name' => config('app.name'),
             'title' => config('app.name'),
             'image' => asset('assets/img/infopemilu-square-1.webp'),
-            'description' => "Website Unofficial Info Pemilu, daftar calon anggota legislatif terlengkap di seluruh Indonesia. Cari tahu pilihanmu disini!",
+            'description' => "Website Unofficial Info Pemilu, daftar calon anggota legislatif terlengkap di seluruh Indonesia. Cek surat suara dan cari tahu pilihanmu disini. Mari kita sukseskan Pemilu 2024.",
             'url' => url()->current(),
             'image:type' => 'image/webp',
             'image:width' => 366,
