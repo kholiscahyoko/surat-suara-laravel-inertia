@@ -1,7 +1,7 @@
 <template>
-    <footer class="bg-red-600 shadow mt-4 ">
+    <footer class="bg-slate-950 shadow mt-4 ">
         <div class="p-4 sm:items-center">
-            <div class="text-base text-white text-center">&copy; 2024 <a href="https://me.kholiscahyoko.my.id/" class="hover:underline">Shotaro Hidari /W</a>.
+            <div class="text-base text-white text-center">&copy; 2024 <a href="https://me.kholiscahyoko.my.id/" class="hover:underline text-purple-500">Shotaro Hidari <span class="text-white">/W</span></a>.
             </div>
         </div>
     </footer>
