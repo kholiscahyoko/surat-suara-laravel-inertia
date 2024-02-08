@@ -119,14 +119,19 @@ class SuratSuaraController extends Controller
 
     public function wilayah(Request $request)
     {
+        $search = $request->input('search');
         $wilayahs = Desa::rightJoin('kecamatans', 'desas.id_kecamatan', '=', 'kecamatans.id')
         ->rightJoin('kabkotas', 'kecamatans.id_kabkota', '=', 'kabkotas.id')
         ->rightJoin('provinsis', 'kabkotas.id_provinsi', '=', 'provinsis.id')
-        ->where('desas.nama', 'like', "{$request->input('search')}%")->orWhere('desas.nama', 'like', "% {$request->input('search')}%")
-        ->orWhere('kecamatans.nama', 'like', "{$request->input('search')}%")->orWhere('kecamatans.nama', 'like', "% {$request->input('search')}%")
-        ->orWhere('kabkotas.nama', 'like', "{$request->input('search')}%")->orWhere('kabkotas.nama', 'like', "% {$request->input('search')}%")
-        ->orWhere('provinsis.nama', 'like', "{$request->input('search')}%")->orWhere('provinsis.nama', 'like', "% {$request->input('search')}%")
+        ->where('desas.nama', 'like', "{$search}%")->orWhere('desas.nama', 'like', "% {$search}%")
+        ->orWhere('kecamatans.nama', 'like', "{$search}%")->orWhere('kecamatans.nama', 'like', "% {$search}%")
+        ->orWhere('kabkotas.nama', 'like', "{$search}%")->orWhere('kabkotas.nama', 'like', "% {$search}%")
+        ->orWhere('provinsis.nama', 'like', "{$search}%")->orWhere('provinsis.nama', 'like', "% {$search}%")
         ->select(['desas.id AS id_desa', 'desas.nama AS nama_desa', 'kecamatans.id AS id_kecamatan', 'kecamatans.nama AS nama_kecamatan', 'kabkotas.id AS id_kabkota', 'kabkotas.nama AS nama_kabkota', 'provinsis.id AS id_provinsi', 'provinsis.nama AS nama_provinsi', DB::raw("(CASE WHEN desas.kode_wilayah IS NOT NULL THEN desas.kode_wilayah WHEN kecamatans.kode_wilayah IS NOT NULL THEN kecamatans.kode_wilayah WHEN kabkotas.kode_wilayah IS NOT NULL THEN kabkotas.kode_wilayah ELSE provinsis.kode_wilayah END) AS kode_wilayah")])
+        ->orderByRaw("case when desas.nama = '{$search}' then 1 when kecamatans.nama = '{$search}' then 2 when kabkotas.nama = '{$search}' then 3 when provinsis.nama = '{$search}' then 4
+        when desas.nama like '{$search}%' then 5 when kecamatans.nama like '{$search}%' then 6 when kabkotas.nama like '{$search}%' then 7 when provinsis.nama like '{$search}%' then 8
+        when desas.nama like '%{$search}' then 9 when kecamatans.nama like '%{$search}' then 10 when kabkotas.nama like '%{$search}' then 11 when provinsis.nama like '%{$search}' then 12
+        else 13 end")
         ->paginate(20)
         ->withQueryString()
         ;
