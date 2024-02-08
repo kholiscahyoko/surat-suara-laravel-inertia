@@ -73,7 +73,9 @@ class SuratSuaraController extends Controller
             'users' => Calons::
             query()->with(['dapil', 'partai'])
             ->when($request->input('search'), function($query, $search){
-                $query->where('nama', 'like', "{$search}%")->orWhere('nama', 'like', "% {$search}%");
+                $query->where('nama', 'like', "%{$search}%")
+                ->orderByRaw("case when nama = '{$search}' or nama like '{$search},%' then 1 when nama like '{$search} %' then 2 when nama like '% {$search}' then 3 when nama like '{$search}%' then 4 else 5 end")
+                ;
             })
             ->paginate(20)
             ->withQueryString()
