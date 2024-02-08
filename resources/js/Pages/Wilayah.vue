@@ -13,7 +13,7 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="wilayah in wilayahs.data" :key="wilayah.kode_wilayah">
+                                <tr v-if="wilayahs.data.length > 0" v-for="wilayah in wilayahs.data" :key="wilayah.kode_wilayah">
                                     <td class="px-6 py-4 ">
                                         <div class="flex items-center">
                                             <div>
@@ -27,6 +27,14 @@
                                         <Link :href="$setUrl(`/surat-suara/${ wilayah.id_desa !== null ? 'desa' : ( wilayah.id_kecamatan !== null ? 'kecamatan' : (wilayah.id_kabkota !== null ? 'kabkota' : 'provinsi' )) }/${$slugify(wilayah.nama_desa ?? wilayah.nama_kecamatan ?? wilayah.nama_kabkota ?? wilayah.nama_provinsi)}/${wilayah.kode_wilayah}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
                                     </td>
                                 </tr>
+                                <tr v-else>
+                                    <td class="px-5 lg:px-6 py-4 text-gray-700">
+                                        Nama wilayah tidak ditemukan.<br>
+                                        Saran : coba gunakan nama DESA/KELURAHAN saja atau tingkatan diatasnya (KECAMATAN atau KABUPATEN/KOTA).<br>
+                                        Contoh : CIDENG , jika tidak ada coba GAMBIR, jika tidak ada coba JAKARTA PUSAT<br>
+                                        Jika masih tidak menemukan, coba alternatif pencarian <Link :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</Link> atau <Link :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</Link>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -36,7 +44,6 @@
         <div class="mt-4">
             <Pagination :data="wilayahs" />
         </div>
-
     </div>
 </template>
 

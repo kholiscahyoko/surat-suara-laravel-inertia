@@ -16,7 +16,7 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="dapil in dapils.data" :key="dapil.id">
+                                <tr v-if="dapils.data.length > 0" v-for="dapil in dapils.data" :key="dapil.id">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
                                             <div>
@@ -39,6 +39,12 @@
                                     </td>
                                     <td class="px-6 py-4 text-right text-sm font-medium">
                                         <Link :href="$setUrl(`/surat-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
+                                    </td>
+                                </tr>
+                                <tr v-else>
+                                    <td class="px-5 lg:px-6 py-4 text-gray-700">
+                                        Nama dapil tidak ditemukan.<br>
+                                        Saran : gunakan nama provinsi atau nama kabupaten/kota (tanpa kata "PROVINSI" atau "KABUPATEN/KOTA"). Jika masih tidak menemukan, coba alternatif pencarian <Link :href="$setUrl(`/wilayah`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Wilayah</Link> atau <Link :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</Link>
                                     </td>
                                 </tr>
                             </tbody>

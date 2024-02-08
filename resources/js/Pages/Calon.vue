@@ -13,7 +13,7 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="user in users.data" :key="user.id">
+                                <tr v-if="users.data.length > 0" v-for="user in users.data" :key="user.id">
                                     <td class="px-1 lg:px-6 py-4">
                                         <div class="flex items-center">
                                             <div>
@@ -55,6 +55,12 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr v-else>
+                                    <td class="px-5 lg:px-6 py-4 text-gray-600">
+                                        Nama tidak ditemukan.<br>
+                                        Saran : coba hilangkan gelar dan nama peran/alias, dsb. Jika masih tidak menemukan, coba alternatif pencarian <Link :href="$setUrl(`/wilayah`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Wilayah</Link> atau <Link :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</Link>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -71,7 +77,7 @@
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
 import { ref, watch } from "vue";
-import { router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 let props = defineProps({
     users: Object,
