@@ -53,7 +53,3 @@ Route::post('/logout', function(){
 });
 
 Route::get('/get_list_wilayah_by_dapil', [SuratSuaraController::class, 'get_list_wilayah_by_dapil']);
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-});
