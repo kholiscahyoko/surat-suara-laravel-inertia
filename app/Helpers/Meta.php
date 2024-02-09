@@ -32,7 +32,7 @@ class Meta {
     }
 
     public function generate() {
-        return $this->generate_meta_names().$this->generate_meta_properties().$this->generate_meta_keywords().$this->generate_meta_robots().$this->generate_canonical().$this->generate_title();
+        return $this->generate_meta_names().$this->generate_meta_properties().$this->generate_meta_keywords().$this->generate_meta_robots().$this->generate_canonical().$this->generate_meta_google_adsense().$this->generate_title();
     }
 
     public function generate_meta_properties() {
@@ -85,6 +85,10 @@ class Meta {
 
     public function generate_canonical(){
         return "<link rel=\"canonical\" href=\"".url()->current()."\" />";
+    }
+
+    public function generate_meta_google_adsense(){
+        return '<meta name="google-adsense-account" content="ca-pub-3686539766588397">';
     }
 
     public function addMetaKeywords(array $data = []) : void{
