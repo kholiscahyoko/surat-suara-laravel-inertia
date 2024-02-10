@@ -156,6 +156,23 @@ class SuratSuaraController extends Controller
             ], 404);
         }
 
+        if(strlen($request->input('kode_dapil')) == 2){
+            $result = Provinsi::where('kode_wilayah', '=', $request->input('kode_dapil'))
+            ->select(['nama'])
+            ->first();
+            if(!$result){
+                return response()->json([
+                    'message' => "dapil tidak ditemukan"
+                ], 404);
+            }else{
+                $wilayahs = [];
+                $wilayahs["Provinsi"][] = $result->nama;
+                return response()->json([
+                    $wilayahs
+                ], 200);
+            }
+        }
+
         $result = Wilayah::where('kode_dapil', '=', $request->input('kode_dapil'))
         ->select(['tingkatan_wilayah', 'nama_wilayah'])
         ->get();
