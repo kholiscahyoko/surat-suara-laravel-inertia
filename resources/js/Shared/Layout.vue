@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-screen justify-between">
+    <div class="flex flex-col min-h-screen justify-between">
         <section class="p-0">
             <header class="bg-white shadow">
                 <Nav />
