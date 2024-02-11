@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\Calons;
 use App\Models\Desa;
@@ -157,9 +158,14 @@ class SuratSuaraController extends Controller
         }
 
         if(strlen($request->input('kode_dapil')) == 2){
-            $result = Provinsi::where('kode_wilayah', '=', $request->input('kode_dapil'))
-            ->select(['nama'])
-            ->first();
+            if($result = Cache::get('wilayah_by_kode_dapil:'.$request->input('kode_dapil'))){
+                $result = json_decode($result);
+            }else{
+                $result = Provinsi::where('kode_wilayah', '=', $request->input('kode_dapil'))
+                ->select(['nama'])
+                ->first();
+                Cache::put('wilayah_by_kode_dapil:'.$request->input('kode_dapil'));
+            }
             if(!$result){
                 return response()->json([
                     'message' => "dapil tidak ditemukan"
@@ -172,12 +178,19 @@ class SuratSuaraController extends Controller
                 ], 200);
             }
         }
+        if($result = Cache::get('wilayah_by_kode_dapil:'.$request->input('kode_dapil'))){
+            $result = json_decode($result);
+        }else{
+            $result = Wilayah::where('kode_dapil', '=', $request->input('kode_dapil'))
+            ->select(['tingkatan_wilayah', 'nama_wilayah'])
+            ->get();
+            if($result->isEmpty()){
+                $result = null;
+            }
+            Cache::put('wilayah_by_kode_dapil:'.$request->input('kode_dapil'), json_encode($result));
+        }
 
-        $result = Wilayah::where('kode_dapil', '=', $request->input('kode_dapil'))
-        ->select(['tingkatan_wilayah', 'nama_wilayah'])
-        ->get();
-
-        if($result->isEmpty()){
+        if(empty($result)){
             return response()->json([
                 'message' => "dapil tidak ditemukan"
             ], 404);
@@ -240,47 +253,69 @@ class SuratSuaraController extends Controller
             return Inertia::render('SuratSuaraPilpres');
             exit();
         }elseif($jenis === "dpd"){
-            $dapil = Dapils::query()
-            ->where('kode_dapil', $kode_dapil)
-            ->first();
+            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                $dapil = json_decode($dapil);
+            }else{
+                $dapil = Dapils::query()
+                ->where('kode_dapil', $kode_dapil)
+                ->first();
+                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
 
             $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil));
 
             $template = "SuratSuaraDpd";
 
-            $data = [
-                'calons' => Calons::where('kode_dapil', $kode_dapil)
+            if($calons = Cache::get('calons_by_dapil:'.$kode_dapil)){
+                $calons = json_decode($calons);
+            }else{
+                $calons = Calons::where('kode_dapil', $kode_dapil)
                 ->orderBy('no_urut')
-                ->get(),
+                ->get();
+                Cache::put('calons_by_dapil:'.$kode_dapil, json_encode($calons));
+            }
+
+            $data = [
+                'calons' => $calons,
                 'dapil' => $dapil
             ];
         }else{
-            $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
-                $query->where('kode_dapil', $kode_dapil)->orderBy('calons.no_urut');
-            }])
-            ->orderBy('partais.no_urut')
-            ->get()
-            ->map(function($partai){
-                return count($partai->calons) > 0 ? [
-                    'id' => $partai->id,
-                    'no_urut' => $partai->no_urut,
-                    'nama' => $partai->nama,
-                    'calons' => $partai->calons->map(function($calon){
-                        return [
-                            'id' => $calon->id,
-                            'nama' => $calon->nama,
-                            'no_urut' => $calon->no_urut,
-                        ];
-                    }),
-                ] : false;
-            })
-            ->reject(function ($partai) {
-                return empty($partai);
-            })
-            ->toArray();
-            $dapil = Dapils::query()
-            ->where('kode_dapil', $kode_dapil)
-            ->first();
+            if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
+                $partais = json_decode($partais);
+            }else{
+                $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
+                    $query->where('kode_dapil', $kode_dapil)->orderBy('calons.no_urut');
+                }])
+                ->orderBy('partais.no_urut')
+                ->get()
+                ->map(function($partai){
+                    return count($partai->calons) > 0 ? [
+                        'id' => $partai->id,
+                        'no_urut' => $partai->no_urut,
+                        'nama' => $partai->nama,
+                        'calons' => $partai->calons->map(function($calon){
+                            return [
+                                'id' => $calon->id,
+                                'nama' => $calon->nama,
+                                'no_urut' => $calon->no_urut,
+                            ];
+                        }),
+                    ] : false;
+                })
+                ->reject(function ($partai) {
+                    return empty($partai);
+                })
+                ->toArray();
+                Cache::put('partais_by_dapil:'.$kode_dapil, json_encode($partais));
+            }
+            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                $dapil = json_decode($dapil);
+            }else{
+                $dapil = Dapils::query()
+                ->where('kode_dapil', $kode_dapil)
+                ->first();
+                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
 
             switch ($jenis) {
                 case 'dpr':
@@ -321,12 +356,20 @@ class SuratSuaraController extends Controller
         }
 
         if(!empty($data['dapil']) && is_numeric($calon_id)){
-            if($calon = Calons::find($calon_id)){
-                $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
+            if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
+                $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
-                $data['calon_id'] = $calon_id;
+            }else{
+                if($calon = Calons::find($calon_id)){
+                    Cache::put('profil_calon_suara:'.$calon_id, json_encode($calon));
+                    $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
+                    $this->meta->addMetaKeywords([
+                        strtolower(str_replace(",", ".", $calon->nama))
+                    ]);
+                    $data['calon_id'] = $calon_id;
+                }
             }
         }
 
@@ -361,13 +404,21 @@ class SuratSuaraController extends Controller
         }
 
         if(is_numeric($calon_id)){
-            if($calon = Calons::with('partai', 'dapil')->find($calon_id)){
+            if($calon = Cache::get('profil_calon_id:'.$calon_id)){
+                $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
             }else{
-                abort(404);
-                exit();
+                if($calon = Calons::with('partai', 'dapil')->find($calon_id)){
+                    Cache::put('profil_calon_id:'.$calon_id, json_encode($calon));
+                    $this->meta->addMetaKeywords([
+                        strtolower(str_replace(",", ".", $calon->nama))
+                    ]);
+                }else{
+                    abort(404);
+                    exit();
+                }
             }
         }else{
             abort(404);
@@ -441,9 +492,15 @@ class SuratSuaraController extends Controller
 
         switch ($tingkatan_wilayah) {
             case 'desa':
-                $wilayah = Desa::with(['kecamatan', 'kecamatan.kabkota' , 'kecamatan.kabkota.provinsi'])
-                ->where('kode_wilayah', $kode_wilayah)
-                ->first();
+                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                    $wilayah = json_decode($wilayah);
+                }else{
+                    $wilayah = Desa::with(['kecamatan', 'kecamatan.kabkota' , 'kecamatan.kabkota.provinsi'])
+                    ->where('kode_wilayah', $kode_wilayah)
+                    ->first();
+                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                }
+    
                 $label_wilayah = "Desa/Kelurahan {$wilayah->nama}, Kec. {$wilayah->kecamatan->nama}, {$wilayah->kecamatan->kabkota->nama}, {$wilayah->kecamatan->kabkota->provinsi->nama}";
 
                 if($wilayah){
@@ -454,9 +511,14 @@ class SuratSuaraController extends Controller
                 }
                 break;
             case 'kecamatan':
-                $wilayah = Kecamatan::with('kabkota', 'kabkota.provinsi')
-                ->where('kode_wilayah', $kode_wilayah)
-                ->first();
+                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                    $wilayah = json_decode($wilayah);
+                }else{
+                    $wilayah = Kecamatan::with('kabkota', 'kabkota.provinsi')
+                    ->where('kode_wilayah', $kode_wilayah)
+                    ->first();
+                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                }
 
                 $label_wilayah = "Kec. {$wilayah->nama}, {$wilayah->kabkota->nama}, {$wilayah->kabkota->provinsi->nama}";
                 if($wilayah){
@@ -469,9 +531,14 @@ class SuratSuaraController extends Controller
                 break;
 
             case 'kabkota':
-                $wilayah = Kabkota::with('provinsi')
-                ->where('kode_wilayah', $kode_wilayah)
-                ->first();
+                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                    $wilayah = json_decode($wilayah);
+                }else{
+                    $wilayah = Kabkota::with('provinsi')
+                    ->where('kode_wilayah', $kode_wilayah)
+                    ->first();
+                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                }
 
                 $label_wilayah = "{$wilayah->nama}, {$wilayah->provinsi->nama}";
                 if($wilayah){
@@ -483,8 +550,13 @@ class SuratSuaraController extends Controller
                 break;
 
             case 'provinsi':
-                $wilayah = Provinsi::where('kode_wilayah', $kode_wilayah)
-                ->first();
+                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                    $wilayah = json_decode($wilayah);
+                }else{
+                    $wilayah = Provinsi::where('kode_wilayah', $kode_wilayah)
+                    ->first();
+                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                }
 
                 $label_wilayah = "{$wilayah->provinsi->nama}";
                 if($wilayah){
@@ -500,10 +572,10 @@ class SuratSuaraController extends Controller
         }
 
         if($sampul){
-            $dprdk = $id_dapil_dprdk ? Dapils::find($id_dapil_dprdk) : null;
-            $dprdp = $id_dapil_dprdp ? Dapils::find($id_dapil_dprdp) : null;
-            $dpr = $id_dapil_dpr ? Dapils::find($id_dapil_dpr) : null;
-            $dpd = $id_dapil_dpd ? Dapils::find($id_dapil_dpd) : null;
+            $dprdk = $id_dapil_dprdk ? (Cache::has('dapil_id:'.$id_dapil_dprdk) ? Cache::get('dapil_id:'.$id_dapil_dprdk) : Dapils::find($id_dapil_dprdk)): null;
+            $dprdp = $id_dapil_dprdp ? (Cache::has('dapil_id:'.$id_dapil_dprdp) ? Cache::get('dapil_id:'.$id_dapil_dprdp) : Dapils::find($id_dapil_dprdp)): null;
+            $dpr = $id_dapil_dpr ? (Cache::has('dapil_id:'.$id_dapil_dpr) ? Cache::get('dapil_id:'.$id_dapil_dpr) : Dapils::find($id_dapil_dpr)): null;
+            $dpd = $id_dapil_dpd ? (Cache::has('dapil_id:'.$id_dapil_dpd) ? Cache::get('dapil_id:'.$id_dapil_dpd) : Dapils::find($id_dapil_dpd)): null;
         }else{
             $dprdk = $id_dapil_dprdk ? $this->get_surat_suara_by_id_dapil($id_dapil_dprdk) : null;
             $dprdp = $id_dapil_dprdp ? $this->get_surat_suara_by_id_dapil($id_dapil_dprdp) : null;
@@ -566,7 +638,13 @@ class SuratSuaraController extends Controller
             ->toArray();
         }
 
-        $dapil = Dapils::find($id_dapil);
+        if($dapil = Cache::get('dapil_id:'.$id_dapil)){
+            $dapil = json_decode($dapil);
+        }else{
+            $dapil = Dapils::find($id_dapil);
+            Cache::put('dapil_id:'.$id_dapil, json_encode($dapil));
+        }
+
 
         return [
             'surat_suara' => $result,
