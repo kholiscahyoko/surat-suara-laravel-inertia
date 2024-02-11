@@ -52,4 +52,16 @@ Route::post('/logout', function(){
    dd(request('foo')); 
 });
 
+Route::get('/tentang-kami', function(){
+   return Inertia::render('TentangKami'); 
+});
+
+Route::get('/kebijakan-privasi', function(){
+   return Inertia::render('KebijakanPrivasi'); 
+});
+
+Route::get('/hubungi-kami', function(){
+   return Inertia::render('HubungiKami'); 
+});
+
 Route::get('/get_list_wilayah_by_dapil', [SuratSuaraController::class, 'get_list_wilayah_by_dapil']);
