@@ -603,10 +603,10 @@ class SuratSuaraController extends Controller
         }
 
         if($sampul){
-            $dprdk = $id_dapil_dprdk ? (Cache::has('dapil_id:'.$id_dapil_dprdk) ? Cache::get('dapil_id:'.$id_dapil_dprdk) : Dapils::find($id_dapil_dprdk)): null;
-            $dprdp = $id_dapil_dprdp ? (Cache::has('dapil_id:'.$id_dapil_dprdp) ? Cache::get('dapil_id:'.$id_dapil_dprdp) : Dapils::find($id_dapil_dprdp)): null;
-            $dpr = $id_dapil_dpr ? (Cache::has('dapil_id:'.$id_dapil_dpr) ? Cache::get('dapil_id:'.$id_dapil_dpr) : Dapils::find($id_dapil_dpr)): null;
-            $dpd = $id_dapil_dpd ? (Cache::has('dapil_id:'.$id_dapil_dpd) ? Cache::get('dapil_id:'.$id_dapil_dpd) : Dapils::find($id_dapil_dpd)): null;
+            $dprdk = $id_dapil_dprdk ? (Cache::has('dapil_id:'.$id_dapil_dprdk) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dprdk)) : function() use ($id_dapil_dprdk) { $dapils = Dapils::find($id_dapil_dprdk); Cache::put('dapil_id:'.$id_dapil_dprdk, json_encode($dapils)); return $dapils; }): null;
+            $dprdp = $id_dapil_dprdp ? (Cache::has('dapil_id:'.$id_dapil_dprdp) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dprdp)) : function() use ($id_dapil_dprdp) { $dapils = Dapils::find($id_dapil_dprdp); Cache::put('dapil_id:'.$id_dapil_dprdp, json_encode($dapils)); return $dapils; }): null;
+            $dpr = $id_dapil_dpr ? (Cache::has('dapil_id:'.$id_dapil_dpr) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dpr)) : function() use ($id_dapil_dpr) { $dapils = Dapils::find($id_dapil_dpr); Cache::put('dapil_id:'.$id_dapil_dpr, json_encode($dapils)); return $dapils; }): null;
+            $dpd = $id_dapil_dpd ? (Cache::has('dapil_id:'.$id_dapil_dpd) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dpd)) : function() use ($id_dapil_dpd) { $dapils = Dapils::find($id_dapil_dpd); Cache::put('dapil_id:'.$id_dapil_dpd, json_encode($dapils)); return $dapils; }): null;
         }else{
             $dprdk = $id_dapil_dprdk ? $this->get_surat_suara_by_id_dapil($id_dapil_dprdk) : null;
             $dprdp = $id_dapil_dprdp ? $this->get_surat_suara_by_id_dapil($id_dapil_dprdp) : null;
