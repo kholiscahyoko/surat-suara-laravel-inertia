@@ -1,12 +1,12 @@
 <template>
 <div class="md:flex justify-center mb-10">
     <div class="rounded-lg p-4 md:p-6 m-3 shadow-xl shadow-slate-600 bg-white">
-        <h3 class="text-center font-bold text-lg">Proporsi jumlah calon berdasarkan jenis kelamin</h3>
+        <h3 class="text-center font-bold text-lg">Representasi Gender</h3>
         <!-- Pie Chart Jenis Kelamin -->
         <div class="max-w-64 mx-auto" id="jenis-kelamin"></div>
     </div>
     <div class="rounded-lg p-4 md:p-6 m-3 shadow-xl shadow-slate-600 bg-white">
-        <h3 class="text-center font-bold text-lg">Jumlah calon legislatif berdasarkan kategori</h3>
+        <h3 class="text-center font-bold text-lg">Jumlah calon anggota legislatif</h3>
         <!-- Line Chart Jenis Dewan-->
         <div class="flex flex-wrap items-center justify-center max-w-md mx-auto">
             <div class="text-sm min-w-36 lg:min-w-52 bg-red-600 p-4 m-1 text-center text-white rounded-lg font-bold flex-shrink-0 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">

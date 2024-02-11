@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white mb-10 p-2 shadow-lg shadow-slate-800 rounded-lg">
-    <h2 class="lg:text-2xl text-xl text-center font-bold mb-2">Jumlah Calon Tetap di setiap provinsi</h2>
+    <h2 class="lg:text-2xl text-xl text-center font-bold mb-2">Daftar Calon Tetap di setiap provinsi</h2>
     <div class="w-full h-[500px] ">
       <l-map ref="map" v-model:zoom="zoom" :min-zoom="(zoom-1)" :center="center" :use-global-leaflet="false">
         <l-tile-layer
