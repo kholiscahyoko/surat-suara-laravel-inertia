@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 use App\Models\Calons;
 use App\Models\Desa;
@@ -70,8 +71,14 @@ class SuratSuaraController extends Controller
             "cari caleg dprd kabupaten",
             "cari caleg dprd kota",
         ]);
-        return Inertia::render('Calon',[
-            'users' => Calons::
+        $page = $request->input('page');
+        if(!is_numeric($page)){
+            $page = 0;
+        }
+        if($calons = Cache::get('calon_search:'.Str::slug(strtolower($request->input('search'))).":".$page)){
+            $calons = json_decode($calons);
+        }else{
+            $calons = Calons::
             query()->with(['dapil', 'partai'])
             ->when($request->input('search'), function($query, $search){
                 $query->where('nama', 'like', "%{$search}%")
@@ -87,14 +94,26 @@ class SuratSuaraController extends Controller
                 'nama_partai' => $user->partai && $user->partai->nama ? $user->partai->nama : "Non Partai",
                 'jenis_dewan' => $user->dapil->jenis_dewan,
                 'nama_dapil' => $user->dapil->nama_dapil,
-            ]),
+            ]);
+            Cache::put('calon_search:'.Str::slug(strtolower($request->input('search'))).":".$page, json_encode($calons));
+        }
+
+        return Inertia::render('Calon',[
+            'users' => $calons,
             'filters' => $request->only(['search'])
         ]);
     }
 
     public function dapil(Request $request)
     {
-        $dapils = Dapils::query()
+        $page = $request->input('page');
+        if(!is_numeric($page)){
+            $page = 0;
+        }
+        if($dapils = Cache::get('dapil_search:'.Str::slug(strtolower($request->input('search'))).":".$page)){
+            $dapils = json_decode($dapils);
+        }else{
+            $dapils = Dapils::query()
             ->when($request->input('search'), function($query, $search){
                 $query->where('nama_dapil', 'like', "{$search}%")->orWhere('nama_dapil', 'like', "% {$search}%");
             })
@@ -106,6 +125,8 @@ class SuratSuaraController extends Controller
                 'kode_dapil' => $data->kode_dapil,
                 'jenis_dewan' => $data->jenis_dewan,
             ]);
+            Cache::put('dapil_search:'.Str::slug(strtolower($request->input('search'))).":".$page, json_encode($dapils));
+        }
 
         $this->meta->setMeta(config('app.meta')['dapil']);
         $this->meta->addMetaKeywords([
@@ -120,23 +141,33 @@ class SuratSuaraController extends Controller
 
     public function wilayah(Request $request)
     {
+        $page = $request->input('page');
+        if(!is_numeric($page)){
+            $page = 0;
+        }
         $search = $request->input('search');
-        $wilayahs = Desa::rightJoin('kecamatans', 'desas.id_kecamatan', '=', 'kecamatans.id')
-        ->rightJoin('kabkotas', 'kecamatans.id_kabkota', '=', 'kabkotas.id')
-        ->rightJoin('provinsis', 'kabkotas.id_provinsi', '=', 'provinsis.id')
-        ->where('desas.nama', 'like', "{$search}%")->orWhere('desas.nama', 'like', "% {$search}%")
-        ->orWhere('kecamatans.nama', 'like', "{$search}%")->orWhere('kecamatans.nama', 'like', "% {$search}%")
-        ->orWhere('kabkotas.nama', 'like', "{$search}%")->orWhere('kabkotas.nama', 'like', "% {$search}%")
-        ->orWhere('provinsis.nama', 'like', "{$search}%")->orWhere('provinsis.nama', 'like', "% {$search}%")
-        ->select(['desas.id AS id_desa', 'desas.nama AS nama_desa', 'kecamatans.id AS id_kecamatan', 'kecamatans.nama AS nama_kecamatan', 'kabkotas.id AS id_kabkota', 'kabkotas.nama AS nama_kabkota', 'provinsis.id AS id_provinsi', 'provinsis.nama AS nama_provinsi', DB::raw("(CASE WHEN desas.kode_wilayah IS NOT NULL THEN desas.kode_wilayah WHEN kecamatans.kode_wilayah IS NOT NULL THEN kecamatans.kode_wilayah WHEN kabkotas.kode_wilayah IS NOT NULL THEN kabkotas.kode_wilayah ELSE provinsis.kode_wilayah END) AS kode_wilayah")])
-        ->orderByRaw("case when desas.nama = '{$search}' then 1 when kecamatans.nama = '{$search}' then 2 when kabkotas.nama = '{$search}' then 3 when provinsis.nama = '{$search}' then 4
-        when desas.nama like '{$search}%' then 5 when kecamatans.nama like '{$search}%' then 6 when kabkotas.nama like '{$search}%' then 7 when provinsis.nama like '{$search}%' then 8
-        when desas.nama like '% {$search}' then 9 when kecamatans.nama like '% {$search}' then 10 when kabkotas.nama like '% {$search}' then 11 when provinsis.nama like '% {$search}' then 12
-        when desas.nama like '%{$search}' then 13 when kecamatans.nama like '%{$search}' then 14 when kabkotas.nama like '%{$search}' then 15 when provinsis.nama like '%{$search}' then 16
-        else 17 end")
-        ->paginate(20)
-        ->withQueryString()
-        ;
+
+        if($wilayahs = Cache::get('wilayah_search:'.Str::slug(strtolower($search)).":".$page)){
+            $wilayahs = json_decode($wilayahs);
+        }else{
+            $wilayahs = Desa::rightJoin('kecamatans', 'desas.id_kecamatan', '=', 'kecamatans.id')
+            ->rightJoin('kabkotas', 'kecamatans.id_kabkota', '=', 'kabkotas.id')
+            ->rightJoin('provinsis', 'kabkotas.id_provinsi', '=', 'provinsis.id')
+            ->where('desas.nama', 'like', "{$search}%")->orWhere('desas.nama', 'like', "% {$search}%")
+            ->orWhere('kecamatans.nama', 'like', "{$search}%")->orWhere('kecamatans.nama', 'like', "% {$search}%")
+            ->orWhere('kabkotas.nama', 'like', "{$search}%")->orWhere('kabkotas.nama', 'like', "% {$search}%")
+            ->orWhere('provinsis.nama', 'like', "{$search}%")->orWhere('provinsis.nama', 'like', "% {$search}%")
+            ->select(['desas.id AS id_desa', 'desas.nama AS nama_desa', 'kecamatans.id AS id_kecamatan', 'kecamatans.nama AS nama_kecamatan', 'kabkotas.id AS id_kabkota', 'kabkotas.nama AS nama_kabkota', 'provinsis.id AS id_provinsi', 'provinsis.nama AS nama_provinsi', DB::raw("(CASE WHEN desas.kode_wilayah IS NOT NULL THEN desas.kode_wilayah WHEN kecamatans.kode_wilayah IS NOT NULL THEN kecamatans.kode_wilayah WHEN kabkotas.kode_wilayah IS NOT NULL THEN kabkotas.kode_wilayah ELSE provinsis.kode_wilayah END) AS kode_wilayah")])
+            ->orderByRaw("case when desas.nama = '{$search}' then 1 when kecamatans.nama = '{$search}' then 2 when kabkotas.nama = '{$search}' then 3 when provinsis.nama = '{$search}' then 4
+            when desas.nama like '{$search}%' then 5 when kecamatans.nama like '{$search}%' then 6 when kabkotas.nama like '{$search}%' then 7 when provinsis.nama like '{$search}%' then 8
+            when desas.nama like '% {$search}' then 9 when kecamatans.nama like '% {$search}' then 10 when kabkotas.nama like '% {$search}' then 11 when provinsis.nama like '% {$search}' then 12
+            when desas.nama like '%{$search}' then 13 when kecamatans.nama like '%{$search}' then 14 when kabkotas.nama like '%{$search}' then 15 when provinsis.nama like '%{$search}' then 16
+            else 17 end")
+            ->paginate(20)
+            ->withQueryString()
+            ;
+            Cache::put('wilayah_search:'.Str::slug(strtolower($search)).":".$page, json_encode($wilayahs));
+        }
 
         $this->meta->setMeta(config('app.meta')['wilayah']);
         $this->meta->addMetaKeywords([
@@ -164,7 +195,7 @@ class SuratSuaraController extends Controller
                 $result = Provinsi::where('kode_wilayah', '=', $request->input('kode_dapil'))
                 ->select(['nama'])
                 ->first();
-                Cache::put('wilayah_by_kode_dapil:'.$request->input('kode_dapil'));
+                Cache::put('wilayah_by_kode_dapil:'.$request->input('kode_dapil'), json_encode($result));
             }
             if(!$result){
                 return response()->json([
