@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\Calons;
 use App\Models\Desa;
@@ -760,5 +761,24 @@ class SuratSuaraController extends Controller
         // For example, check if there is a specific header indicating the proxy
         // If no proxy, return an empty string
         return isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? '/proxy' : '';
+    }
+
+    private function simulateEmptyResult(){
+        // Simulate null result
+        $data = [];
+
+        // Create a paginator instance with manual null result
+        $perPage = 10; // Number of items per page
+        $total = 0; // Total number of items
+        $page = request()->get('page', 1); // Get the current page number from the request
+        $paginator = new LengthAwarePaginator($data, $total, $perPage, $page);
+
+        // Modify pagination links to include page number manually
+        $paginator->setPath(request()->url()); // Set the base path for the paginator links
+        
+        $paginator->withQueryString();
+
+        // Modify pagination links to include existing query string parameters
+        return $paginator->withQueryString();
     }
 }
