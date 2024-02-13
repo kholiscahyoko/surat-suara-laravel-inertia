@@ -47,7 +47,7 @@
                 <div>
                     <p class="font-semibold">Sumber Data</p>
                     <p>
-                        DCT Info Pemilu KPU, terakhir akses tanggal 18 Januari 2023
+                        DCT Info Pemilu KPU, terakhir akses tanggal 18 Januari 2024
                     </p>
                 </div>
             </div>
