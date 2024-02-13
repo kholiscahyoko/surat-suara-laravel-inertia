@@ -91,7 +91,10 @@
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_penghargaan && calon.profil_data.riwayat_penghargaan.length > 1" :data_riwayat="calon.profil_data.riwayat_penghargaan" :title="'RIWAYAT PENGHARGAAN'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_pasangan && calon.profil_data.riwayat_pasangan.length > 1" :data_riwayat="calon.profil_data.riwayat_pasangan" :title="'RIWAYAT PASANGAN'"/>
                 <div>
-                    Sumber Data : DCT Info Pemilu KPU, terakhir akses tanggal 18 Januari 2023
+                    <p class="font-semibold">Sumber Data</p>
+                    <p>
+                        DCT Info Pemilu KPU, terakhir akses tanggal 18 Januari 2023
+                    </p>
                 </div>
             </div>
         </div>
