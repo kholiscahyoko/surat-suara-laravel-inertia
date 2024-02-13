@@ -91,7 +91,7 @@ const handleInput = () => {
     }else{
         console.log("MINIMAL 4 KARAKTER");
     }
-  }, 1000); // Timeout duration in milliseconds
+  }, 2000); // Timeout duration in milliseconds
 };
 // Initialize timerId variable
 let timerId;
