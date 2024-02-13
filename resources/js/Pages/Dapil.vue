@@ -89,6 +89,7 @@
             </div>
         </div>
     </div>
+    <KawalPemilu />
 </template>
 
 <script setup>
@@ -97,6 +98,7 @@ import {  onMounted, onUnmounted, ref, inject, watch } from "vue";
 import { router } from '@inertiajs/vue3';
 import { initModals } from 'flowbite';
 import axios from 'axios';
+import KawalPemilu from '../Shared/KawalPemilu.vue';
 
 let props = defineProps({
     dapils: Object,

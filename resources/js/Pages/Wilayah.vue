@@ -45,12 +45,14 @@
             <Pagination :data="wilayahs" />
         </div>
     </div>
+    <KawalPemilu />
 </template>
 
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
 import { ref, watch } from "vue";
 import { router } from '@inertiajs/vue3';
+import KawalPemilu from '../Shared/KawalPemilu.vue';
 
 let props = defineProps({
     wilayahs: Object,
