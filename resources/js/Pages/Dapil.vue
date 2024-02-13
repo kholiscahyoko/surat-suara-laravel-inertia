@@ -111,7 +111,7 @@ var processing = ref(false);
 
 //simulate form submission
 const submitSearch = function(value){
-    router.get('/calon', { search : value }, {
+    router.get('/dapil', { search : value }, {
         preserveState : true,
         replace: true,
         onStart: () => {
