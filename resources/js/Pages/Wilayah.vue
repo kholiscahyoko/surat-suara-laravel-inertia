@@ -46,7 +46,6 @@
         </div>
     </div>
     <KawalPemilu />
-    <Loader :processing="processing" />
 </template>
 
 <script setup>
@@ -54,7 +53,6 @@ import Pagination from '../Shared/Pagination.vue';
 import { ref } from "vue";
 import { router } from '@inertiajs/vue3';
 import KawalPemilu from '../Shared/KawalPemilu.vue';
-import Loader from '../Components/Loader.vue';
 
 let props = defineProps({
     wilayahs: Object,
