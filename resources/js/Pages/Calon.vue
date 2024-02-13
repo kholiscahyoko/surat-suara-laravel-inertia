@@ -42,14 +42,14 @@
                                     <td class="px-1 lg:px-6 py-4">
                                         <div class="flex items-center">
                                             <div>
-                                                <div class="text-sm font-medium text-gray-900">
+                                                <div class="text-sm text-center font-medium text-gray-900">
                                                     {{ user.nama_dapil }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium">
-                                        <div class="flex items-center">
+                                        <div class="flex flex-wrap items-center">
                                             <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1  text-center">Surat Suara</Link>
                                             <Link :href="$setUrl(`/profil-calon/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Profil</Link>
                                         </div>
