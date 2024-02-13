@@ -67,15 +67,15 @@ const debounce = (func, delay) => {
 };
 
 watch(search, value => {
-    if(value.length >= 3 && value.charAt(value.length - 1) !== ' '){
+    if(value.length >= 4 && value.charAt(value.length - 1) !== ' '){
         debounce(function(){
             router.get('/wilayah', { search : value }, {
                 preserveState : true,
                 replace: true
             });
-        }, 500); // 500 milliseconds = 0.5 seconds
+        }, 1000); // 1000 milliseconds = 1 second
     }else{
-        console.log("HARUS LEBIH DARI 3 KARAKTER");
+        console.log("MINIMAL 4 KARAKTER");
     }
 })
 </script>
