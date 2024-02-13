@@ -3,10 +3,10 @@
         <h3 class="text-center font-bold text-xl">KawalPemilu.org</h3>
         <div class="flex flex-wrap font-serif">
             <p>
-                Ayo bagikan & ajak sebanyak-banyaknya orang di seluruh Indonesia, untuk ikut <a class="text-indigo-600 hover:text-indigo-900" href="https://twitter.com/hashtag/UnggahInputKirim">#UnggahInputKirim</a> -> Unggah foto C.Hasil Plano, Input Perolehan Suara, Kirim ke <a class="text-indigo-600 hover:text-indigo-900" href="http://kawalpemilu.org">http://kawalpemilu.org</a>.
+                Ayo bagikan & ajak sebanyak-banyaknya orang di seluruh Indonesia, untuk ikut <a class="text-indigo-600 hover:text-indigo-900" href="https://kawalpemilu.org">#UnggahInputKirim</a> -> Unggah foto C.Hasil Plano, Input Perolehan Suara, Kirim ke <a class="text-indigo-600 hover:text-indigo-900" href="https://kawalpemilu.org">http://kawalpemilu.org</a>.
             </p>
             <p>
-                Semakin banyak yang <a class="text-indigo-600 hover:text-indigo-900" href="https://twitter.com/hashtag/UnggahInputKirim">#UnggahInputKirim</a> - maka penghitungan swadaya ini akan semakin transparan dan akurat <a class="text-indigo-600 hover:text-indigo-900" href="https://twitter.com/hashtag/kawalpemilu2024">#kawalpemilu2024</a>
+                Semakin banyak yang <a class="text-indigo-600 hover:text-indigo-900" href="https://kawalpemilu.org">#UnggahInputKirim</a> - maka penghitungan swadaya ini akan semakin transparan dan akurat <a class="text-indigo-600 hover:text-indigo-900" href="https://kawalpemilu.org">#kawalpemilu2024</a>
             </p>
         </div>
         <div class="mx-auto font-serif mt-5">
