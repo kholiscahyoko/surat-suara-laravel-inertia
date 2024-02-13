@@ -90,6 +90,9 @@
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_kursus_diklat && calon.profil_data.riwayat_kursus_diklat.length > 1" :data_riwayat="calon.profil_data.riwayat_kursus_diklat" :title="'RIWAYAT KURSUS DAN DIKLAT'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_penghargaan && calon.profil_data.riwayat_penghargaan.length > 1" :data_riwayat="calon.profil_data.riwayat_penghargaan" :title="'RIWAYAT PENGHARGAAN'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_pasangan && calon.profil_data.riwayat_pasangan.length > 1" :data_riwayat="calon.profil_data.riwayat_pasangan" :title="'RIWAYAT PASANGAN'"/>
+                <div>
+                    Sumber Data : DCT Info Pemilu KPU, terakhir akses tanggal 18 Januari 2023
+                </div>
             </div>
         </div>
         <div class="min-w-32 bg-white flex justify-center overflow-hidden m-2 mb-10">
