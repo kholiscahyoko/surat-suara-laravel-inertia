@@ -8,12 +8,14 @@
         <Link :href="$setUrl('/calon')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5 bg-blue-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cari Nama Calon Disini</Link>
         <Link :href="$setUrl('/surat-suara/kecamatan/cikande/360415')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5 bg-green-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Contoh Surat Suara Disini</Link>
     </div>
+    <KawalPemilu />
     <StatsBlock v-if="summary" :summary="summary"/>
     <Leaflet v-if="summary && summary.data_provinsi && geo_provinsi" :data_provinsi="summary.data_provinsi" :geo_provinsi="geo_provinsi"/>
 </template>
 <script setup>
 import StatsBlock from '../Components/StatsBlock.vue';
 import Leaflet from '../Components/Leaflet.vue';
+import KawalPemilu from '../Shared/KawalPemilu.vue';
 
 let props = defineProps({
     summary : Object,
