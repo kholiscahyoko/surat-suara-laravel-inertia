@@ -3,7 +3,7 @@
         Cari Surat Suara Berdasarkan Wilayah
     </h1>
     <div class="mt-4">
-        <input v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 min-w-full">
+        <input v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 min-w-full" @input="handleInput" :disabled="processing">
     </div>
     <div class="mt-4">
         <!-- table -->
@@ -46,13 +46,15 @@
         </div>
     </div>
     <KawalPemilu />
+    <Loader :processing="processing" />
 </template>
 
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { router } from '@inertiajs/vue3';
 import KawalPemilu from '../Shared/KawalPemilu.vue';
+import Loader from '../Components/Loader.vue';
 
 let props = defineProps({
     wilayahs: Object,
@@ -60,24 +62,39 @@ let props = defineProps({
 })
 
 let search = ref(props.filters.search);
+var processing = ref(false);
 
-// Debounce function to delay processing
-let timeoutId;
-const debounce = (func, delay) => {
-  clearTimeout(timeoutId);
-  timeoutId = setTimeout(func, delay);
-};
+//simulate form submission
+const submitSearch = function(value){
+    router.get('/wilayah', { search : value }, {
+        preserveState : true,
+        replace: true,
+        onStart: () => {
+            processing.value = true;
+        },
+        onFinish: () => {
+            processing.value = false;
+        }
+    });
+}
 
-watch(search, value => {
-    if(value.length >= 4 && value.charAt(value.length - 1) !== ' '){
-        debounce(function(){
-            router.get('/wilayah', { search : value }, {
-                preserveState : true,
-                replace: true
-            });
-        }, 1000); // 1000 milliseconds = 1 second
+// Function to handle input events
+const handleInput = () => {
+  // Clear any existing timeout
+  clearTimeout(timerId);
+
+  // Start a new timeout
+  timerId = setTimeout(() => {
+    // Perform action when user stops typing for 1 second
+    console.log('User stopped typing');
+    // You can call your submitForm method here if needed
+    if(search.value.length >= 4 && search.value.charAt(search.value.length - 1) !== ' '){
+        submitSearch(search.value); // 1000 milliseconds = 1 second
     }else{
         console.log("MINIMAL 4 KARAKTER");
     }
-})
+  }, 1000); // Timeout duration in milliseconds
+};
+// Initialize timerId variable
+let timerId;
 </script>
