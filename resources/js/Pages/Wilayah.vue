@@ -3,7 +3,7 @@
         Cari Surat Suara Berdasarkan Wilayah
     </h1>
     <div class="mt-4">
-        <input v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 min-w-full" @input="handleInput" :disabled="processing">
+        <input v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 min-w-full" @input="handleInput" :disabled="processing" ref="inputField">
     </div>
     <div class="mt-4">
         <!-- table -->
@@ -61,6 +61,8 @@ let props = defineProps({
 
 let search = ref(props.filters.search);
 var processing = ref(false);
+// Reference to the input field
+const inputField = ref(null);
 
 //simulate form submission
 const submitSearch = function(value){
@@ -71,6 +73,8 @@ const submitSearch = function(value){
             processing.value = true;
         },
         onFinish: () => {
+            // Focus on the input field
+            inputField.value.focus();
             processing.value = false;
         }
     });
