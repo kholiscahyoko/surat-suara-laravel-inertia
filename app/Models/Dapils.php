@@ -10,6 +10,10 @@ class Dapils extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
+
     public function calons(): HasMany
     {
         return $this->hasMany(Calons::class, 'kode_dapil', 'kode_dapil');
