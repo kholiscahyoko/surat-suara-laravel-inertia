@@ -3,27 +3,27 @@
         <table class="w-full text-xs md:text-base text-left rtl:text-right text-gray-500 dark:text-gray-400 border-2">
             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-1 py-1 md:px-6 md:py-2">
                         Wilayah
                     </th>
-                    <th v-for="item, key in master" scope="col" class="px-6 py-3" @click="console.log(item.nama);">
+                    <th v-for="item, key in master" scope="col" class="px-1 py-1 md:px-6 md:py-2" @click="console.log(item.nama);">
                         <div class="flex justify-end">
                             {{ mapping_nomor_paslon[key] }}&nbsp;
                             <ChevronUpDownIcon class="h-4 w-4" aria-hidden="true"/>
                         </div>
                     </th>
-                    <th scope="col" class="px-6 py-3 bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700 text-center" rowspan="2">Progress</th>
+                    <th scope="col" class="px-1 py-1 md:px-6 md:py-2 bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700 text-center" rowspan="2">%</th>
                 </tr>
                 <tr class="bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th class="px-6 py-4" v-html="`Total`" />
-                    <th v-for="item, key in master" class="px-6 py-4" :class="typeof data.chart[key] == 'number' ? 'text-right': ''" v-html="(typeof data.chart[key] == 'number' ? data.chart[key].toLocaleString('en-US', { style: 'decimal',}) : data.chart[key]) " />
+                    <th class="px-1 py-1 md:px-6 md:py-2" v-html="`Total`" />
+                    <th v-for="item, key in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof data.chart[key] == 'number' ? 'text-right': ''" v-html="(typeof data.chart[key] == 'number' ? data.chart[key].toLocaleString('en-US', { style: 'decimal',}) : data.chart[key]) " />
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="row in tableData" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td class="px-6 py-4" v-html="row.nama_wilayah" />
-                    <td v-for="item, key in master" class="px-6 py-4" :class="typeof row[key] == 'number' ? 'text-right': ''" v-html="(typeof row[key] == 'number' ? row[key].toLocaleString('en-US', { style: 'decimal',}) : row[key]) " />
-                    <td class="px-6 py-4 text-center" v-html="`${row.persen}%`" />
+                    <td class="px-1 py-1 md:px-6 md:py-2" v-html="row.nama_wilayah" />
+                    <td v-for="item, key in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof row[key] == 'number' ? 'text-right': ''" v-html="(typeof row[key] == 'number' ? row[key].toLocaleString('en-US', { style: 'decimal',}) : row[key]) " />
+                    <td class="px-1 py-1 md:px-6 md:py-2 text-center" v-html="`${row.persen}%`" />
                 </tr>
             </tbody>
         </table>
