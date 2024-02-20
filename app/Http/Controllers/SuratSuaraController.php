@@ -486,18 +486,18 @@ class SuratSuaraController extends Controller
             return Inertia::render('RealCountPilpres', $result);
             exit();
         }elseif($jenis === "dpd"){
-            if($dapil = Cache::get('dapil:'.$kode_dapil)){
-                $dapil = json_decode($dapil);
-            }else{
-                $dapil = Dapils::query()
-                ->where('kode_dapil', $kode_dapil)
-                ->first();
-                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
-            }
-
             if($result = Cache::get('hitung_suara:dpd:'.$kode_dapil)){
                 $result = json_decode($result, true);
             }else{
+                if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                    $dapil = json_decode($dapil);
+                }else{
+                    $dapil = Dapils::query()
+                    ->where('kode_dapil', $kode_dapil)
+                    ->first();
+                    Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                }
+    
                 $master = null;
                 $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
                 if($response_master->ok()){
@@ -516,7 +516,7 @@ class SuratSuaraController extends Controller
                     $data = $response_data->object();
                 }
 
-                $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
+                $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah, 'dapil' => $dapil ];
                 Cache::put('hitung_suara:dpd:'.$kode_dapil, json_encode($result), 120);
             }
             $template = "RealCountDpd";
