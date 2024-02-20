@@ -5,7 +5,7 @@
                 <Nav />
             </header>
         </section>
-        <section class="mx-auto px-1 py-6 mb-auto md:px-6 lg:px-8">
+        <section class="px-1 py-6 mb-auto md:px-6 lg:px-8 w-full">
             <main>
                 <slot />
             </main>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Http;
 
 use App\Models\Calons;
 use App\Models\Desa;
@@ -362,6 +363,199 @@ class SuratSuaraController extends Controller
                 
                 case 'dprdk':
                     $template = "SuratSuaraDprdk";
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil));
+                    break;
+                
+                default:
+                    abort(404);
+                    exit();
+                    break;
+            }
+    
+                $data = [
+                'partais' => $partais,
+                'dapil' => $dapil
+            ];
+        }
+
+        $meta_desc = preg_replace('/\[nama_dapil\]/', $dapil->nama_dapil, $meta_desc);
+        $meta_desc = preg_replace('/\[nama_wilayah\]/', $dapil->nama_dapil, $meta_desc);
+        $metadata = ['description' => $meta_desc ];
+
+        if(!empty($calon_keyword)){
+            $this->meta->addMetaKeywords([
+                $calon_keyword,
+            ]);
+        }
+
+        if(!empty($data['dapil']) && is_numeric($calon_id)){
+            if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
+                $calon = json_decode($calon);
+                $this->meta->addMetaKeywords([
+                    strtolower(str_replace(",", ".", $calon->nama))
+                ]);
+            }else{
+                if($calon = Calons::find($calon_id)){
+                    Cache::put('profil_calon_suara:'.$calon_id, json_encode($calon));
+                    $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
+                    $this->meta->addMetaKeywords([
+                        strtolower(str_replace(",", ".", $calon->nama))
+                    ]);
+                    $data['calon_id'] = $calon_id;
+                }
+            }
+        }
+
+        $this->meta->setMeta($metadata);
+
+        return Inertia::render($template, $data);
+    }
+
+    public function real_count(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
+    {
+        switch ($jenis) {
+            case 'dprdp':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-provinsi/{$nama_dapil}/{$kode_dapil}";
+                if(strlen($nama_calon)>0 && is_numeric($calon_id)){
+                    $url_redirect .= "/{$nama_calon}/{$calon_id}";
+                }
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprdk':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-kabkota/{$nama_dapil}/{$kode_dapil}";
+                if(strlen($nama_calon)>0 && is_numeric($calon_id)){
+                    $url_redirect .= "/{$nama_calon}/{$calon_id}";
+                }
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprd-provinsi':
+                $jenis = "dprdp";
+                break;
+
+            case 'dprd-kabkota':
+                $jenis = "dprdk";
+                break;
+            
+            default:
+                break;
+        }
+        if(!empty(config('app.meta')['real-count'][$jenis]['description'])){
+            $meta_desc = config('app.meta')['real-count'][$jenis]['description'];
+            $this->meta->setTitle(config('app.meta')['real-count'][$jenis]['title']);
+        }
+
+        if($jenis === "pilpres"){
+            $metadata = ['description' => $meta_desc] ;
+            $this->meta->setMeta($metadata);
+            $this->meta->addMetaKeywords([
+                "capres dan cawapres",
+                "calon presiden dan calon wakil presiden",
+                "anies rasyid baswedan dan muhaimin iskanda",
+                "prabowo soebianto dan gibran rakabuming raka",
+                "ganjar pranowo dan mahfud md",
+            ]);
+
+
+            $master = null;
+            $response_master = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
+            if($response_master->ok()){
+                $master = $response_master->object();
+            }
+
+            $wilayah = null;
+            $response_wilayah = Http::get('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
+            if($response_wilayah->ok()){
+                $wilayah = $response_wilayah->object();
+            }
+
+            $response_data = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
+            $data = null;
+            if($response_data->ok()){
+                $data = $response_data->object();
+            }
+            
+            return Inertia::render('RealCountPilpres', ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ]);
+            exit();
+        }elseif($jenis === "dpd"){
+            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                $dapil = json_decode($dapil);
+            }else{
+                $dapil = Dapils::query()
+                ->where('kode_dapil', $kode_dapil)
+                ->first();
+                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
+
+            $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil));
+
+            $template = "RealCountDpd";
+
+            if($calons = Cache::get('calons_by_dapil:'.$kode_dapil)){
+                $calons = json_decode($calons);
+            }else{
+                $calons = Calons::where('kode_dapil', $kode_dapil)
+                ->orderBy('no_urut')
+                ->get();
+                Cache::put('calons_by_dapil:'.$kode_dapil, json_encode($calons));
+            }
+
+            $data = [
+                'calons' => $calons,
+                'dapil' => $dapil
+            ];
+        }else{
+            if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
+                $partais = json_decode($partais);
+            }else{
+                $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
+                    $query->where('kode_dapil', $kode_dapil)->orderBy('calons.no_urut');
+                }])
+                ->orderBy('partais.no_urut')
+                ->get()
+                ->map(function($partai){
+                    return count($partai->calons) > 0 ? [
+                        'id' => $partai->id,
+                        'no_urut' => $partai->no_urut,
+                        'nama' => $partai->nama,
+                        'calons' => $partai->calons->map(function($calon){
+                            return [
+                                'id' => $calon->id,
+                                'nama' => $calon->nama,
+                                'no_urut' => $calon->no_urut,
+                            ];
+                        }),
+                    ] : false;
+                })
+                ->reject(function ($partai) {
+                    return empty($partai);
+                })
+                ->toArray();
+                Cache::put('partais_by_dapil:'.$kode_dapil, json_encode($partais));
+            }
+            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                $dapil = json_decode($dapil);
+            }else{
+                $dapil = Dapils::query()
+                ->where('kode_dapil', $kode_dapil)
+                ->first();
+                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
+
+            switch ($jenis) {
+                case 'dpr':
+                    $template = "RealCountDpr";
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    break;
+                
+                case 'dprdp':
+                    $template = "RealCountDprdp";
+                    $calon_keyword = "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($dapil->nama_dapil)))." dapil ".trim(strtolower($dapil->nama_dapil));
+                    break;
+                
+                case 'dprdk':
+                    $template = "RealCountDprdk";
                     $calon_keyword = "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil));
                     break;
                 

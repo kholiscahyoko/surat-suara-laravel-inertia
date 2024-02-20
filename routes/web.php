@@ -39,6 +39,15 @@ Route::get('/surat-suara/{jenis}/{nama_dapil?}/{kode_dapil?}/{nama_calon?}/{calo
     'calon_id' => '[0-9]+',
 ]);
 
+Route::get('/hitung-suara/{jenis}/{nama_dapil?}/{kode_dapil?}/{nama_calon?}/{calon_id?}', [SuratSuaraController::class, 'real_count'])
+->where([
+    'jenis', '(pilpres|dpd|dpr|dprd-provinsi|dprd-kabkota)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+',
+    'nama_calon' => '[a-z0-9-]+',
+    'calon_id' => '[0-9]+',
+]);
+
 Route::get('/profil-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{calon_id}', [SuratSuaraController::class, 'profil'])
 ->where([
     'jenis', '(dpd|dpr|dprd-provinsi|dprd-kabkota)',

@@ -199,5 +199,12 @@ return [
             'dprdp' => ["title" => "Surat Suara Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
             'dprdk' => ["title" => "Surat Suara Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
         ],
+        'real-count' => [
+            'pilpres' => ["title" => "Real Count Capres dan Cawapres", "description" => "Real Count Pemilihan Umum Presiden dan Wakil Presiden Republik Indonesia Tahun 2024"],
+            'dpd' => ["title" => "Real Count Dewan Perwakilan Daerah", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Daerah Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dpr' => ["title" => "Real Count Dewan Perwakilan Rakyat", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dprdp' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dprdk' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+        ],
     ],
 ];
