@@ -4,7 +4,6 @@
           Calon DPR RI
       </h1>
       <div class="flex">
-        <button id="button" data-modal-toggle="modal" data-modal-target="modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 focus:outline-none">Hitung Suara</button>
         <WilayahListBlock :kode_dapil="dapil.kode_dapil"/>
       </div>
     </div>
