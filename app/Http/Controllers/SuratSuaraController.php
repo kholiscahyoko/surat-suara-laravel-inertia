@@ -458,25 +458,32 @@ class SuratSuaraController extends Controller
             ]);
 
 
-            $master = null;
-            $response_master = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
-            if($response_master->ok()){
-                $master = $response_master->object();
-            }
+            if($result = Cache::get('hitung_suara:pilpres')){
+                $result = json_decode($result, true);
+            }else{
+                $master = null;
+                $response_master = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
+                if($response_master->ok()){
+                    $master = $response_master->object();
+                }
+    
+                $wilayah = null;
+                $response_wilayah = Http::get('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
+                if($response_wilayah->ok()){
+                    $wilayah = $response_wilayah->object();
+                }
+    
+                $response_data = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
+                $data = null;
+                if($response_data->ok()){
+                    $data = $response_data->object();
+                }
 
-            $wilayah = null;
-            $response_wilayah = Http::get('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
-            if($response_wilayah->ok()){
-                $wilayah = $response_wilayah->object();
-            }
-
-            $response_data = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
-            $data = null;
-            if($response_data->ok()){
-                $data = $response_data->object();
+                $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
+                Cache::put('hitung_suara:pilpres', json_encode($result), 120);
             }
             
-            return Inertia::render('RealCountPilpres', ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ]);
+            return Inertia::render('RealCountPilpres', $result);
             exit();
         }elseif($jenis === "dpd"){
             if($dapil = Cache::get('dapil:'.$kode_dapil)){
