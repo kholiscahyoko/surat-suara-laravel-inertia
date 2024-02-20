@@ -488,6 +488,7 @@ class SuratSuaraController extends Controller
         }elseif($jenis === "dpd"){
             if($result = Cache::get('hitung_suara:dpd:'.$kode_dapil)){
                 $result = json_decode($result, true);
+                $dapil = (object) $result["dapil"];
             }else{
                 if($dapil = Cache::get('dapil:'.$kode_dapil)){
                     $dapil = json_decode($dapil);
