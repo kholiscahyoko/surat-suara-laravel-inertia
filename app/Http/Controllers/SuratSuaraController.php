@@ -495,23 +495,31 @@ class SuratSuaraController extends Controller
                 Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
             }
 
-            $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil));
-
-            $template = "RealCountDpd";
-
-            if($calons = Cache::get('calons_by_dapil:'.$kode_dapil)){
-                $calons = json_decode($calons);
+            if($result = Cache::get('hitung_suara:dpd:'.$kode_dapil)){
+                $result = json_decode($result, true);
             }else{
-                $calons = Calons::where('kode_dapil', $kode_dapil)
-                ->orderBy('no_urut')
-                ->get();
-                Cache::put('calons_by_dapil:'.$kode_dapil, json_encode($calons));
-            }
+                $master = null;
+                $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
+                if($response_master->ok()){
+                    $master = $response_master->object();
+                }
+    
+                $wilayah = null;
+                $response_wilayah = Http::get("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{$kode_dapil}.json");
+                if($response_wilayah->ok()){
+                    $wilayah = $response_wilayah->object();
+                }
+    
+                $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
+                $data = null;
+                if($response_data->ok()){
+                    $data = $response_data->object();
+                }
 
-            $data = [
-                'calons' => $calons,
-                'dapil' => $dapil
-            ];
+                $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
+                Cache::put('hitung_suara:dpd:'.$kode_dapil, json_encode($result), 120);
+            }
+            $template = "RealCountDpd";
         }else{
             if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
                 $partais = json_decode($partais);
@@ -588,7 +596,7 @@ class SuratSuaraController extends Controller
             ]);
         }
 
-        if(!empty($data['dapil']) && is_numeric($calon_id)){
+        if(!empty($dapil) && is_numeric($calon_id)){
             if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
@@ -608,7 +616,7 @@ class SuratSuaraController extends Controller
 
         $this->meta->setMeta($metadata);
 
-        return Inertia::render($template, $data);
+        return Inertia::render($template, $result);
     }
 
     public function profil(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")

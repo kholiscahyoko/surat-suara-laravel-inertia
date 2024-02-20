@@ -50,15 +50,15 @@
                                     </td>
                                     <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium">
                                         <div class="flex flex-wrap items-center">
-                                            <Link :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1  text-center">Surat Suara</Link>
-                                            <Link :href="$setUrl(`/profil-calon/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Profil</Link>
+                                            <a :href="$setUrl(`/surat-suara/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1  text-center">Surat Suara</a>
+                                            <a :href="$setUrl(`/profil-calon/${user.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : user.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : user.jenis_dewan}/${$slugify(user.nama_dapil)}/${user.kode_dapil}/${$slugify(user.name)}/${user.id}`)" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Profil</a>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr v-else>
                                     <td class="px-5 lg:px-6 py-4 text-gray-600">
                                         Nama tidak ditemukan.<br>
-                                        Saran : coba hilangkan gelar dan nama peran/alias, dsb. Jika masih tidak menemukan, coba alternatif pencarian <Link :href="$setUrl(`/wilayah`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Wilayah</Link> atau <Link :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</Link>
+                                        Saran : coba hilangkan gelar dan nama peran/alias, dsb. Jika masih tidak menemukan, coba alternatif pencarian <a :href="$setUrl(`/wilayah`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Wilayah</a> atau <a :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -78,7 +78,7 @@
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
 import { ref } from "vue";
-import { Link, router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import KawalPemilu from '../Shared/KawalPemilu.vue';
 
 let props = defineProps({

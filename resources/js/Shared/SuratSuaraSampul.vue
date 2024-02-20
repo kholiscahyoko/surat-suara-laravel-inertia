@@ -1,5 +1,5 @@
 <template>
-    <Link class="w-72 bg-white rounded-lg overflow-hidden mx-10 shadow-xl shadow-slate-600 mr-4 mb-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300" :href="$setUrl(`/surat-suara/${jenis}${surat_suara ? '/'+ $slugify(surat_suara.nama_dapil)+ '/' +surat_suara.kode_dapil : ''}`)">
+    <a class="w-72 bg-white rounded-lg overflow-hidden mx-10 shadow-xl shadow-slate-600 mr-4 mb-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300" :href="$setUrl(`/surat-suara/${jenis}${surat_suara ? '/'+ $slugify(surat_suara.nama_dapil)+ '/' +surat_suara.kode_dapil : ''}`)">
         <div>
             <div class="bg-red-600 flex items-center justify-between pt-5 px-5 min-h-20">
                 <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="object-contain w-10 h-11" alt="Komisi Pemilihan Umum" loading="lazy">
@@ -25,7 +25,7 @@
         </div>
         <div class="flex justify-center min-h-14 items-center align-middle text-center font-bold " v-html="configs[jenis].footer.label" :class="configs[jenis].footer.class">
         </div>
-    </Link>
+    </a>
 </template>
 <script setup>
 defineProps({

@@ -3,7 +3,7 @@
         Cari Surat Suara Berdasarkan Dapil
     </h1>
     <div class="mt-4">
-        Mungkin yang kamu maksud wilayah ? <Link :href="$setUrl('/wilayah')" class="text-indigo-600 font-semibold hover:text-indigo-900 text-nowrap">Cek disini</Link>
+        Mungkin yang kamu maksud wilayah ? <a :href="$setUrl('/wilayah')" class="text-indigo-600 font-semibold hover:text-indigo-900 text-nowrap">Cek disini</a>
     </div>
     <div class="mt-4">
         <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 min-w-full" @input="handleInput" :disabled="processing">
@@ -39,13 +39,13 @@
                                     </td>
                                     <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium flex justify-end">
                                         <button :id="`button-${dapil.kode_dapil}`" data-modal-toggle="modal" data-modal-target="modal" type="button" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center" @click="get_list_wilayah(dapil.kode_dapil)">Lingkup Wilayah</button>
-                                        <Link :href="$setUrl(`/surat-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Surat Suara</Link>
+                                        <a :href="$setUrl(`/surat-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Surat Suara</a>
                                     </td>
                                 </tr>
                                 <tr v-else>
                                     <td class="px-5 lg:px-6 py-4 text-gray-700">
                                         Nama dapil tidak ditemukan.<br>
-                                        Saran : gunakan nama provinsi atau nama kabupaten/kota (tanpa kata "PROVINSI" atau "KABUPATEN/KOTA"). Jika masih tidak menemukan, coba alternatif pencarian <Link :href="$setUrl(`/wilayah`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Wilayah</Link> atau <Link :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</Link>
+                                        Saran : gunakan nama provinsi atau nama kabupaten/kota (tanpa kata "PROVINSI" atau "KABUPATEN/KOTA"). Jika masih tidak menemukan, coba alternatif pencarian <a :href="$setUrl(`/wilayah`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Wilayah</a> atau <a :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -4,7 +4,7 @@
         Surat Suara Capres dan Cawapres
       </h1>
       <div class="flex">
-        <Link :href="$setUrl(`/hitung-suara/pilpres`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 focus:outline-none">Hitung Suara</Link>
+        <a :href="$setUrl(`/hitung-suara/pilpres`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 focus:outline-none">Hitung Suara</a>
       </div>
     </div>
     <SuratSuaraPilpres />

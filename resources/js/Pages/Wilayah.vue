@@ -24,7 +24,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-right text-sm font-medium">
-                                        <Link :href="$setUrl(`/surat-suara/${ wilayah.id_desa !== null ? 'desa' : ( wilayah.id_kecamatan !== null ? 'kecamatan' : (wilayah.id_kabkota !== null ? 'kabkota' : 'provinsi' )) }/${$slugify(wilayah.nama_desa ?? wilayah.nama_kecamatan ?? wilayah.nama_kabkota ?? wilayah.nama_provinsi)}/${wilayah.kode_wilayah}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</Link>
+                                        <a :href="$setUrl(`/surat-suara/${ wilayah.id_desa !== null ? 'desa' : ( wilayah.id_kecamatan !== null ? 'kecamatan' : (wilayah.id_kabkota !== null ? 'kabkota' : 'provinsi' )) }/${$slugify(wilayah.nama_desa ?? wilayah.nama_kecamatan ?? wilayah.nama_kabkota ?? wilayah.nama_provinsi)}/${wilayah.kode_wilayah}`)" class="text-indigo-600 hover:text-indigo-900">Lihat Surat Suara</a>
                                     </td>
                                 </tr>
                                 <tr v-else>
@@ -32,7 +32,7 @@
                                         Nama wilayah tidak ditemukan.<br>
                                         Saran : coba gunakan nama DESA/KELURAHAN saja atau tingkatan diatasnya (KECAMATAN atau KABUPATEN/KOTA).<br>
                                         Contoh : CIDENG , jika tidak ada coba GAMBIR, jika tidak ada coba JAKARTA PUSAT<br>
-                                        Jika masih tidak menemukan, coba alternatif pencarian <Link :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</Link> atau <Link :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</Link>
+                                        Jika masih tidak menemukan, coba alternatif pencarian <a :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</a> atau <a :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</a>
                                     </td>
                                 </tr>
                             </tbody>
