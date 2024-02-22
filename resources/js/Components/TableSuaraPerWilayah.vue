@@ -1,5 +1,5 @@
 <template>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-20">
         <table class="w-full text-xs md:text-base text-left rtl:text-right text-gray-500 dark:text-gray-400 border-2">
             <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
