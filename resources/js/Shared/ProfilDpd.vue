@@ -18,8 +18,9 @@
                 PROVINSI<br>
                 <span class="block lg:text-3xl">{{ calon.dapil.nama_dapil }}</span>
             </h3>
-            <div class="flex justify-center align-middle mt-2">
-                <Link :href="$setUrl(`/surat-suara/${calon.dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : calon.dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : calon.dapil.jenis_dewan}/${$slugify(calon.dapil.nama_dapil)}/${calon.kode_dapil}/${$slugify(calon.nama)}/${calon.id}`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">Lihat Surat Suara</Link>
+            <div class="flex justify-center align-middle mt-2 space-x-2">
+                <a :href="$setUrl(`/hitung-suara/${calon.dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : calon.dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : calon.dapil.jenis_dewan}/${$slugify(calon.dapil.nama_dapil)}/${calon.kode_dapil}/${$slugify(calon.nama)}/${calon.id}`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">Hitung Suara</a>
+                <a :href="$setUrl(`/surat-suara/${calon.dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : calon.dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : calon.dapil.jenis_dewan}/${$slugify(calon.dapil.nama_dapil)}/${calon.kode_dapil}/${$slugify(calon.nama)}/${calon.id}`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">Lihat Surat Suara</a>
             </div>
         </div>
         <div class="flex flex-wrap items-start justify-center mt-4">

@@ -520,6 +520,7 @@ class SuratSuaraController extends Controller
                 $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah, 'dapil' => $dapil ];
                 Cache::put('hitung_suara:dpd:'.$kode_dapil, json_encode($result), 120);
             }
+            $calon_keyword = "calon dewan perwakilan daerah ".strtolower($dapil->nama_dapil);
             $template = "RealCountDpd";
         }else{
             if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
@@ -613,6 +614,7 @@ class SuratSuaraController extends Controller
                     $data['calon_id'] = $calon_id;
                 }
             }
+            $result["calon"] = $calon;
         }
 
         $this->meta->setMeta($metadata);

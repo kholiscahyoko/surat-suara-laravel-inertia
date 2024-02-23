@@ -58,22 +58,22 @@ let render_chart = function(){
         });
     }
 
+    let getPercentage = function(input){
+        let total = 0; 
+        for (const key in props.master) {
+            total = total + props.data.chart[key];
+        }
+        return (input/total) * 100;
+    }
+
     let colors = function(master_chart, threshold){
-        console.log(master_chart);
         let colors = [];
     
         // Repeat elements from the original array
         for (let i = 0; i < threshold; i++) {
             colors.push('#90ee7e');
         }
-        // // Fill remaining elements with a different value
-        // const remaining = master_chart.length - (threshold * master_chart.length);
-        // if (remaining > 0) {
-        //     colors.push(...Array(remaining).fill('#d4526e'));
-        // }
         colors = master_chart.length > colors.length ? colors.concat(Array(master_chart.length - colors.length).fill('#d4526e')) : colors;
-        console.log(colors);
-        console.log(master_chart.length);
 
         return colors;
     }
@@ -109,7 +109,10 @@ let render_chart = function(){
             formatter: function (val, opt) {
                 return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val.toLocaleString('en-US', {
                         style: 'decimal',
-                    })
+                    }) + ` (${getPercentage(val).toLocaleString('en-US', {
+                        style: 'decimal',
+                        maximumFractionDigits: 2
+                    })} %) `
             },
             offsetX: 0,
         },
@@ -143,32 +146,6 @@ let render_chart = function(){
                 }
             }
         }
-        // ,responsive: [
-        //     {
-        //         breakpoint: 1024,
-        //         options: {
-        //             chart: {
-        //                 height: 640
-        //             },
-        //         }
-        //     },
-        //     {
-        //         breakpoint: 640,
-        //         options: {
-        //             chart: {
-        //                 height: 640
-        //             },
-        //         }
-        //     },
-        //     {
-        //         breakpoint: 480,
-        //         options: {
-        //             chart: {
-        //                 height: 640
-        //             },
-        //         }
-        //     },
-        // ],
     }
     chart = new ApexCharts(document.getElementById("bar-chart"), options);
     chart.render();

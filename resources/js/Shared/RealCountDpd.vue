@@ -19,16 +19,21 @@
         <div class="flex flex-wrap items-start justify-center my-8">
             <BarChart :master="master" :data="data"/>
         </div>
+        <div class="flex flex-wrap items-start justify-center my-8">
+            <TableSuaraDpdPerWilayah :master="master" :data="data" :wilayah="wilayah" :calon="calon"/>
+        </div>
     </div>
 </template>
 <script setup>
 import BarChart from '../Components/BarChart.vue';
+import TableSuaraDpdPerWilayah from '../Components/TableSuaraDpdPerWilayah.vue';
 
 let props = defineProps({
     master : Object,
     data : Object,
     wilayah : Object,
     dapil: Object,
+    calon: Object,
 });
 
 // Array of month names
