@@ -611,7 +611,6 @@ class SuratSuaraController extends Controller
                     $this->meta->addMetaKeywords([
                         strtolower(str_replace(",", ".", $calon->nama))
                     ]);
-                    $data['calon_id'] = $calon_id;
                 }
             }
             $result["calon"] = $calon;
