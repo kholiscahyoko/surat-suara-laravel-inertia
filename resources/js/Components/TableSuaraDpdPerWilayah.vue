@@ -16,8 +16,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item, kode_calon in master" class="border-b dark:bg-gray-800 dark:border-gray-700" :class="calon.no_urut == item.nomor_urut ? 'bg-yellow-300':''">
-                    <td class="sticky left-0 px-1 py-1 md:px-6 md:py-2"  :class="calon.no_urut == item.nomor_urut ? 'bg-yellow-300':'bg-white'">
+                <tr v-for="item, kode_calon in master" class="border-b dark:bg-gray-800 dark:border-gray-700" :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300':''">
+                    <td class="sticky left-0 px-1 py-1 md:px-6 md:py-2"  :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300':'bg-white'">
                         <div class="flex space-x-3 items-center">
                             <div>
                                 {{ item.nomor_urut }}
