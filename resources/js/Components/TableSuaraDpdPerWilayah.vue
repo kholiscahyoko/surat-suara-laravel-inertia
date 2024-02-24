@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-screen overflow-x-auto mb-20">
+    <div class="flex flex-col max-h-screen min-h-96 overflow-x-auto mb-20">
         <div class="relative shadow-md sm:rounded-lg">
         <table class="min-w-full divide-y text-xs md:text-base text-left rtl:text-right text-gray-500 dark:text-gray-400 border-2">
             <thead class="sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 z-10">
@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item, kode_calon in master" class="border-b dark:bg-gray-800 dark:border-gray-700" :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300':''">
+                <tr v-for="item, kode_calon in master" class="border-b dark:bg-gray-800 dark:border-gray-700" :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300 font-semibold':''">
                     <td class="sticky left-0 px-1 py-1 md:px-6 md:py-2"  :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300':'bg-white'">
                         <div class="flex space-x-3 items-center">
                             <div>
@@ -28,7 +28,7 @@
                         </div>
                     </td>
                     <td class="px-1 py-1 md:px-6 md:py-2 text-right" v-html="data.chart[kode_calon].toLocaleString('en-US', { style: 'decimal',})" />
-                    <th v-for="item, key in wilayah" class="px-1 py-1 md:px-6 md:py-2 text-right" v-html=" data.table[item.kode][kode_calon].toLocaleString('en-US', { style: 'decimal',}) " />
+                    <td v-for="item, key in wilayah" class="px-1 py-1 md:px-6 md:py-2 text-right" v-html=" data.table[item.kode][kode_calon].toLocaleString('en-US', { style: 'decimal',}) " />
                 </tr>
             </tbody>
             <tfoot class="sticky bottom-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
