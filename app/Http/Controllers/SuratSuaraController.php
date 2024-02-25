@@ -522,6 +522,7 @@ class SuratSuaraController extends Controller
             }
             $calon_keyword = "calon dewan perwakilan daerah ".strtolower($dapil->nama_dapil);
             $template = "RealCountDpd";
+            $this->meta->setTitle("Real Count DPD {$dapil->nama_dapil}");
         }else{
             if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
                 $partais = json_decode($partais);
