@@ -394,6 +394,7 @@ class SuratSuaraController extends Controller
         }
 
         if(!empty($data['dapil']) && is_numeric($calon_id)){
+            $this->meta->set_canonical("{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$kode_dapil}");
             if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
@@ -627,6 +628,7 @@ class SuratSuaraController extends Controller
         }
 
         if(!empty($dapil) && is_numeric($calon_id)){
+            $this->meta->set_canonical("{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$kode_dapil}");
             if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
