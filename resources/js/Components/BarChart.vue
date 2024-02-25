@@ -31,6 +31,7 @@ let render_chart = function(){
                 y: value.jumlah_suara,
             });
         });
+        console.log(sortedChart);
         return sortedChart;
     }
     let getX = function(array){
@@ -43,11 +44,15 @@ let render_chart = function(){
         return newarray;
     }
 
-    let getY = function(array){
+    let getY = function(array, percent = false){
         let newarray = [];
 
         for (let index = 0; index < array.length; index++) {
-            newarray.push(array[index].y);
+            if(percent){
+                newarray.push(getPercentage(array[index].y));
+            }else{
+                newarray.push(array[index].y);
+            }
         }
         return newarray;
     }
@@ -64,7 +69,8 @@ let render_chart = function(){
         for (const key in props.master) {
             total = total + props.data.chart[key];
         }
-        return (input/total) * 100;
+        let result = (input * 100) / total;
+        return result;
     }
 
     let colors = function(master_chart, threshold, data){
@@ -77,10 +83,8 @@ let render_chart = function(){
         colors = master_chart.length > colors.length ? colors.concat(Array(master_chart.length - colors.length).fill('#d4526e')) : colors;
 
         if(props.calon && props.calon.no_urut){
-            console.log(props.calon);
             const pattern = new RegExp(`\\((${props.calon.no_urut})\\)`)
             for (let index = 0; index < data.length; index++) {
-                console.log(data[index].x);
                 let matches = data[index].x.match(pattern);
                 // if(data[index].nomor_urut == props.calon.no_urut){
                 //     colors[index] = '#faca15';
@@ -126,14 +130,14 @@ let render_chart = function(){
                 colors: ['#000']
             },
             formatter: function (val, opt) {
-                return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val.toLocaleString('en-US', {
+                return opt.w.globals.labels[opt.dataPointIndex] + ":  " + data[opt.dataPointIndex].y.toLocaleString('en-US', {
                         style: 'decimal',
-                    }) + ` (${getPercentage(val).toLocaleString('en-US', {
+                    }) + ` (${val.toLocaleString('en-US', {
                         style: 'decimal',
                         maximumFractionDigits: 2
                     })} %) `
             },
-            offsetX: 0,
+            offsetX: -60,
         },
         stroke: {
             width: 1,
@@ -141,7 +145,7 @@ let render_chart = function(){
         },
         series: [
             {
-                data: getY(data)
+                data: getY(data, true)
             }
         ],
         xaxis: {
@@ -155,9 +159,17 @@ let render_chart = function(){
         tooltip: {
             theme: 'dark',
             x: {
-                show: false
+                show: true
             },
             y: {
+                formatter: function (val, opt) {
+                    return data[opt.dataPointIndex].y.toLocaleString('en-US', {
+                            style: 'decimal',
+                        }) + ` (${val.toLocaleString('en-US', {
+                            style: 'decimal',
+                            maximumFractionDigits: 2
+                        })} %) `
+                },
                 title: {
                     formatter: function () {
                     return ''
