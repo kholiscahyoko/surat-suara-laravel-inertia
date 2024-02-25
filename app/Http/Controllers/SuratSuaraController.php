@@ -529,34 +529,17 @@ class SuratSuaraController extends Controller
             $template = "RealCountDpd";
             $this->meta->setTitle("Real Count DPD {$dapil->nama_dapil}");
         }else{
-            if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
-                $partais = json_decode($partais);
+            $master_partai = null;
+            if($master_partai = Cache::get('hitung_suara:master_partai')){
+                $master_partai = json_decode($master_partai);
             }else{
-                $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
-                    $query->where('kode_dapil', $kode_dapil)->orderBy('calons.no_urut');
-                }])
-                ->orderBy('partais.no_urut')
-                ->get()
-                ->map(function($partai){
-                    return count($partai->calons) > 0 ? [
-                        'id' => $partai->id,
-                        'no_urut' => $partai->no_urut,
-                        'nama' => $partai->nama,
-                        'calons' => $partai->calons->map(function($calon){
-                            return [
-                                'id' => $calon->id,
-                                'nama' => $calon->nama,
-                                'no_urut' => $calon->no_urut,
-                            ];
-                        }),
-                    ] : false;
-                })
-                ->reject(function ($partai) {
-                    return empty($partai);
-                })
-                ->toArray();
-                Cache::put('partais_by_dapil:'.$kode_dapil, json_encode($partais));
+                $response_master_partai = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
+                if($response_master_partai->ok()){
+                    $master_partai = $response_master_partai->object();
+                    Cache::put('hitung_suara:master_partai', json_encode($master_partai), 120);
+                }
             }
+
             if($dapil = Cache::get('dapil:'.$kode_dapil)){
                 $dapil = json_decode($dapil);
             }else{
@@ -568,7 +551,51 @@ class SuratSuaraController extends Controller
 
             switch ($jenis) {
                 case 'dpr':
+
+                    $data_higher_level = null;
+
+                    if($data_higher_level = Cache::get('hitung_suara:dpr:nasional')){
+                        $data_higher_level = json_decode($data_higher_level);
+                    }else{
+                        $response_data_higher_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
+                        if($response_data_higher_level->ok()){
+                            $data_higher_level = $response_data_higher_level->object();
+                            Cache::put('hitung_suara:dpr:nasional', json_encode($data_higher_level), 120);
+                        }
+                    }
+
+                    $data_lower_level = null;
+                    if($data_lower_level = Cache::get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
+                        $data_lower_level = json_decode($data_lower_level);
+                    }else{
+                        $response_data_lower_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
+                        if($response_data_lower_level->ok()){
+                            $data_lower_level = $response_data_lower_level->object();
+                            Cache::put('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, json_encode($data_lower_level), 120);
+                        }
+                    }
+
+                    $master_calon = null;
+                    if($master_calon = Cache::get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            Cache::put('hitung_suara:dpr:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                        }
+                    }
+
+                    $result = [
+                        'master_partai' => $master_partai,
+                        'master_calon' => $master_calon,
+                        'higher_data' => $data_higher_level,
+                        'lower_data' => $data_lower_level,
+                        'dapil' => $dapil
+                    ];
+    
                     $template = "RealCountDpr";
+                    $this->meta->setTitle("Real Count DPR RI Dapil {$dapil->nama_dapil}");
                     $calon_keyword = "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
@@ -587,11 +614,6 @@ class SuratSuaraController extends Controller
                     exit();
                     break;
             }
-    
-                $data = [
-                'partais' => $partais,
-                'dapil' => $dapil
-            ];
         }
 
         $meta_desc = preg_replace('/\[nama_dapil\]/', $dapil->nama_dapil, $meta_desc);
