@@ -136,7 +136,7 @@ let render_chart = function(){
                         maximumFractionDigits: 2
                     })} %) `
             },
-            offsetX: -60,
+            offsetX: -50,
         },
         stroke: {
             width: 1,
