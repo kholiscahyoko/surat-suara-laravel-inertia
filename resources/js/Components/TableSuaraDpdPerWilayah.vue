@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col max-h-screen min-h-96 overflow-x-auto mb-20">
         <div class="relative shadow-md sm:rounded-lg">
-        <table class="min-w-full divide-y text-xs md:text-base text-left rtl:text-right text-gray-500 dark:text-gray-400 border-2">
+        <table class="min-w-full divide-y text-xs md:text-base text-left rtl:text-right text-black dark:text-gray-400 border-2">
             <thead class="sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 z-10">
                 <tr>
                     <th scope="col" class="sticky left-0 bg-white px-1 py-1 md:px-6 md:py-2  border-b dark:bg-gray-800 dark:border-gray-700 text-center">
