@@ -103,6 +103,6 @@ class Meta {
     }
 
     public function setTitle(string $title = ""): void {
-        $this->meta["title"] = config('app.name')." - ".$title;
+        $this->meta["title"] = $title ." - ". config('app.name');
     }
 }

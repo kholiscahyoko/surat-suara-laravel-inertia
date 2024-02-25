@@ -614,6 +614,7 @@ class SuratSuaraController extends Controller
                 }
             }
             $result["calon"] = $calon;
+            $this->meta->setTitle("Perolehan Suara {$calon->nama}");
         }
 
         $this->meta->setMeta($metadata);
