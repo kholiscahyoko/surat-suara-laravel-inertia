@@ -31,7 +31,6 @@ let render_chart = function(){
                 y: value.jumlah_suara,
             });
         });
-        console.log(sortedChart);
         return sortedChart;
     }
     let getX = function(array){
