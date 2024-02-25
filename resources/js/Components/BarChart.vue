@@ -8,6 +8,7 @@ import ApexCharts from 'apexcharts'
 var props = defineProps({
     master : Object,
     data : Object,
+    calon: Object,
 })
 
 var chart = null;
@@ -66,7 +67,7 @@ let render_chart = function(){
         return (input/total) * 100;
     }
 
-    let colors = function(master_chart, threshold){
+    let colors = function(master_chart, threshold, data){
         let colors = [];
     
         // Repeat elements from the original array
@@ -74,6 +75,21 @@ let render_chart = function(){
             colors.push('#90ee7e');
         }
         colors = master_chart.length > colors.length ? colors.concat(Array(master_chart.length - colors.length).fill('#d4526e')) : colors;
+
+        if(props.calon && props.calon.no_urut){
+            console.log(props.calon);
+            const pattern = new RegExp(`\\((${props.calon.no_urut})\\)`)
+            for (let index = 0; index < data.length; index++) {
+                console.log(data[index].x);
+                let matches = data[index].x.match(pattern);
+                // if(data[index].nomor_urut == props.calon.no_urut){
+                //     colors[index] = '#faca15';
+                // }
+                if(matches && matches.length > 1){
+                    colors[index] = '#faca15';
+                }
+            }
+        }
 
         return colors;
     }
@@ -88,8 +104,12 @@ let render_chart = function(){
         plotOptions: {
             bar: {
                 barHeight: '100%',
+                // columnWidth: '80%',
                 distributed: true,
                 horizontal: true,
+                borderRadius: 10,
+                borderRadiusApplication : 'end',
+                borderRadiusWhenStacked : 'last',
                 dataLabels: {
                     position: 'bottom'
                 },
@@ -99,7 +119,7 @@ let render_chart = function(){
         dataLabels: {
             enabled: false
         },
-        colors: colors(Object.entries(props.master), 4),
+        colors: colors(Object.entries(props.master), 4, data),
         dataLabels: {
             enabled: true,
             textAnchor: 'start',
