@@ -13,6 +13,7 @@ class Meta {
     ];
 
     private int $limit_keywords = 10;
+    private string $url_canonical = "";
 
     public function __construct(array $meta = []) {
         $this->meta = [
@@ -29,6 +30,8 @@ class Meta {
             'image:width' => 366,
             'image:heigth' => 650,
         ];
+
+        $this->url_canonical = url()->current();
     }
 
     public function generate() {
@@ -84,7 +87,11 @@ class Meta {
     }
 
     public function generate_canonical(){
-        return "<link rel=\"canonical\" href=\"".url()->current()."\" />";
+        return "<link rel=\"canonical\" href=\"".$this->url_canonical."\" />";
+    }
+
+    public function set_canonical($url){
+        $this->url_canonical = $url;
     }
 
     public function generate_meta_google_adsense(){
