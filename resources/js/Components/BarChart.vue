@@ -103,8 +103,7 @@ let render_chart = function(){
         },
         plotOptions: {
             bar: {
-                barHeight: '100%',
-                // columnWidth: '80%',
+                barHeight: '99%',
                 distributed: true,
                 horizontal: true,
                 borderRadius: 10,
