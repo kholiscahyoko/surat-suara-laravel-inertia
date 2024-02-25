@@ -28,7 +28,6 @@ const props = defineProps({
 const calon_id = props.calon_id;
 let checkId = function(calonId, partaiNoUrut) {
     if(calon_id == calonId){
-        window.location.replace( `#partai${partaiNoUrut}`);
         return true;
     }else{
         return false;

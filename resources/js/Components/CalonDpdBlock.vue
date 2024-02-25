@@ -36,8 +36,6 @@ export default{
     methods:{
         checkId : function(calonId) {
             if(this.calon_id == calonId){
-                console.log(calonId)
-                window.location.replace( `#calon-${calonId}`);
                 return true;
             }else{
                 return false;
