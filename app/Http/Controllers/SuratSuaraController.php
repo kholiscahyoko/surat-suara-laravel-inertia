@@ -297,6 +297,8 @@ class SuratSuaraController extends Controller
 
             $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil));
 
+            $this->meta->setTitle("Surat Suara DPD {$dapil->nama_dapil}");
+
             $template = "SuratSuaraDpd";
 
             if($calons = Cache::get('calons_by_dapil:'.$kode_dapil)){
@@ -354,16 +356,19 @@ class SuratSuaraController extends Controller
                 case 'dpr':
                     $template = "SuratSuaraDpr";
                     $calon_keyword = "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->setTitle("Surat Suara DPR RI Dapil {$dapil->nama_dapil}");
                     break;
                 
                 case 'dprdp':
                     $template = "SuratSuaraDprdp";
                     $calon_keyword = "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($dapil->nama_dapil)))." dapil ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->setTitle("Surat Suara DPRD Provinsi Dapil {$dapil->nama_dapil}");
                     break;
                 
                 case 'dprdk':
                     $template = "SuratSuaraDprdk";
                     $calon_keyword = "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->setTitle("Surat Suara DPRD Kabupaten/Kota Dapil {$dapil->nama_dapil}");
                     break;
                 
                 default:
