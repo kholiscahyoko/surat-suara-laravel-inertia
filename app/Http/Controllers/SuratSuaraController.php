@@ -635,13 +635,48 @@ class SuratSuaraController extends Controller
                     $exp_dapil = explode(" ", $dapil->nama_dapil);
                     array_pop($exp_dapil);
                     $nama_wilayah = implode(" ", $exp_dapil);
-                    $this->meta->setTitle("Real Count DPRD Provinsi {$nama_wilayah} RI Dapil {$dapil->nama_dapil}");
+                    $this->meta->setTitle("Real Count DPRD Provinsi {$nama_wilayah} Dapil {$dapil->nama_dapil}");
                     $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 case 'dprdk':
+                    $data = null;
+                    if($data = Cache::get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
+                        $data = json_decode($data);
+                    }else{
+                        $kode_prov = substr($dapil->kode_dapil, 0, 2);
+                        $kode_kabkota = substr($dapil->kode_dapil, 0, 4);
+                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
+                        if($response_data->ok()){
+                            $data = $response_data->object();
+                            Cache::put('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                        }
+                    }
+
+                    $master_calon = null;
+                    if($master_calon = Cache::get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            Cache::put('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                        }
+                    }
+
+                    $result = [
+                        'master_partai' => $master_partai,
+                        'master_calon' => $master_calon,
+                        'data' => $data,
+                        'dapil' => $dapil
+                    ];
+
                     $template = "RealCountDprdk";
-                    $calon_keyword = "calon dewan perwakilan rakyat daerah ".trim(strtolower($this->prependIfNot('kota', $this->replaceLastWord($dapil->nama_dapil), 'KABUPATEN ')))." dapil ".trim(strtolower($dapil->nama_dapil));
+                    $exp_dapil = explode(" ", $dapil->nama_dapil);
+                    array_pop($exp_dapil);
+                    $nama_wilayah = implode(" ", $exp_dapil);
+                    $this->meta->setTitle("Real Count DPRD Kabupaten/Kota {$nama_wilayah} Dapil {$dapil->nama_dapil}");
+                    $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat kabupaten kota {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 default:
