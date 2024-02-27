@@ -8,16 +8,25 @@
         <table class="min-w-full">
             <thead class="divide-y divide-dashed divide-gray-600 border-b border-black">
                 <tr>
-                    <td class="p-2 w-1/12 text-xs lg:text-base">NO</td>
+                    <td class="p-2 w-1/12 text-xs lg:text-base text-center">NO</td>
                     <td class="p-2 w-1/12 text-xs lg:text-base">NAMA</td>
                     <td class="p-2 w-1/12 text-xs lg:text-base text-right">JUMLAH</td>
                 </tr>
             </thead>
             <tbody class="divide-y divide-dashed divide-gray-600">
+                <tr>
+                    <td class="p-2 w-1/12 text-xs lg:text-base text-center">0.</td>
+                    <td class="p-2"><h5 class="text-xs lg:text-sm">SUARA PARTAI</h5></td>
+                    <td class="p-2 w-1/12 text-right text-xs lg:text-base">{{ data['jml_suara_partai'].toLocaleString('en-US', { style: 'decimal', }) }}</td>
+                </tr>
                 <tr v-for="calon_data, key in master_calon" :class="calon && calon.no_urut && calon_data.nomor_urut == calon.no_urut && calon_data.nama == calon.nama ? 'bg-yellow-300' : ''">
-                    <td class="p-2 w-1/12 text-xs lg:text-base">{{ calon_data.nomor_urut }}.</td>
+                    <td class="p-2 w-1/12 text-xs lg:text-base text-center">{{ calon_data.nomor_urut }}.</td>
                     <td class="p-2"><h5 class="text-xs lg:text-sm">{{ calon_data.nama }}</h5></td>
                     <td class="p-2 w-1/12 text-right text-xs lg:text-base">{{ data[key].toLocaleString('en-US', { style: 'decimal', }) }}</td>
+                </tr>
+                <tr>
+                    <td class="p-2" colspan="2"><h5 class="text-xs lg:text-sm">TOTAL SUARA</h5></td>
+                    <td class="p-2 w-1/12 text-right text-xs lg:text-base">{{ data['jml_suara_total'].toLocaleString('en-US', { style: 'decimal', }) }}</td>
                 </tr>
             </tbody>
         </table>
