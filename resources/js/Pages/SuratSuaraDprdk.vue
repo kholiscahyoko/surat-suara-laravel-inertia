@@ -4,7 +4,7 @@
         Calon DPRD Kabupaten / Kota
     </h1>
     <div class="flex">
-        <a :href="$setUrl(`/hitung-suara/${dapil.jenis_dewan}/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 focus:outline-none">Hitung Suara</a>
+        <a :href="$setUrl(`/hitung-suara/dprd-kabkota/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}`)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-3 focus:outline-none">Hitung Suara</a>
         <WilayahListBlock :kode_dapil="dapil.kode_dapil"/>
       </div>
   </div>
@@ -13,7 +13,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import SuratSuaraContentDprdk from '../Shared/SuratSuaraContentDprdk.vue';
-import WilayahListVue from '../Components/WilayahListBlock.vue'
+import WilayahListBlock from '../Components/WilayahListBlock.vue'
 
 defineProps({
     'partais' : Object,
