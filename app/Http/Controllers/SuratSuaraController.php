@@ -526,7 +526,7 @@ class SuratSuaraController extends Controller
                 $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah, 'dapil' => $dapil ];
                 Cache::put('hitung_suara:dpd:'.$kode_dapil, json_encode($result), 120);
             }
-            $calon_keyword = "calon dewan perwakilan daerah ".strtolower($dapil->nama_dapil);
+            $calon_keyword = "realcount hitung suara calon dewan perwakilan daerah provinsi ".strtolower($dapil->nama_dapil);
             $template = "RealCountDpd";
             $this->meta->setTitle("Real Count DPD {$dapil->nama_dapil}");
         }else{
@@ -597,7 +597,7 @@ class SuratSuaraController extends Controller
     
                     $template = "RealCountDpr";
                     $this->meta->setTitle("Real Count DPR RI Dapil {$dapil->nama_dapil}");
-                    $calon_keyword = "calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 case 'dprdp':
@@ -636,7 +636,7 @@ class SuratSuaraController extends Controller
                     array_pop($exp_dapil);
                     $nama_wilayah = implode(" ", $exp_dapil);
                     $this->meta->setTitle("Real Count DPRD Provinsi {$nama_wilayah} RI Dapil {$dapil->nama_dapil}");
-                    $calon_keyword = "calon dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 case 'dprdk':
