@@ -601,8 +601,42 @@ class SuratSuaraController extends Controller
                     break;
                 
                 case 'dprdp':
+                    $data = null;
+                    if($data = Cache::get('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil)){
+                        $data = json_decode($data);
+                    }else{
+                        $kode_prov = substr($dapil->kode_dapil, 0, 2);
+                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
+                        if($response_data->ok()){
+                            $data = $response_data->object();
+                            Cache::put('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                        }
+                    }
+
+                    $master_calon = null;
+                    if($master_calon = Cache::get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            Cache::put('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                        }
+                    }
+
+                    $result = [
+                        'master_partai' => $master_partai,
+                        'master_calon' => $master_calon,
+                        'data' => $data,
+                        'dapil' => $dapil
+                    ];
+    
                     $template = "RealCountDprdp";
-                    $calon_keyword = "calon dewan perwakilan rakyat daerah provinsi ".trim(strtolower($this->replaceLastWord($dapil->nama_dapil)))." dapil ".trim(strtolower($dapil->nama_dapil));
+                    $exp_dapil = explode(" ", $dapil->nama_dapil);
+                    array_pop($exp_dapil);
+                    $nama_wilayah = implode(" ", $exp_dapil);
+                    $this->meta->setTitle("Real Count DPRD Provinsi {$nama_wilayah} RI Dapil {$dapil->nama_dapil}");
+                    $calon_keyword = "calon dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
                 case 'dprdk':
