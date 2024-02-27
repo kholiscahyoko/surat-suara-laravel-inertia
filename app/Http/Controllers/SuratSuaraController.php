@@ -675,7 +675,10 @@ class SuratSuaraController extends Controller
                     $exp_dapil = explode(" ", $dapil->nama_dapil);
                     array_pop($exp_dapil);
                     $nama_wilayah = implode(" ", $exp_dapil);
-                    $this->meta->setTitle("Real Count DPRD Kabupaten/Kota {$nama_wilayah} Dapil {$dapil->nama_dapil}");
+                    if(!preg_match("/^KOTA/i", $nama_wilayah)){
+                        $nama_wilayah = "KABUPATEN ".$nama_wilayah;
+                    }
+                    $this->meta->setTitle("Real Count DPRD {$nama_wilayah} Dapil {$dapil->nama_dapil}");
                     $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat kabupaten kota {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
                     break;
                 
