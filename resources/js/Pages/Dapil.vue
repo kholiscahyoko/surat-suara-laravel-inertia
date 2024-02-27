@@ -38,7 +38,7 @@
                                         </div>
                                     </td>
                                     <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium flex justify-end">
-                                        <a v-if="dapil.jenis_dewan === 'dpd' || dapil.jenis_dewan === 'dpr'" :href="$setUrl(`/hitung-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Real Count</a>
+                                        <a v-if="dapil.jenis_dewan === 'dpd' || dapil.jenis_dewan === 'dpr' || dapil.jenis_dewan === 'dprdp'" :href="$setUrl(`/hitung-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Real Count</a>
                                         <button :id="`button-${dapil.kode_dapil}`" data-modal-toggle="modal" data-modal-target="modal" type="button" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center" @click="get_list_wilayah(dapil.kode_dapil)">Lingkup Wilayah</button>
                                         <a :href="$setUrl(`/surat-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Surat Suara</a>
                                     </td>
