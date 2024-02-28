@@ -20,7 +20,7 @@
             <BarChart :master="master" :data="data" :calon="calon"/>
         </div>
         <div class="flex flex-wrap items-start justify-center my-8">
-            <TableSuaraDpdPerWilayah :master="master" :data="data" :wilayah="wilayah" :calon="calon"/>
+            <TableSuaraDpdPerWilayah :master="master" :data="data" :wilayah="wilayah" :calon="calon" :dapil="dapil"/>
         </div>
     </div>
 </template>

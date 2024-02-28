@@ -505,6 +505,11 @@ class SuratSuaraController extends Controller
                     Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
                 }
     
+                if(empty($dapil) || !isset($dapil->nama_dapil)){
+                    abort(404);
+                    exit();
+                }
+
                 $master = null;
                 $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
                 if($response_master->ok()){
@@ -548,6 +553,11 @@ class SuratSuaraController extends Controller
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
                 Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
+
+            if(empty($dapil) || !isset($dapil->nama_dapil)){
+                abort(404);
+                exit();
             }
 
             switch ($jenis) {
@@ -825,6 +835,79 @@ class SuratSuaraController extends Controller
         $this->meta->setMeta($metadata);
 
         return Inertia::render($template, $data);
+    }
+
+    public function cari_profil(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "")
+    {
+        $no_partai = $request->input('no_partai');
+        $no_calon = $request->input('no_calon');
+        switch ($jenis) {
+            case 'dprdp':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-provinsi/{$nama_dapil}/{$kode_dapil}/{$nama_calon}?no_partai={$no_partai}&no_calon={$no_calon}";
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprdk':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-kabkota/{$nama_dapil}/{$kode_dapil}/{$nama_calon}?no_partai={$no_partai}&no_calon={$no_calon}";
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprd-provinsi':
+                $jenis = "dprdp";
+                break;
+
+                case 'dprd-kabkota':
+                    $jenis = "dprdk";
+                break;
+            
+            default:
+                break;
+        }
+
+        if(is_numeric($kode_dapil) && is_numeric($no_calon) && (strlen($kode_dapil) == 2 || is_numeric($no_partai))){
+            if($calon = Cache::get("cari_profil:{$kode_dapil}:{$no_partai}:{$no_calon}")){
+                $calon = json_decode($calon);
+                $this->meta->addMetaKeywords([
+                    strtolower(str_replace(",", ".", $calon->nama))
+                ]);
+            }else{
+                if($jenis === "dpd"){
+                    $calon = Calons::with('dapil')->where('calons.kode_dapil', $kode_dapil)->where('calons.no_urut', $no_calon)->first();
+                }else{
+                    $calons = Calons::with('partai', 'dapil')->where('calons.kode_dapil', $kode_dapil)->where('calons.no_urut', $no_calon)->get();
+                    $calon = null;
+                    foreach ($calons as $calon) {
+                        if($calon->partai->no_urut === (int) $no_partai)
+                            break;
+                    }
+                }
+                if($calon){
+                    Cache::put('cari_profil:{$kode_dapil}:{$no_partai}:{$no_calon}', json_encode($calon));
+                }else{
+                    abort(404);
+                    exit();
+                }
+            }
+        }else{
+            abort(404);
+            exit();
+        }
+
+        switch ($calon->jenis_dewan) {
+            case 'dprdp':
+                $jenis = "dprd-provinsi";
+                break;
+
+            case 'dprdk':
+                $jenis = "dprd-kabkota";
+                break;
+
+            default:
+                break;
+        }
+
+        $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/{$jenis}/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
+        return redirect($url_redirect, 301);
     }
 
     public function wilayah_dapil(string $tingkatan_wilayah, string $nama_wilayah, string $kode_wilayah, bool $sampul = true)
