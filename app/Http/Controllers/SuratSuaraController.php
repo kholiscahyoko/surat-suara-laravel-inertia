@@ -463,31 +463,39 @@ class SuratSuaraController extends Controller
                 "ganjar pranowo dan mahfud md",
             ]);
 
-
-            if($result = Cache::get('hitung_suara:pilpres')){
-                $result = json_decode($result, true);
+            $master = null;
+            if($master = Cache::get('hitung_suara:pilpres:calon')){
+                $master = json_decode($master);
             }else{
-                $master = null;
                 $response_master = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
                 if($response_master->ok()){
                     $master = $response_master->object();
+                    Cache::put('hitung_suara:pilpres:calon', json_encode($master));
                 }
-    
-                $wilayah = null;
+            }
+
+            $wilayah = null;
+            if($wilayah = Cache::get('hitung_suara:pilpres:wilayah')){
+                $wilayah = json_decode($wilayah);
+            }else{
                 $response_wilayah = Http::get('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
                 if($response_wilayah->ok()){
                     $wilayah = $response_wilayah->object();
+                    Cache::put('hitung_suara:pilpres:wilayah', json_encode($wilayah));
                 }
-    
+            }
+
+            $data = null;
+            if($data = Cache::get('hitung_suara:pilpres:data')){
+                $data = json_decode($data);
+            }else{
                 $response_data = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
-                $data = null;
                 if($response_data->ok()){
                     $data = $response_data->object();
+                    Cache::put('hitung_suara:pilpres:data', json_encode($data), 120);
                 }
-
-                $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
-                Cache::put('hitung_suara:pilpres', json_encode($result), 120);
             }
+            $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
             
             return Inertia::render('RealCountPilpres', $result);
             exit();
