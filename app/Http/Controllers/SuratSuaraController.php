@@ -492,59 +492,54 @@ class SuratSuaraController extends Controller
             return Inertia::render('RealCountPilpres', $result);
             exit();
         }elseif($jenis === "dpd"){
-            if($result = Cache::get('hitung_suara:dpd:'.$kode_dapil)){
-                $result = json_decode($result, true);
-                $dapil = (object) $result["dapil"];
+            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                $dapil = json_decode($dapil);
+                echo "DAPIL CACHED<br>";
             }else{
-                if($dapil = Cache::get('dapil:'.$kode_dapil)){
-                    $dapil = json_decode($dapil);
-                }else{
-                    $dapil = Dapils::query()
-                    ->where('kode_dapil', $kode_dapil)
-                    ->first();
-                    Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
-                }
-    
-                if(empty($dapil) || !isset($dapil->nama_dapil)){
-                    abort(404);
-                    exit();
+                $dapil = Dapils::query()
+                ->where('kode_dapil', $kode_dapil)
+                ->first();
+                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
+
+            if(empty($dapil) || !isset($dapil->nama_dapil)){
+                abort(404);
+                exit();
+            }
+
+            $master = null;
+            if($master = Cache::get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
+                $master = json_decode($master);
+                echo "MASTER CACHED<br>";
+            }else{
+                $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
+                if($response_master->ok()){
+                    $master = $response_master->object();
+                    Cache::put("hitung_suara:dpd:calon:{$dapil->kode_dapil}", json_encode($master), 120);
                 }
             }
 
-            if($data_calon_lolos = Cache::get("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}")){
-                $data_calon_lolos = json_decode($data_calon_lolos, true);
+            $wilayah = null;
+            if($wilayah = Cache::get("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}")){
+                $wilayah = json_decode($wilayah);
+                echo "WILAYAH CACHED<br>";
             }else{
-                $master = null;
-                if($master = Cache::get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
-                    $master = json_decode($master);
-                }else{
-                    $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
-                    if($response_master->ok()){
-                        $master = $response_master->object();
-                        Cache::put("hitung_suara:dpd:calon:{$dapil->kode_dapil}", json_encode($master), 120);
-                    }
+                $response_wilayah = Http::get("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{$kode_dapil}.json");
+                if($response_wilayah->ok()){
+                    $wilayah = $response_wilayah->object();
+                    Cache::put("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}", json_encode($wilayah), 120);
                 }
-    
-                $wilayah = null;
-                if($wilayah = Cache::get("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}")){
-                    $wilayah = json_decode($wilayah);
-                }else{
-                    $response_wilayah = Http::get("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{$kode_dapil}.json");
-                    if($response_wilayah->ok()){
-                        $wilayah = $response_wilayah->object();
-                        Cache::put("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}", json_encode($wilayah), 120);
-                    }
-                }
+            }
 
-                $data = null;
-                if($data = Cache::get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
-                    $data = json_decode($data);
-                }else{
-                    $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
-                    if($response_data->ok()){
-                        $data = $response_data->object();
-                        Cache::put("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", json_encode($data), 120);
-                    }
+            $data = null;
+            if($data = Cache::get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
+                $data = json_decode($data);
+                echo "DATA CACHED<br>";
+            }else{
+                $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
+                if($response_data->ok()){
+                    $data = $response_data->object();
+                    Cache::put("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", json_encode($data), 120);
                 }
             }
 
