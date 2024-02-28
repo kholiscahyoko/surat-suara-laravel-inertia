@@ -12,9 +12,10 @@
                 DAERAH PEMILIHAN<br>{{ dapil.nama_dapil }}
             </h4>
         </div>
-        <div class="flex flex-wrap items-start justify-center text-center my-8">
+        <div class="text-center my-8">
             {{ `Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${data.chart.persen}%)` }}<br>
             {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
+            <span class="font-semibold">Sumber Data</span> : <a href="https://pemilu2024.kpu.go.id" class="text-indigo-600 hover:text-indigo-900">pemilu2024.kpu.go.id</a><br>
         </div>
         <div class="flex flex-wrap items-start justify-center my-8">
             <BarChart :master="master" :data="data" :calon="calon"/>

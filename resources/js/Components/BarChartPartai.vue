@@ -1,8 +1,9 @@
 <template>
     <h4 class="text-center font-bold md:text-3xl mt-10" v-html="(nasional ? `Perolehan Suara Nasional`: `Perolehan Suara Dapil ${dapil.nama_dapil}`)"></h4>
-    <div class="flex flex-wrap items-start justify-center text-center my-8">
+    <div class="text-center my-8">
         {{ `Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)` }}<br>
         {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
+        <span class="font-semibold">Sumber Data</span>: <a href="https://pemilu2024.kpu.go.id" class="text-indigo-600 hover:text-indigo-900">pemilu2024.kpu.go.id</a><br>
     </div>
     <!-- Bar Chart -->
     <div class="mx-auto w-full" :id="`bar-chart-${id}`"></div>

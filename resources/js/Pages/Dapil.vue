@@ -17,27 +17,28 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr v-if="dapils.data.length > 0" v-for="dapil in dapils.data" :key="dapil.id">
-                                    <td class="px-6 py-4">
+                                    <td class="px-1 md:px-6 py-4 text-xs md:text-sm">
                                         <div class="flex items-center">
                                             <div>
-                                                <div class="text-sm font-medium text-gray-900">
+                                                <div class="font-medium text-gray-900">
                                                     {{ dapil.nama }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-1 md:px-6 py-4 text-xs md:text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div>
-                                                <div v-if="dapil.jenis_dewan === 'dpd'" class="text-sm font-medium rounded-lg bg-red-600 p-1 text-white text-wrap text-center">DPD RI</div>
-                                                <div v-else-if="dapil.jenis_dewan === 'dpr'" class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">DPR RI</div>
-                                                <div v-else-if="dapil.jenis_dewan === 'dprdp'" class="text-sm font-medium rounded-lg bg-blue-600 p-1 text-white text-wrap text-center">DPRD Provinsi</div>
-                                                <div v-else-if="dapil.jenis_dewan === 'dprdk'" class="text-sm font-medium rounded-lg bg-green-600 p-1 text-white text-wrap text-center">DPRD Kab/Kota</div>
-                                                <div v-else class="text-sm font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">Tidak Diketahui</div>
+                                                <div v-if="dapil.jenis_dewan === 'dpd'" class="font-medium rounded-lg bg-red-600 p-1 text-white text-wrap text-center">DPD RI</div>
+                                                <div v-else-if="dapil.jenis_dewan === 'dpr'" class="font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">DPR RI</div>
+                                                <div v-else-if="dapil.jenis_dewan === 'dprdp'" class="font-medium rounded-lg bg-blue-600 p-1 text-white text-wrap text-center">DPRD Provinsi</div>
+                                                <div v-else-if="dapil.jenis_dewan === 'dprdk'" class="font-medium rounded-lg bg-green-600 p-1 text-white text-wrap text-center">DPRD Kab/Kota</div>
+                                                <div v-else class="font-medium text-gray-900 rounded-lg bg-yellow-400 p-1 text-wrap text-center">Tidak Diketahui</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-1 lg:px-6 py-4 text-right text-sm font-medium flex justify-end">
+                                    <td class="px-1 lg:px-6 py-4 text-right text-xs md:text-sm font-medium flex justify-end">
+                                        <a v-if="dapil.jenis_dewan === 'dpd'" :href="$setUrl(`/calon-terpilih/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Calon Terpilih</a>
                                         <a :href="$setUrl(`/hitung-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Real Count</a>
                                         <button :id="`button-${dapil.kode_dapil}`" data-modal-toggle="modal" data-modal-target="modal" type="button" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center" @click="get_list_wilayah(dapil.kode_dapil)">Lingkup Wilayah</button>
                                         <a :href="$setUrl(`/surat-suara/${dapil.jenis_dewan === 'dprdp' ? 'dprd-provinsi' : dapil.jenis_dewan === 'dprdk' ? 'dprd-kabkota' : dapil.jenis_dewan}/${$slugify(dapil.nama)}/${dapil.kode_dapil}`)" class="text-white hover:bg-indigo-900 p-1 bg-indigo-600 rounded-md block m-1 text-center">Surat Suara</a>
