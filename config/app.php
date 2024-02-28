@@ -201,10 +201,16 @@ return [
         ],
         'real-count' => [
             'pilpres' => ["title" => "Real Count Capres dan Cawapres", "description" => "Real Count Pemilihan Umum Presiden dan Wakil Presiden Republik Indonesia Tahun 2024"],
-            'dpd' => ["title" => "Real Count Dewan Perwakilan Daerah", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Daerah Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
-            'dpr' => ["title" => "Real Count Dewan Perwakilan Rakyat", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
-            'dprdp' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
-            'dprdk' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dpd' => ["title" => "Real Count Dewan Perwakilan Daerah", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Daerah Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil] Cek Disini"],
+            'dpr' => ["title" => "Real Count Dewan Perwakilan Rakyat", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil] Cek Disini"],
+            'dprdp' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Cek Disini "],
+            'dprdk' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Cek Disini"],
+        ],
+        'calon-lolos' => [
+            'dpd' => ["title" => "Calon Dewan Perwakilan Daerah Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPD RI Provinsi [nama_dapil] Tahun 2024 Berdasarkan Perhitungan Sementara, Cek Disini"],
+            'dpr' => ["title" => "Calon Dewan Perwakilan Rakyat Terpilih", "description" => "Ini Dia Daftar Cek Disini Calon Terpilih Pemilu DPR RI Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
+            'dprdp' => ["title" => "Calon Dewan Perwakilan Rakyat Daerah Provinsi Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD Provinsi [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
+            'dprdk' => ["title" => "Calon Perwakilan Rakyat Daerah Kabupaten Kota Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
         ],
     ],
 ];

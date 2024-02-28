@@ -57,6 +57,13 @@ Route::get('/profil-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{calon_
     'calon_id' => '[0-9]+',
 ]);
 
+Route::get('/calon-terpilih/{jenis}/{nama_dapil}/{kode_dapil}', [SuratSuaraController::class, 'calon_lolos'])
+->where([
+    'jenis', '(dpd|dpr|dprd-provinsi|dprd-kabkota)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+',
+]);
+
 Route::get('/cek-profil/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}', [SuratSuaraController::class, 'cari_profil'])
 ->where([
     'jenis', '(dpd|dpr|dprd-provinsi|dprd-kabkota)',

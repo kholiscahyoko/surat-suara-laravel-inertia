@@ -734,6 +734,322 @@ class SuratSuaraController extends Controller
         return Inertia::render($template, $result);
     }
 
+    public function calon_lolos(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "")
+    {
+        switch ($jenis) {
+            case 'dprdp':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-provinsi/{$nama_dapil}/{$kode_dapil}";
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprdk':
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/dprd-kabkota/{$nama_dapil}/{$kode_dapil}";
+                return redirect($url_redirect, 301);
+                break;
+
+            case 'dprd-provinsi':
+                $jenis = "dprdp";
+                break;
+
+            case 'dprd-kabkota':
+                $jenis = "dprdk";
+                break;
+            
+            default:
+                break;
+        }
+        if(!empty(config('app.meta')['calon-lolos'][$jenis]['description'])){
+            $meta_desc = config('app.meta')['calon-lolos'][$jenis]['description'];
+            $this->meta->setTitle(config('app.meta')['calon-lolos'][$jenis]['title']);
+        }
+
+        if($jenis === "dpd"){
+            if($result = Cache::get('hitung_suara:dpd:'.$kode_dapil)){
+                $result = json_decode($result, true);
+                $dapil = (object) $result["dapil"];
+            }else{
+                if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                    $dapil = json_decode($dapil);
+                }else{
+                    $dapil = Dapils::query()
+                    ->where('kode_dapil', $kode_dapil)
+                    ->first();
+                    Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                }
+    
+                if(empty($dapil) || !isset($dapil->nama_dapil)){
+                    abort(404);
+                    exit();
+                }
+            }
+
+            if($data_calon_lolos = Cache::get("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}")){
+                $data_calon_lolos = json_decode($data_calon_lolos, true);
+            }else{
+                $master = null;
+                if($master = Cache::get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
+                    $master = json_decode($master);
+                }else{
+                    $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
+                    if($response_master->ok()){
+                        $master = $response_master->object();
+                        Cache::put("hitung_suara:dpd:calon:{$dapil->kode_dapil}", json_encode($master), 120);
+                    }
+                }
+    
+                $master = (array) $master;
+    
+                $data = null;
+                if($data = Cache::get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
+                    $data = json_decode($data);
+                }else{
+                    $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
+                    if($response_data->ok()){
+                        $data = $response_data->object();
+                        Cache::put("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", json_encode($data), 120);
+                    }
+                }
+    
+                $data_suara = (array)$data->chart;
+    
+                foreach ( $data_suara as $key => $value )   {
+                    if ( !is_numeric ($key) )    {
+                        unset ( $data_suara [ $key ] );
+                        break;
+                    }
+                }
+    
+                arsort($data_suara);
+
+                $jumlah_total = array_sum($data_suara);
+    
+                $data_suara = array_slice($data_suara, 0, 4, true);
+    
+                $data_calon_lolos = [];
+    
+                foreach ($data_suara as $key_calon => $jumlah_suara) {
+                    if($calon = Cache::get("cari_profil:{$kode_dapil}::{$master[$key_calon]->nomor_urut}")){
+                        $calon = json_decode($calon);
+                    }else{
+                        $calon = Calons::with('dapil')->where('calons.kode_dapil', $kode_dapil)->where('calons.no_urut', $master[$key_calon]->nomor_urut)->first();
+                        if($calon){
+                            Cache::put("cari_profil:{$kode_dapil}::{$master[$key_calon]->nomor_urut}", json_encode($calon));
+                        }
+                    }
+
+                    if(empty($calon)){
+                        $foto = null;
+                        $url_profil = '#';
+                    }else{
+                        $foto = $calon->foto;
+                        $url_profil = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/dpd/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
+                    }
+
+                    $data_calon_lolos['list'][] = [
+                        'nama' => $master[$key_calon]->nama,
+                        'nomor_urut' => $master[$key_calon]->nomor_urut,
+                        'foto' => $foto,
+                        'url_profil' => $url_profil,
+                        'jumlah_suara' => $jumlah_suara,
+                        'persen' => ($jumlah_suara/$jumlah_total)*100
+                    ];
+                }
+    
+                if(!empty($data_calon_lolos['list'])){
+                    $data_calon_lolos["ts"] = $data->ts;
+                    $data_calon_lolos["progres"] = $data->progres;
+                    Cache::put("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}", json_encode($data_calon_lolos), 120);
+                }
+            }
+
+            $result = [
+                'data' => $data_calon_lolos,
+                'dapil' => $dapil,
+            ];
+
+            $calon_keyword = "calon dpd dewan perwakilan daerah terpilih ke senayan dapil provinsi ".strtolower($dapil->nama_dapil);
+            $template = "CalonLolosDpd";
+            $this->meta->setTitle("Daftar Calon DPD Terpilih Provinsi {$dapil->nama_dapil} Sementara");
+        }else{
+            $master_partai = null;
+            if($master_partai = Cache::get('hitung_suara:master_partai')){
+                $master_partai = json_decode($master_partai);
+            }else{
+                $response_master_partai = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
+                if($response_master_partai->ok()){
+                    $master_partai = $response_master_partai->object();
+                    Cache::put('hitung_suara:master_partai', json_encode($master_partai), 120);
+                }
+            }
+
+            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                $dapil = json_decode($dapil);
+            }else{
+                $dapil = Dapils::query()
+                ->where('kode_dapil', $kode_dapil)
+                ->first();
+                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+            }
+
+            if(empty($dapil) || !isset($dapil->nama_dapil)){
+                abort(404);
+                exit();
+            }
+
+            switch ($jenis) {
+                case 'dpr':
+
+                    $data_higher_level = null;
+
+                    if($data_higher_level = Cache::get('hitung_suara:dpr:nasional')){
+                        $data_higher_level = json_decode($data_higher_level);
+                    }else{
+                        $response_data_higher_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
+                        if($response_data_higher_level->ok()){
+                            $data_higher_level = $response_data_higher_level->object();
+                            Cache::put('hitung_suara:dpr:nasional', json_encode($data_higher_level), 120);
+                        }
+                    }
+
+                    $data_lower_level = null;
+                    if($data_lower_level = Cache::get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
+                        $data_lower_level = json_decode($data_lower_level);
+                    }else{
+                        $response_data_lower_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
+                        if($response_data_lower_level->ok()){
+                            $data_lower_level = $response_data_lower_level->object();
+                            Cache::put('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, json_encode($data_lower_level), 120);
+                        }
+                    }
+
+                    $master_calon = null;
+                    if($master_calon = Cache::get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            Cache::put('hitung_suara:dpr:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                        }
+                    }
+
+                    $result = [
+                        'master_partai' => $master_partai,
+                        'master_calon' => $master_calon,
+                        'higher_data' => $data_higher_level,
+                        'lower_data' => $data_lower_level,
+                        'dapil' => $dapil
+                    ];
+    
+                    $template = "RealCountDpr";
+                    $this->meta->setTitle("Real Count DPR RI Dapil {$dapil->nama_dapil}");
+                    $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    break;
+                
+                case 'dprdp':
+                    $data = null;
+                    if($data = Cache::get('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil)){
+                        $data = json_decode($data);
+                    }else{
+                        $kode_prov = substr($dapil->kode_dapil, 0, 2);
+                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
+                        if($response_data->ok()){
+                            $data = $response_data->object();
+                            Cache::put('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                        }
+                    }
+
+                    $master_calon = null;
+                    if($master_calon = Cache::get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            Cache::put('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                        }
+                    }
+
+                    $result = [
+                        'master_partai' => $master_partai,
+                        'master_calon' => $master_calon,
+                        'data' => $data,
+                        'dapil' => $dapil
+                    ];
+    
+                    $template = "RealCountDprdp";
+                    $exp_dapil = explode(" ", $dapil->nama_dapil);
+                    array_pop($exp_dapil);
+                    $nama_wilayah = implode(" ", $exp_dapil);
+                    $this->meta->setTitle("Real Count DPRD Provinsi {$nama_wilayah} Dapil {$dapil->nama_dapil}");
+                    $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    break;
+                
+                case 'dprdk':
+                    $data = null;
+                    if($data = Cache::get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
+                        $data = json_decode($data);
+                    }else{
+                        $kode_prov = substr($dapil->kode_dapil, 0, 2);
+                        $kode_kabkota = substr($dapil->kode_dapil, 0, 4);
+                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
+                        if($response_data->ok()){
+                            $data = $response_data->object();
+                            Cache::put('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                        }
+                    }
+
+                    $master_calon = null;
+                    if($master_calon = Cache::get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            Cache::put('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                        }
+                    }
+
+                    $result = [
+                        'master_partai' => $master_partai,
+                        'master_calon' => $master_calon,
+                        'data' => $data,
+                        'dapil' => $dapil
+                    ];
+
+                    $template = "RealCountDprdk";
+                    $exp_dapil = explode(" ", $dapil->nama_dapil);
+                    array_pop($exp_dapil);
+                    $nama_wilayah = implode(" ", $exp_dapil);
+                    if(!preg_match("/^KOTA/i", $nama_wilayah)){
+                        $nama_wilayah = "KABUPATEN ".$nama_wilayah;
+                    }
+                    $this->meta->setTitle("Real Count DPRD {$nama_wilayah} Dapil {$dapil->nama_dapil}");
+                    $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat kabupaten kota {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    break;
+                
+                default:
+                    abort(404);
+                    exit();
+                    break;
+            }
+        }
+
+        $meta_desc = preg_replace('/\[nama_dapil\]/', $dapil->nama_dapil, $meta_desc);
+        $meta_desc = preg_replace('/\[nama_wilayah\]/', $dapil->nama_dapil, $meta_desc);
+        $metadata = ['description' => $meta_desc ];
+
+        if(!empty($calon_keyword)){
+            $this->meta->addMetaKeywords([
+                $calon_keyword,
+            ]);
+        }
+
+        $this->meta->setMeta($metadata);
+
+        return Inertia::render($template, $result);
+    }
+
     public function profil(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
     {
         switch ($jenis) {
