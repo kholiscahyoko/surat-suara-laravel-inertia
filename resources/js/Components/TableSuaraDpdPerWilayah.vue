@@ -18,7 +18,7 @@
             <tbody>
                 <tr v-for="item, kode_calon in master" class="border-b dark:bg-gray-800 dark:border-gray-700" :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300 font-semibold':''">
                     <td class="sticky left-0 px-1 py-1 md:px-6 md:py-2"  :class="calon && calon.no_urut && calon.no_urut == item.nomor_urut ? 'bg-yellow-300':'bg-white'">
-                        <a :href="$setUrl(`/cek-profil/dpd/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}/${$slugify(item.nama)}?no_calon=${item.nomor_urut}`)">
+                        <a class="hover:text-indigo-700" :href="$setUrl(`/cek-profil/dpd/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}/${$slugify(item.nama)}?no_calon=${item.nomor_urut}`)">
                             <div class="flex space-x-3 items-center">
                                 <div>
                                     {{ item.nomor_urut }}
