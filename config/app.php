@@ -213,4 +213,5 @@ return [
             'dprdk' => ["title" => "Calon Perwakilan Rakyat Daerah Kabupaten Kota Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
         ],
     ],
+    'profil_data_last_access' => "20240630", 
 ];
