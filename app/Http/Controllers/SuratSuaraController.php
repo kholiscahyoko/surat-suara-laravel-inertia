@@ -1230,7 +1230,7 @@ class SuratSuaraController extends Controller
             exit();
         }
 
-        switch ($calon->jenis_dewan) {
+        switch ($calon->dapil->jenis_dewan) {
             case 'dprdp':
                 $jenis = "dprd-provinsi";
                 break;
