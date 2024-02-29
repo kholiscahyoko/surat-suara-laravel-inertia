@@ -5,7 +5,7 @@
         </h1>
         <div class="mt-4">
             <p class="mt-2">
-                Jika Anda memiliki pertanyaan tambahan atau memerlukan informasi lebih lanjut tentang Kebijakan Privasi kami, jangan ragu untuk menghubungi kami melalui <a href="https://me.kholiscahyoko.my.id/" class="hover:underline text-purple-500">kontak kami</a>.
+                Jika Anda memiliki pertanyaan tambahan atau memerlukan informasi lebih lanjut tentang Kebijakan Privasi kami, jangan ragu untuk menghubungi kami melalui <a href="https://me.kholiscahyoko.my.id/" target="_blank" class="hover:underline text-purple-500">kontak kami</a>.
             </p>
         </div>
     </div>

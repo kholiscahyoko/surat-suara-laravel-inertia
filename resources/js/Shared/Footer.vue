@@ -6,7 +6,7 @@
                 <a href="/kebijakan-privasi" class="px-4 text-nowrap hover:underline">Kebijakan Privasi</a>
                 <a href="/hubungi-kami" class="px-4 text-nowrap hover:underline">Hubungi Kami</a>
             </div>
-            <div class="text-base text-white text-center">&copy; 2024 <a href="https://me.kholiscahyoko.my.id/" class="hover:underline text-purple-500">Kholis Cahyoko </a>.
+            <div class="text-base text-white text-center">&copy; 2024 <a href="https://me.kholiscahyoko.my.id/" target="_blank" class="hover:underline text-purple-500">Kholis Cahyoko </a>.
             </div>
         </div>
     </footer>
