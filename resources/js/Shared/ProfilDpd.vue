@@ -48,7 +48,7 @@
                 <div>
                     <p class="font-semibold">Sumber Data</p>
                     <p>
-                        <a href="https://infopemilu.kpu.go.id/Pemilu/Peserta_pemilu" class="text-indigo-600 hover:text-indigo-900">DCT Info Pemilu KPU</a>, terakhir akses tanggal 18 Januari 2024
+                        <a href="https://infopemilu.kpu.go.id/Pemilu/Peserta_pemilu" rel="nofollow" target="_blank" class="text-indigo-600 hover:text-indigo-900">DCT Info Pemilu KPU</a>, terakhir akses tanggal 18 Januari 2024
                     </p>
                 </div>
             </div>
