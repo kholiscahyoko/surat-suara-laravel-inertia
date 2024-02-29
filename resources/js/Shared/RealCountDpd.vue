@@ -15,7 +15,7 @@
         <div class="text-center my-8">
             {{ `Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${data.chart.persen}%)` }}<br>
             {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
-            <span class="font-semibold">Sumber Data</span> : <a href="https://pemilu2024.kpu.go.id" class="text-indigo-600 hover:text-indigo-900">pemilu2024.kpu.go.id</a><br>
+            <SumberPemilu2024 /><br>
         </div>
         <div class="flex flex-wrap items-start justify-center my-8">
             <BarChart :master="master" :data="data" :calon="calon"/>
@@ -28,6 +28,7 @@
 <script setup>
 import BarChart from '../Components/BarChart.vue';
 import TableSuaraDpdPerWilayah from '../Components/TableSuaraDpdPerWilayah.vue';
+import SumberPemilu2024 from './SumberPemilu2024.vue';
 
 let props = defineProps({
     master : Object,

@@ -17,7 +17,7 @@
         </div>
         <div class="my-8">
             <h5 class="text-center font-bold md:text-2xl mt-10">Perolehan Suara Calon Legislatif</h5>
-            <div class="text-center mb-4"><span class="font-semibold">Sumber Data</span>: <a href="https://pemilu2024.kpu.go.id" class="text-indigo-600 hover:text-indigo-900">pemilu2024.kpu.go.id</a></div>
+            <div class="text-center mb-4"><SumberPemilu2024 /></div>
             <div class="flex flex-wrap items-start justify-center">
                 <TableSuaraCaleg v-if="data.table" v-for="calon_data, no_urut in master_calon" :partai="master_partai[no_urut]" :master_calon="calon_data" :calon="calon" :data="data.table[no_urut]" :dapil="dapil" :key="no_urut"/>
             </div>
@@ -27,6 +27,7 @@
 <script setup>
 import BarChartPartai from '../Components/BarChartPartai.vue';
 import TableSuaraCaleg from '../Components/TableSuaraCaleg.vue';
+import SumberPemilu2024 from './SumberPemilu2024.vue';
 
 let props = defineProps({
     master_partai : Object,
