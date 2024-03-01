@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
  
 class Meta {
     private array $meta;
-    private array $meta_property_keys = ['type', 'site_name', 'title', 'image', 'description', 'url', 'image:type', 'image:width', 'image:heigth'];
+    private array $meta_property_keys = ['type', 'site_name', 'title', 'image', 'description', 'url', 'image:type', 'image:width', 'image:height'];
     private array $meta_name_keys = ['description'];
     private array $meta_robot_keys = ['robots', 'googlebot', 'googlebot-news'];
     private array $meta_keywords = [
