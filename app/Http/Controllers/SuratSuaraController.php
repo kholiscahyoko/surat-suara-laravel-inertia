@@ -1127,6 +1127,11 @@ class SuratSuaraController extends Controller
             $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($calon->dapil->nama_dapil));
             $template = "ProfilDpd";
             $header_title_dewan = "DEWAN PERWAKILAN DAERAH<br>REPUBLIK INDONESIA";
+            if(!empty($calon->foto)){
+                $foto = pathinfo($calon->foto, PATHINFO_FILENAME);
+                $foto = Str::slug(strtolower($foto));
+                $foto_url = config('app.url'). "/assets/img/dpd_foto/compressed/{$foto}.webp";
+            }
         }else{
             $calon_keyword = "calon anggota legislatif";
 
@@ -1153,6 +1158,18 @@ class SuratSuaraController extends Controller
                     exit();
                     break;
             }
+            if(!empty($calon->foto)){
+                $foto_url = $calon->foto;
+            }
+        }
+        if(!empty($foto_url)){
+            $metaimage = [
+                'image' => $foto_url,
+                'image:type' => 'image/'.pathinfo($foto_url, PATHINFO_EXTENSION),
+                'image:width' => 800,
+                'image:heigth' => 800
+            ];
+            $this->meta->setMeta($metaimage);
         }
         $data = [
             'calon' => $calon,
