@@ -2,7 +2,7 @@
 <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
   <div class="flex flex-1 justify-between sm:hidden">
     <Component
-      :is="data.prev_page_url ? 'Link' : 'span'"
+      :is="data.prev_page_url ? 'a' : 'span'"
       :href="data.prev_page_url"
       class="relative inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50"
       :class="data.prev_page_url ? 'text-gray-700 bg-white' : 'text-gray-500 bg-gray-200'"
@@ -10,7 +10,7 @@
       Sebelumnya
     </Component>
     <Component
-      :is="data.next_page_url ? 'Link' : 'span'"
+      :is="data.next_page_url ? 'a' : 'span'"
       :href="data.next_page_url"
       class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50"
       :class="data.next_page_url ? 'text-gray-700 bg-white' : 'text-gray-500 bg-gray-200'"
@@ -33,7 +33,7 @@
     <div>
       <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
         <Component
-            :is="data.prev_page_url ? 'Link' : 'span'"
+            :is="data.prev_page_url ? 'a' : 'span'"
             :href="data.prev_page_url"
             class="rounded-l-md relative inline-flex px-4 items-center ring-1 ring-inset ring-gray-300 py-2 hover:bg-gray-50 focus:outline-offset-0 focus:z-20"
             :class="[
@@ -46,7 +46,7 @@
         <PaginationLink v-for="link in data.links.slice(1, -1)" :link="link" />
         <Component
             :is="data.next_page_url ?
-            'Link' : 'span'"
+            'a' : 'span'"
             :href="data.next_page_url"
             class="rounded-r-md relative inline-flex px-4 items-center ring-1 ring-inset ring-gray-300 py-2 hover:bg-gray-50 focus:outline-offset-0 focus:z-20"
             :class="[

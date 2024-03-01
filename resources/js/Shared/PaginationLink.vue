@@ -1,5 +1,5 @@
 <template>
-    <Link v-if="link.url"
+    <a v-if="link.url"
         class="relative inline-flex items-center px-4 py-2 text-sm font-semibold"
         v-html="link.label"
         :href="link.url"
