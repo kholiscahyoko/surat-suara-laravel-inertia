@@ -1167,7 +1167,7 @@ class SuratSuaraController extends Controller
                 'image' => $foto_url,
                 'image:type' => 'image/'.pathinfo($foto_url, PATHINFO_EXTENSION),
                 'image:width' => 800,
-                'image:heigth' => 800
+                'image:height' => 800
             ];
             $this->meta->setMeta($metaimage);
         }

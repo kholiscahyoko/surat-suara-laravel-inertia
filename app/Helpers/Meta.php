@@ -28,7 +28,7 @@ class Meta {
             'url' => url()->current(),
             'image:type' => 'image/webp',
             'image:width' => 366,
-            'image:heigth' => 650,
+            'image:height' => 650,
         ];
 
         $this->url_canonical = url()->current();
