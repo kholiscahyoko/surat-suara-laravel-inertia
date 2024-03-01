@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build && vite build --ssr"
     },
     "devDependencies": {
         "@vue-leaflet/vue-leaflet": "^0.10.1",
@@ -23,6 +23,7 @@
         "@heroicons/vue": "^2.1.1",
         "@inertiajs/vue3": "^1.0.14",
         "@vitejs/plugin-vue": "^5.0.3",
+        "@vue/server-renderer": "^3.4.21",
         "apexcharts": "^3.45.2",
         "crypto-js": "^4.2.0",
         "flowbite": "^2.2.1",

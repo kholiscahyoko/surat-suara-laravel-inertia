@@ -1,4 +1,4 @@
-import { createApp, h } from 'vue'
+import { createSSRApp, h } from 'vue'
 import { createInertiaApp, Link, Head } from '@inertiajs/vue3'
 import Layout from './Shared/Layout.vue';
 
@@ -19,7 +19,7 @@ createInertiaApp({
     return page;
   },
   setup({ el, App, props, plugin }) {
-    const vueApp = createApp({ render: () => h(App, props) })
+    const vueApp = createSSRApp({ render: () => h(App, props) })
       .use(plugin)
       .component("Link", Link);
     vueApp.config.globalProperties.$slugify = function(str){
