@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white mb-10 p-2 shadow-lg shadow-slate-800 rounded-lg">
     <h2 class="lg:text-2xl text-xl text-center font-bold mb-2">Daftar Calon Tetap di setiap provinsi</h2>
-    <div class="w-full h-[500px] ">
+    <div class="w-full h-[500px] max-h-96">
       <l-map ref="map" v-model:zoom="zoom" :min-zoom="(zoom-1)" :max-zoom="(zoom+2)" :center="center" :use-global-leaflet="false" :options="{scrollWheelZoom: false}">
         <l-tile-layer
           url="https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}"
