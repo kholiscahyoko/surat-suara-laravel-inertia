@@ -30,6 +30,13 @@ Route::get('/surat-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [Su
     'kode_wilayah' => '[0-9]+',
 ]);
 
+Route::get('/hitung-suara/{tingkatan_wilayah}/{nama_wilayah}/{kode_wilayah}', [SuratSuaraController::class, 'wilayah_dapil'])
+->where([
+    'tingkatan_wilayah' => '(desa|kecamatan|kabkota|provinsi)',
+    'nama_wilayah' => '[a-z0-9-]+',
+    'kode_wilayah' => '[0-9]+',
+]);
+
 Route::get('/surat-suara/{jenis}/{nama_dapil?}/{kode_dapil?}/{nama_calon?}/{calon_id?}', [SuratSuaraController::class, 'jenis'])
 ->where([
     'jenis', '(pilpres|dpd|dpr|dprd-provinsi|dprd-kabkota)',

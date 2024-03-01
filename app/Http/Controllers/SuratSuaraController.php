@@ -1264,7 +1264,7 @@ class SuratSuaraController extends Controller
         return redirect($url_redirect, 301);
     }
 
-    public function wilayah_dapil(string $tingkatan_wilayah, string $nama_wilayah, string $kode_wilayah, bool $sampul = true)
+    public function wilayah_dapil(Request $request, string $tingkatan_wilayah, string $nama_wilayah, string $kode_wilayah, bool $sampul = true)
     {
         $id_dapil_dprdk = null;
         $id_dapil_dprdp = null;
@@ -1368,22 +1368,41 @@ class SuratSuaraController extends Controller
 
         $label_wilayah = ucwords(strtolower($label_wilayah));
 
-        $metadata = ['description' => "Surat Suara Pemilu di Wilayah {$label_wilayah}"] ;
+        if($request->segment(1) === "hitung-suara"){
+            $metadata = ['description' => "Hitung Suara Real Count Pemilu di Wilayah {$label_wilayah}"] ;
 
-        $this->meta->setMeta($metadata);
-        $this->meta->setTitle("Surat Suara Wilayah {$wilayah->nama}");
+            $this->meta->setMeta($metadata);
+            $this->meta->setTitle("Hitung Suara Wilayah {$wilayah->nama}");
+    
+            $this->meta->addMetaKeywords([
+                "hitung suara realcount pemilu di ".trim(strtolower(str_replace(',', '', $label_wilayah))),
+            ]);
+    
+            return Inertia::render('RealCountWilayah',  [
+                'dprdk' => $dprdk,
+                'dprdp' => $dprdp,
+                'dpr' => $dpr,
+                'dpd' => $dpd,
+                'label_wilayah' => $label_wilayah
+            ]);
+        }else{
+            $metadata = ['description' => "Surat Suara Pemilu di Wilayah {$label_wilayah}"] ;
 
-        $this->meta->addMetaKeywords([
-            "surat suara pemilu di ".trim(strtolower(str_replace(',', '', $label_wilayah))),
-        ]);
-
-        return Inertia::render('SuratSuaraSampul',  [
-            'dprdk' => $dprdk,
-            'dprdp' => $dprdp,
-            'dpr' => $dpr,
-            'dpd' => $dpd,
-            'label_wilayah' => $label_wilayah
-        ]);
+            $this->meta->setMeta($metadata);
+            $this->meta->setTitle("Surat Suara Wilayah {$wilayah->nama}");
+    
+            $this->meta->addMetaKeywords([
+                "surat suara pemilu di ".trim(strtolower(str_replace(',', '', $label_wilayah))),
+            ]);
+    
+            return Inertia::render('SuratSuaraSampul',  [
+                'dprdk' => $dprdk,
+                'dprdp' => $dprdp,
+                'dpr' => $dpr,
+                'dpd' => $dpd,
+                'label_wilayah' => $label_wilayah
+            ]);
+        }
     }
 
     private function get_surat_suara_by_id_dapil(Int $id_dapil, bool $dpd = false){
