@@ -6,6 +6,7 @@
     @isset($meta)
     {!! $meta->generate() !!}
     @endisset
+    @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/nprogress.css'])
     @inertiaHead
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3686539766588397"
      crossorigin="anonymous"></script>
@@ -21,6 +22,5 @@
   </head>
   <body class="min-h-full">
     @inertia
-    @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/nprogress.css'])
   </body>
 </html>
