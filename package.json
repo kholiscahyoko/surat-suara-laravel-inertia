@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build && vite build --ssr"
+        "build": "vite build"
     },
     "devDependencies": {
         "@vue-leaflet/vue-leaflet": "^0.10.1",
