@@ -6,7 +6,7 @@
                 Fitur <span class="font-semibold text-green-900">Real Count</span> dan <span class="font-semibold text-green-900">Calon Terpilih</span> sudah selesai dikembangkan. Temukan di semua fitur pencarian maupun halaman detail surat suara. Selamat mencoba.
             </p>
             <p>
-                Butuh Bantuan ? Jangan ragu <a :href="$setUrl('/hubungi-kami')" class="text-indigo-600 font-semibold underline underline-offset-2">Hubungi Kami</a>.
+                Butuh Bantuan ? Jangan ragu <a :href="$setUrl('/hubungi-kami')" class="text-indigo-600 font-semibold underline underline-offset-2">Hubungi Kami</a>. Kritik dan saran yang membangun juga kami harapkan.
             </p>
         </div>
     </div>
