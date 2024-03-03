@@ -31,8 +31,8 @@
             </template>
         </div>
         <div class="md:flex md:justify-evenly mb-4 items-center">
-            <a :href="$setUrl(`/hitung-suara/dprd-provinsi/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}`)" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Real Count Lengkap Disini</a>
-            <a :href="$setUrl(`/surat-suara/dprd-provinsi/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}`)" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Lihat Surat Suara Disini</a>
+            <a :href="$setUrl(`/hitung-suara/dprd-kabkota/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}`)" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Real Count Lengkap Disini</a>
+            <a :href="$setUrl(`/surat-suara/dprd-kabkota/${$slugify(dapil.nama_dapil)}/${dapil.kode_dapil}`)" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Lihat Surat Suara Disini</a>
         </div>
     </div>
 </template>
