@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-20">
+    <div class="m-2 max-w-[800px]">
         <h1 class="text-2xl font-bold tracking-tight text-gray-900">
             Tentang Kami
         </h1>

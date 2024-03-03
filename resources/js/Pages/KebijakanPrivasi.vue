@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-20 max-w-[800px]">
+    <div class="m-2 max-w-[800px]">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">
             Kebijakan Privasi
         </h1>
@@ -43,7 +43,7 @@
             Terima kasih.
         </p>
     </div>
-    <div class="mt-10 mx-20 max-w-[800px]">
+    <div class="mt-10 m-2 max-w-[800px]">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">
             Privacy Policy
         </h1>
