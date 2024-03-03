@@ -19,7 +19,7 @@
         <h2 class="text-center font-bold md:text-3xl mt-10">JUMLAH KURSI TERSEDIA</h2>
         <h2 class="text-center font-bold text-2xl md:text-5xl mt-2">{{ kursi_dapil.jumlah_kursi }}</h2>
         <h2 class="text-center font-bold md:text-3xl mt-10">PARTAI YANG LOLOS PARLEMEN</h2>
-        <h3 class="text-center text-sm md:text-xl mt-1">*menggunakan <a href="www.google.com/search?q=sainte+lague" target="_blank" rel="nofollow" class="hover:underline">metode sainte lague</a></h3>
+        <h3 class="text-center text-sm md:text-xl mt-1">*menggunakan <a href="https://www.google.com/search?q=sainte+lague" target="_blank" rel="nofollow" class="hover:underline">metode sainte lague</a></h3>
         <div class="flex flex-wrap items-start justify-center mt-2 p-2">
             <KursiPartaiBlock v-for="item, k in data?.list" :partai="master_partai[k]" :data="item"/>
         </div>
