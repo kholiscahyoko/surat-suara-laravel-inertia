@@ -34,4 +34,12 @@ class CacheHelper {
             return Cache::get($key, $content);
         }
     }
+
+    public function del(string $key, bool $useRedis = false) {
+        if($this->useRedis || $useRedis){
+            return Redis::del($key);
+        }else{
+            return Cache::forget($key);
+        }
+    }
 }
