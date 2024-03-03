@@ -78,7 +78,7 @@ class SuratSuaraController extends Controller
         if(!is_numeric($page)){
             $page = 0;
         }
-        if($calons = Cache::get('calon_search:'.Str::slug(strtolower($request->input('search'))).":".$page)){
+        if($calons = $this->cache->get('calon_search:'.Str::slug(strtolower($request->input('search'))).":".$page)){
             $calons = json_decode($calons);
         }else{
             $calons = Calons::
@@ -98,7 +98,7 @@ class SuratSuaraController extends Controller
                 'jenis_dewan' => $user->dapil->jenis_dewan,
                 'nama_dapil' => $user->dapil->nama_dapil,
             ]);
-            Cache::put('calon_search:'.Str::slug(strtolower($request->input('search'))).":".$page, json_encode($calons));
+            $this->cache->set('calon_search:'.Str::slug(strtolower($request->input('search'))).":".$page, json_encode($calons));
         }
 
         return Inertia::render('Calon',[
@@ -113,7 +113,7 @@ class SuratSuaraController extends Controller
         if(!is_numeric($page)){
             $page = 0;
         }
-        if($dapils = Cache::get('dapil_search:'.Str::slug(strtolower($request->input('search'))).":".$page)){
+        if($dapils = $this->cache->get('dapil_search:'.Str::slug(strtolower($request->input('search'))).":".$page)){
             $dapils = json_decode($dapils);
         }else{
             $dapils = Dapils::query()
@@ -128,7 +128,7 @@ class SuratSuaraController extends Controller
                 'kode_dapil' => $data->kode_dapil,
                 'jenis_dewan' => $data->jenis_dewan,
             ]);
-            Cache::put('dapil_search:'.Str::slug(strtolower($request->input('search'))).":".$page, json_encode($dapils));
+            $this->cache->set('dapil_search:'.Str::slug(strtolower($request->input('search'))).":".$page, json_encode($dapils));
         }
 
         $this->meta->setMeta(config('app.meta')['dapil']);
@@ -150,7 +150,7 @@ class SuratSuaraController extends Controller
         }
         $search = $request->input('search');
 
-        if($wilayahs = Cache::get('wilayah_search:'.Str::slug(strtolower($search)).":".$page)){
+        if($wilayahs = $this->cache->get('wilayah_search:'.Str::slug(strtolower($search)).":".$page)){
             $wilayahs = json_decode($wilayahs);
         }else{
             $wilayahs = Desa::rightJoin('kecamatans', 'desas.id_kecamatan', '=', 'kecamatans.id')
@@ -169,7 +169,7 @@ class SuratSuaraController extends Controller
             ->paginate(20)
             ->withQueryString()
             ;
-            Cache::put('wilayah_search:'.Str::slug(strtolower($search)).":".$page, json_encode($wilayahs));
+            $this->cache->set('wilayah_search:'.Str::slug(strtolower($search)).":".$page, json_encode($wilayahs));
         }
 
         $this->meta->setMeta(config('app.meta')['wilayah']);
@@ -192,13 +192,13 @@ class SuratSuaraController extends Controller
         }
 
         if(strlen($request->input('kode_dapil')) == 2){
-            if($result = Cache::get('wilayah_by_kode_dapil:'.$request->input('kode_dapil'))){
+            if($result = $this->cache->get('wilayah_by_kode_dapil:'.$request->input('kode_dapil'))){
                 $result = json_decode($result);
             }else{
                 $result = Provinsi::where('kode_wilayah', '=', $request->input('kode_dapil'))
                 ->select(['nama'])
                 ->first();
-                Cache::put('wilayah_by_kode_dapil:'.$request->input('kode_dapil'), json_encode($result));
+                $this->cache->set('wilayah_by_kode_dapil:'.$request->input('kode_dapil'), json_encode($result));
             }
             if(!$result){
                 return response()->json([
@@ -212,7 +212,7 @@ class SuratSuaraController extends Controller
                 ], 200);
             }
         }
-        if($result = Cache::get('wilayah_by_kode_dapil:'.$request->input('kode_dapil'))){
+        if($result = $this->cache->get('wilayah_by_kode_dapil:'.$request->input('kode_dapil'))){
             $result = json_decode($result);
         }else{
             $result = Wilayah::where('kode_dapil', '=', $request->input('kode_dapil'))
@@ -221,7 +221,7 @@ class SuratSuaraController extends Controller
             if($result->isEmpty()){
                 $result = null;
             }
-            Cache::put('wilayah_by_kode_dapil:'.$request->input('kode_dapil'), json_encode($result));
+            $this->cache->set('wilayah_by_kode_dapil:'.$request->input('kode_dapil'), json_encode($result));
         }
 
         if(empty($result)){
@@ -287,13 +287,13 @@ class SuratSuaraController extends Controller
             return Inertia::render('SuratSuaraPilpres');
             exit();
         }elseif($jenis === "dpd"){
-            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+            if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
                 $dapil = json_decode($dapil);
             }else{
                 $dapil = Dapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
             }
 
             $calon_keyword = "calon dewan perwakilan daerah provinsi ".trim(strtolower($dapil->nama_dapil));
@@ -302,13 +302,13 @@ class SuratSuaraController extends Controller
 
             $template = "SuratSuaraDpd";
 
-            if($calons = Cache::get('calons_by_dapil:'.$kode_dapil)){
+            if($calons = $this->cache->get('calons_by_dapil:'.$kode_dapil)){
                 $calons = json_decode($calons);
             }else{
                 $calons = Calons::where('kode_dapil', $kode_dapil)
                 ->orderBy('no_urut')
                 ->get();
-                Cache::put('calons_by_dapil:'.$kode_dapil, json_encode($calons));
+                $this->cache->set('calons_by_dapil:'.$kode_dapil, json_encode($calons));
             }
 
             $data = [
@@ -316,7 +316,7 @@ class SuratSuaraController extends Controller
                 'dapil' => $dapil
             ];
         }else{
-            if($partais = Cache::get('partais_by_dapil:'.$kode_dapil)){
+            if($partais = $this->cache->get('partais_by_dapil:'.$kode_dapil)){
                 $partais = json_decode($partais);
             }else{
                 $partais = Partais::with(['calons' => function($query) use ($kode_dapil){
@@ -342,15 +342,15 @@ class SuratSuaraController extends Controller
                     return empty($partai);
                 })
                 ->toArray();
-                Cache::put('partais_by_dapil:'.$kode_dapil, json_encode($partais));
+                $this->cache->set('partais_by_dapil:'.$kode_dapil, json_encode($partais));
             }
-            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+            if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
                 $dapil = json_decode($dapil);
             }else{
                 $dapil = Dapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
             }
 
             switch ($jenis) {
@@ -396,14 +396,14 @@ class SuratSuaraController extends Controller
 
         if(!empty($data['dapil']) && is_numeric($calon_id)){
             $this->meta->set_canonical("{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$kode_dapil}");
-            if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
+            if($calon = $this->cache->get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
             }else{
                 if($calon = Calons::find($calon_id)){
-                    Cache::put('profil_calon_suara:'.$calon_id, json_encode($calon));
+                    $this->cache->set('profil_calon_suara:'.$calon_id, json_encode($calon));
                     $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
                     $this->meta->addMetaKeywords([
                         strtolower(str_replace(",", ".", $calon->nama))
@@ -465,35 +465,35 @@ class SuratSuaraController extends Controller
             ]);
 
             $master = null;
-            if($master = Cache::get('hitung_suara:pilpres:calon')){
+            if($master = $this->cache->get('hitung_suara:pilpres:calon')){
                 $master = json_decode($master);
             }else{
                 $response_master = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
                 if($response_master->ok()){
                     $master = $response_master->object();
-                    Cache::put('hitung_suara:pilpres:calon', json_encode($master));
+                    $this->cache->set('hitung_suara:pilpres:calon', json_encode($master));
                 }
             }
 
             $wilayah = null;
-            if($wilayah = Cache::get('hitung_suara:pilpres:wilayah')){
+            if($wilayah = $this->cache->get('hitung_suara:pilpres:wilayah')){
                 $wilayah = json_decode($wilayah);
             }else{
                 $response_wilayah = Http::get('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
                 if($response_wilayah->ok()){
                     $wilayah = $response_wilayah->object();
-                    Cache::put('hitung_suara:pilpres:wilayah', json_encode($wilayah));
+                    $this->cache->set('hitung_suara:pilpres:wilayah', json_encode($wilayah));
                 }
             }
 
             $data = null;
-            if($data = Cache::get('hitung_suara:pilpres:data')){
+            if($data = $this->cache->get('hitung_suara:pilpres:data')){
                 $data = json_decode($data);
             }else{
                 $response_data = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
                 if($response_data->ok()){
                     $data = $response_data->object();
-                    Cache::put('hitung_suara:pilpres:data', json_encode($data), 120);
+                    $this->cache->setex('hitung_suara:pilpres:data', 120, json_encode($data));
                 }
             }
             $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
@@ -501,14 +501,14 @@ class SuratSuaraController extends Controller
             return Inertia::render('RealCountPilpres', $result);
             exit();
         }elseif($jenis === "dpd"){
-            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+            if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
                 $dapil = json_decode($dapil);
                 echo "DAPIL CACHED<br>";
             }else{
                 $dapil = Dapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
             }
 
             if(empty($dapil) || !isset($dapil->nama_dapil)){
@@ -517,38 +517,38 @@ class SuratSuaraController extends Controller
             }
 
             $master = null;
-            if($master = Cache::get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
+            if($master = $this->cache->get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
                 $master = json_decode($master);
                 echo "MASTER CACHED<br>";
             }else{
                 $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
                 if($response_master->ok()){
                     $master = $response_master->object();
-                    Cache::put("hitung_suara:dpd:calon:{$dapil->kode_dapil}", json_encode($master), 120);
+                    $this->cache->setex("hitung_suara:dpd:calon:{$dapil->kode_dapil}", 120, json_encode($master));
                 }
             }
 
             $wilayah = null;
-            if($wilayah = Cache::get("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}")){
+            if($wilayah = $this->cache->get("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}")){
                 $wilayah = json_decode($wilayah);
                 echo "WILAYAH CACHED<br>";
             }else{
                 $response_wilayah = Http::get("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{$kode_dapil}.json");
                 if($response_wilayah->ok()){
                     $wilayah = $response_wilayah->object();
-                    Cache::put("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}", json_encode($wilayah), 120);
+                    $this->cache->setex("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}", 120, json_encode($wilayah));
                 }
             }
 
             $data = null;
-            if($data = Cache::get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
+            if($data = $this->cache->get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
                 $data = json_decode($data);
                 echo "DATA CACHED<br>";
             }else{
                 $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
                 if($response_data->ok()){
                     $data = $response_data->object();
-                    Cache::put("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", json_encode($data), 120);
+                    $this->cache->setex("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", 120, json_encode($data));
                 }
             }
 
@@ -558,23 +558,23 @@ class SuratSuaraController extends Controller
             $this->meta->setTitle("Real Count DPD {$dapil->nama_dapil}");
         }else{
             $master_partai = null;
-            if($master_partai = Cache::get('hitung_suara:master_partai')){
+            if($master_partai = $this->cache->get('hitung_suara:master_partai')){
                 $master_partai = json_decode($master_partai);
             }else{
                 $response_master_partai = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
                 if($response_master_partai->ok()){
                     $master_partai = $response_master_partai->object();
-                    Cache::put('hitung_suara:master_partai', json_encode($master_partai), 120);
+                    $this->cache->setex('hitung_suara:master_partai', 120, json_encode($master_partai));
                 }
             }
 
-            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+            if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
                 $dapil = json_decode($dapil);
             }else{
                 $dapil = Dapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
             }
 
             if(empty($dapil) || !isset($dapil->nama_dapil)){
@@ -587,35 +587,35 @@ class SuratSuaraController extends Controller
 
                     $data_higher_level = null;
 
-                    if($data_higher_level = Cache::get('hitung_suara:dpr:nasional')){
+                    if($data_higher_level = $this->cache->get('hitung_suara:dpr:nasional')){
                         $data_higher_level = json_decode($data_higher_level);
                     }else{
                         $response_data_higher_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
                         if($response_data_higher_level->ok()){
                             $data_higher_level = $response_data_higher_level->object();
-                            Cache::put('hitung_suara:dpr:nasional', json_encode($data_higher_level), 120);
+                            $this->cache->setex('hitung_suara:dpr:nasional', 120, json_encode($data_higher_level));
                         }
                     }
 
                     $data_lower_level = null;
-                    if($data_lower_level = Cache::get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
+                    if($data_lower_level = $this->cache->get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
                         $data_lower_level = json_decode($data_lower_level);
                     }else{
                         $response_data_lower_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
                         if($response_data_lower_level->ok()){
                             $data_lower_level = $response_data_lower_level->object();
-                            Cache::put('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, json_encode($data_lower_level), 120);
+                            $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
                         }
                     }
 
                     $master_calon = null;
-                    if($master_calon = Cache::get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
+                    if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
                         $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
-                            Cache::put('hitung_suara:dpr:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                            $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
@@ -634,25 +634,25 @@ class SuratSuaraController extends Controller
                 
                 case 'dprdp':
                     $data = null;
-                    if($data = Cache::get('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil)){
+                    if($data = $this->cache->get('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil)){
                         $data = json_decode($data);
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
                         $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
-                            Cache::put('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                            $this->cache->setex('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
                         }
                     }
 
                     $master_calon = null;
-                    if($master_calon = Cache::get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
+                    if($master_calon = $this->cache->get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
                         $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
-                            Cache::put('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                            $this->cache->setex('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
@@ -673,7 +673,7 @@ class SuratSuaraController extends Controller
                 
                 case 'dprdk':
                     $data = null;
-                    if($data = Cache::get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
+                    if($data = $this->cache->get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
                         $data = json_decode($data);
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
@@ -681,18 +681,18 @@ class SuratSuaraController extends Controller
                         $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
-                            Cache::put('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                            $this->cache->setex('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
                         }
                     }
 
                     $master_calon = null;
-                    if($master_calon = Cache::get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
+                    if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
                         $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
-                            Cache::put('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                            $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
@@ -733,14 +733,14 @@ class SuratSuaraController extends Controller
 
         if(!empty($dapil) && is_numeric($calon_id)){
             $this->meta->set_canonical("{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$kode_dapil}");
-            if($calon = Cache::get('profil_calon_suara:'.$calon_id)){
+            if($calon = $this->cache->get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
             }else{
                 if($calon = Calons::find($calon_id)){
-                    Cache::put('profil_calon_suara:'.$calon_id, json_encode($calon));
+                    $this->cache->set('profil_calon_suara:'.$calon_id, json_encode($calon));
                     $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
                     $this->meta->addMetaKeywords([
                         strtolower(str_replace(",", ".", $calon->nama))
@@ -786,17 +786,17 @@ class SuratSuaraController extends Controller
         }
 
         if($jenis === "dpd"){
-            if($result = Cache::get('hitung_suara:dpd:'.$kode_dapil)){
+            if($result = $this->cache->get('hitung_suara:dpd:'.$kode_dapil)){
                 $result = json_decode($result, true);
                 $dapil = (object) $result["dapil"];
             }else{
-                if($dapil = Cache::get('dapil:'.$kode_dapil)){
+                if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
                     $dapil = json_decode($dapil);
                 }else{
                     $dapil = Dapils::query()
                     ->where('kode_dapil', $kode_dapil)
                     ->first();
-                    Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                    $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
                 }
     
                 if(empty($dapil) || !isset($dapil->nama_dapil)){
@@ -805,30 +805,30 @@ class SuratSuaraController extends Controller
                 }
             }
 
-            if($data_calon_lolos = Cache::get("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}")){
+            if($data_calon_lolos = $this->cache->get("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}")){
                 $data_calon_lolos = json_decode($data_calon_lolos, true);
             }else{
                 $master = null;
-                if($master = Cache::get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
+                if($master = $this->cache->get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
                     $master = json_decode($master);
                 }else{
                     $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
                     if($response_master->ok()){
                         $master = $response_master->object();
-                        Cache::put("hitung_suara:dpd:calon:{$dapil->kode_dapil}", json_encode($master), 120);
+                        $this->cache->setex("hitung_suara:dpd:calon:{$dapil->kode_dapil}", 120, json_encode($master));
                     }
                 }
     
                 $master = (array) $master;
     
                 $data = null;
-                if($data = Cache::get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
+                if($data = $this->cache->get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
                     $data = json_decode($data);
                 }else{
                     $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
                     if($response_data->ok()){
                         $data = $response_data->object();
-                        Cache::put("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", json_encode($data), 120);
+                        $this->cache->setex("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", 120, json_encode($data));
                     }
                 }
     
@@ -850,12 +850,12 @@ class SuratSuaraController extends Controller
                 $data_calon_lolos = [];
     
                 foreach ($data_suara as $key_calon => $jumlah_suara) {
-                    if($calon = Cache::get("cari_profil:{$kode_dapil}::{$master[$key_calon]->nomor_urut}")){
+                    if($calon = $this->cache->get("cari_profil:{$kode_dapil}::{$master[$key_calon]->nomor_urut}")){
                         $calon = json_decode($calon);
                     }else{
                         $calon = Calons::with('dapil')->where('calons.kode_dapil', $kode_dapil)->where('calons.no_urut', $master[$key_calon]->nomor_urut)->first();
                         if($calon){
-                            Cache::put("cari_profil:{$kode_dapil}::{$master[$key_calon]->nomor_urut}", json_encode($calon));
+                            $this->cache->set("cari_profil:{$kode_dapil}::{$master[$key_calon]->nomor_urut}", json_encode($calon));
                         }
                     }
 
@@ -880,7 +880,7 @@ class SuratSuaraController extends Controller
                 if(!empty($data_calon_lolos['list'])){
                     $data_calon_lolos["ts"] = $data->ts;
                     $data_calon_lolos["progres"] = $data->progres;
-                    Cache::put("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}", json_encode($data_calon_lolos), 120);
+                    $this->cache->setex("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}", 120, json_encode($data_calon_lolos));
                 }
             }
 
@@ -894,32 +894,32 @@ class SuratSuaraController extends Controller
             $this->meta->setTitle("Daftar Calon DPD Terpilih Provinsi {$dapil->nama_dapil} Sementara");
         }else{
             $master_partai = null;
-            if($master_partai = Cache::get('hitung_suara:master_partai')){
+            if($master_partai = $this->cache->get('hitung_suara:master_partai')){
                 $master_partai = json_decode($master_partai);
             }else{
                 $response_master_partai = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
                 if($response_master_partai->ok()){
                     $master_partai = $response_master_partai->object();
-                    Cache::put('hitung_suara:master_partai', json_encode($master_partai), 120);
+                    $this->cache->setex('hitung_suara:master_partai', 120, json_encode($master_partai));
                 }
             }
 
-            if($dapil = Cache::get('dapil:'.$kode_dapil)){
+            if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
                 $dapil = json_decode($dapil);
             }else{
                 $dapil = Dapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                Cache::put('dapil:'.$kode_dapil, json_encode($dapil));
+                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
             }
 
-            if($kursi_dapil = Cache::get('kursi_dapil:'.$kode_dapil)){
+            if($kursi_dapil = $this->cache->get('kursi_dapil:'.$kode_dapil)){
                 $kursi_dapil = json_decode($kursi_dapil);
             }else{
                 $kursi_dapil = Kursidapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                Cache::put('kursi_dapil:'.$kode_dapil, json_encode($kursi_dapil));
+                $this->cache->set('kursi_dapil:'.$kode_dapil, json_encode($kursi_dapil));
             }
 
             if(empty($dapil) || !isset($dapil->nama_dapil) || empty($kursi_dapil) || !isset($kursi_dapil->jumlah_kursi)){
@@ -932,35 +932,35 @@ class SuratSuaraController extends Controller
 
                     $data_higher_level = null;
 
-                    if($data_higher_level = Cache::get('hitung_suara:dpr:nasional')){
+                    if($data_higher_level = $this->cache->get('hitung_suara:dpr:nasional')){
                         $data_higher_level = json_decode($data_higher_level);
                     }else{
                         $response_data_higher_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
                         if($response_data_higher_level->ok()){
                             $data_higher_level = $response_data_higher_level->object();
-                            Cache::put('hitung_suara:dpr:nasional', json_encode($data_higher_level), 120);
+                            $this->cache->setex('hitung_suara:dpr:nasional', 120, json_encode($data_higher_level));
                         }
                     }
 
                     $data_lower_level = null;
-                    if($data_lower_level = Cache::get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
+                    if($data_lower_level = $this->cache->get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
                         $data_lower_level = json_decode($data_lower_level);
                     }else{
                         $response_data_lower_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
                         if($response_data_lower_level->ok()){
                             $data_lower_level = $response_data_lower_level->object();
-                            Cache::put('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, json_encode($data_lower_level), 120);
+                            $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
                         }
                     }
 
                     $master_calon = null;
-                    if($master_calon = Cache::get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
+                    if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
                         $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
-                            Cache::put('hitung_suara:dpr:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                            $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
@@ -979,30 +979,30 @@ class SuratSuaraController extends Controller
                 
                 case 'dprdp':
                     $data = null;
-                    if($data = Cache::get('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil)){
+                    if($data = $this->cache->get('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil)){
                         $data = json_decode($data);
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
                         $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
-                            Cache::put('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                            $this->cache->setex('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
                         }
                     }
 
                     $master_calon = null;
-                    if($master_calon = Cache::get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
+                    if($master_calon = $this->cache->get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
                         $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
-                            Cache::put('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                            $this->cache->setex('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
                     $data_calon_lolos = null;
-                    if($data_calon_lolos = Cache::get("hitung_suara:dprdp:calon_lolos:{$dapil->kode_dapil}")){
+                    if($data_calon_lolos = $this->cache->get("hitung_suara:dprdp:calon_lolos:{$dapil->kode_dapil}")){
                         $data_calon_lolos = json_decode($data_calon_lolos);
                     }else{
                         $jumlah_kursi = $kursi_dapil->jumlah_kursi;
@@ -1025,7 +1025,7 @@ class SuratSuaraController extends Controller
                                 $data_suara = array_slice($suara_calon_partai, 0, $kursi_partai, true);
     
                                 foreach ($data_suara as $key_calon => $jumlah_suara) {
-                                    if($calon = Cache::get("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}")){
+                                    if($calon = $this->cache->get("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}")){
                                         $calon = json_decode($calon);
                                     }else{
                                         $calons = Calons::with('partai', 'dapil')->where('calons.kode_dapil', $kode_dapil)->where('calons.no_urut', $master_calon->$no_partai->$key_calon->nomor_urut)->get();
@@ -1042,7 +1042,7 @@ class SuratSuaraController extends Controller
                                     }else{
                                         $foto = $calon->foto;
                                         $url_profil = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/dprd-provinsi/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
-                                        Cache::put("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
+                                        $this->cache->set("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
                                     }
                 
                                     $data_calon_lolos['list'][$no_partai]['list'][] = [
@@ -1061,7 +1061,7 @@ class SuratSuaraController extends Controller
                         if(!empty($data_calon_lolos["list"])){
                             $data_calon_lolos["ts"] = $data->ts;
                             $data_calon_lolos["progres"] = $data->progres;
-                            Cache::put("hitung_suara:dprdp:calon_lolos:{$dapil->kode_dapil}", json_encode($data_calon_lolos), 120);
+                            $this->cache->setex("hitung_suara:dprdp:calon_lolos:{$dapil->kode_dapil}", 120, json_encode($data_calon_lolos));
                         }
                     }
 
@@ -1082,7 +1082,7 @@ class SuratSuaraController extends Controller
                 
                 case 'dprdk':
                     $data = null;
-                    if($data = Cache::get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
+                    if($data = $this->cache->get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
                         $data = json_decode($data);
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
@@ -1090,23 +1090,23 @@ class SuratSuaraController extends Controller
                         $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
-                            Cache::put('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, json_encode($data), 120);
+                            $this->cache->setex('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
                         }
                     }
 
                     $master_calon = null;
-                    if($master_calon = Cache::get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
+                    if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
                         $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
-                            Cache::put('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, json_encode($master_calon), 120);
+                            $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
                     $data_calon_lolos = null;
-                    if($data_calon_lolos = Cache::get("hitung_suara:dprdk:calon_lolos:{$dapil->kode_dapil}")){
+                    if($data_calon_lolos = $this->cache->get("hitung_suara:dprdk:calon_lolos:{$dapil->kode_dapil}")){
                         $data_calon_lolos = json_decode($data_calon_lolos);
                     }else{
                         $jumlah_kursi = $kursi_dapil->jumlah_kursi;
@@ -1129,7 +1129,7 @@ class SuratSuaraController extends Controller
                                 $data_suara = array_slice($suara_calon_partai, 0, $kursi_partai, true);
     
                                 foreach ($data_suara as $key_calon => $jumlah_suara) {
-                                    if($calon = Cache::get("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}")){
+                                    if($calon = $this->cache->get("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}")){
                                         $calon = json_decode($calon);
                                     }else{
                                         $calons = Calons::with('partai', 'dapil')->where('calons.kode_dapil', $kode_dapil)->where('calons.no_urut', $master_calon->$no_partai->$key_calon->nomor_urut)->get();
@@ -1146,7 +1146,7 @@ class SuratSuaraController extends Controller
                                     }else{
                                         $foto = $calon->foto;
                                         $url_profil = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/dprd-provinsi/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
-                                        Cache::put("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
+                                        $this->cache->set("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
                                     }
                 
                                     $data_calon_lolos['list'][$no_partai]['list'][] = [
@@ -1165,7 +1165,7 @@ class SuratSuaraController extends Controller
                         if(!empty($data_calon_lolos["list"])){
                             $data_calon_lolos["ts"] = $data->ts;
                             $data_calon_lolos["progres"] = $data->progres;
-                            Cache::put("hitung_suara:dprdk:calon_lolos:{$dapil->kode_dapil}", json_encode($data_calon_lolos), 120);
+                            $this->cache->setex("hitung_suara:dprdk:calon_lolos:{$dapil->kode_dapil}", 120, json_encode($data_calon_lolos));
                         }
                     }
 
@@ -1235,14 +1235,14 @@ class SuratSuaraController extends Controller
         }
 
         if(is_numeric($calon_id)){
-            if($calon = Cache::get('profil_calon_id:'.$calon_id)){
+            if($calon = $this->cache->get('profil_calon_id:'.$calon_id)){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
             }else{
                 if($calon = Calons::with('partai', 'dapil')->find($calon_id)){
-                    Cache::put('profil_calon_id:'.$calon_id, json_encode($calon));
+                    $this->cache->set('profil_calon_id:'.$calon_id, json_encode($calon));
                     $this->meta->addMetaKeywords([
                         strtolower(str_replace(",", ".", $calon->nama))
                     ]);
@@ -1357,7 +1357,7 @@ class SuratSuaraController extends Controller
         }
 
         if(is_numeric($kode_dapil) && is_numeric($no_calon) && (strlen($kode_dapil) == 2 || is_numeric($no_partai))){
-            if($calon = Cache::get("cari_profil:{$kode_dapil}:{$no_partai}:{$no_calon}")){
+            if($calon = $this->cache->get("cari_profil:{$kode_dapil}:{$no_partai}:{$no_calon}")){
                 $calon = json_decode($calon);
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
@@ -1374,7 +1374,7 @@ class SuratSuaraController extends Controller
                     }
                 }
                 if($calon){
-                    Cache::put('cari_profil:{$kode_dapil}:{$no_partai}:{$no_calon}', json_encode($calon));
+                    $this->cache->set('cari_profil:{$kode_dapil}:{$no_partai}:{$no_calon}', json_encode($calon));
                 }else{
                     abort(404);
                     exit();
@@ -1413,13 +1413,13 @@ class SuratSuaraController extends Controller
 
         switch ($tingkatan_wilayah) {
             case 'desa':
-                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                if($wilayah = $this->cache->get('wilayah:'.$kode_wilayah)){
                     $wilayah = json_decode($wilayah);
                 }else{
                     $wilayah = Desa::with(['kecamatan', 'kecamatan.kabkota' , 'kecamatan.kabkota.provinsi'])
                     ->where('kode_wilayah', $kode_wilayah)
                     ->first();
-                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                    $this->cache->set('wilayah:'.$kode_wilayah, json_encode($wilayah));
                 }
     
                 $label_wilayah = "Desa/Kelurahan {$wilayah->nama}, Kec. {$wilayah->kecamatan->nama}, {$wilayah->kecamatan->kabkota->nama}, {$wilayah->kecamatan->kabkota->provinsi->nama}";
@@ -1432,13 +1432,13 @@ class SuratSuaraController extends Controller
                 }
                 break;
             case 'kecamatan':
-                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                if($wilayah = $this->cache->get('wilayah:'.$kode_wilayah)){
                     $wilayah = json_decode($wilayah);
                 }else{
                     $wilayah = Kecamatan::with('kabkota', 'kabkota.provinsi')
                     ->where('kode_wilayah', $kode_wilayah)
                     ->first();
-                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                    $this->cache->set('wilayah:'.$kode_wilayah, json_encode($wilayah));
                 }
 
                 $label_wilayah = "Kec. {$wilayah->nama}, {$wilayah->kabkota->nama}, {$wilayah->kabkota->provinsi->nama}";
@@ -1452,13 +1452,13 @@ class SuratSuaraController extends Controller
                 break;
 
             case 'kabkota':
-                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                if($wilayah = $this->cache->get('wilayah:'.$kode_wilayah)){
                     $wilayah = json_decode($wilayah);
                 }else{
                     $wilayah = Kabkota::with('provinsi')
                     ->where('kode_wilayah', $kode_wilayah)
                     ->first();
-                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                    $this->cache->set('wilayah:'.$kode_wilayah, json_encode($wilayah));
                 }
 
                 $label_wilayah = "{$wilayah->nama}, {$wilayah->provinsi->nama}";
@@ -1471,12 +1471,12 @@ class SuratSuaraController extends Controller
                 break;
 
             case 'provinsi':
-                if($wilayah = Cache::get('wilayah:'.$kode_wilayah)){
+                if($wilayah = $this->cache->get('wilayah:'.$kode_wilayah)){
                     $wilayah = json_decode($wilayah);
                 }else{
                     $wilayah = Provinsi::where('kode_wilayah', $kode_wilayah)
                     ->first();
-                    Cache::put('wilayah:'.$kode_wilayah, json_encode($wilayah));
+                    $this->cache->set('wilayah:'.$kode_wilayah, json_encode($wilayah));
                 }
 
                 $label_wilayah = "{$wilayah->provinsi->nama}";
@@ -1493,10 +1493,10 @@ class SuratSuaraController extends Controller
         }
 
         if($sampul){
-            $dprdk = $id_dapil_dprdk ? (Cache::has('dapil_id:'.$id_dapil_dprdk) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dprdk)) : function() use ($id_dapil_dprdk) { $dapils = Dapils::find($id_dapil_dprdk); Cache::put('dapil_id:'.$id_dapil_dprdk, json_encode($dapils)); return $dapils; }): null;
-            $dprdp = $id_dapil_dprdp ? (Cache::has('dapil_id:'.$id_dapil_dprdp) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dprdp)) : function() use ($id_dapil_dprdp) { $dapils = Dapils::find($id_dapil_dprdp); Cache::put('dapil_id:'.$id_dapil_dprdp, json_encode($dapils)); return $dapils; }): null;
-            $dpr = $id_dapil_dpr ? (Cache::has('dapil_id:'.$id_dapil_dpr) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dpr)) : function() use ($id_dapil_dpr) { $dapils = Dapils::find($id_dapil_dpr); Cache::put('dapil_id:'.$id_dapil_dpr, json_encode($dapils)); return $dapils; }): null;
-            $dpd = $id_dapil_dpd ? (Cache::has('dapil_id:'.$id_dapil_dpd) ? json_decode(Cache::get('dapil_id:'.$id_dapil_dpd)) : function() use ($id_dapil_dpd) { $dapils = Dapils::find($id_dapil_dpd); Cache::put('dapil_id:'.$id_dapil_dpd, json_encode($dapils)); return $dapils; }): null;
+            $dprdk = $id_dapil_dprdk ? (Cache::has('dapil_id:'.$id_dapil_dprdk) ? json_decode($this->cache->get('dapil_id:'.$id_dapil_dprdk)) : function() use ($id_dapil_dprdk) { $dapils = Dapils::find($id_dapil_dprdk); $this->cache->set('dapil_id:'.$id_dapil_dprdk, json_encode($dapils)); return $dapils; }): null;
+            $dprdp = $id_dapil_dprdp ? (Cache::has('dapil_id:'.$id_dapil_dprdp) ? json_decode($this->cache->get('dapil_id:'.$id_dapil_dprdp)) : function() use ($id_dapil_dprdp) { $dapils = Dapils::find($id_dapil_dprdp); $this->cache->set('dapil_id:'.$id_dapil_dprdp, json_encode($dapils)); return $dapils; }): null;
+            $dpr = $id_dapil_dpr ? (Cache::has('dapil_id:'.$id_dapil_dpr) ? json_decode($this->cache->get('dapil_id:'.$id_dapil_dpr)) : function() use ($id_dapil_dpr) { $dapils = Dapils::find($id_dapil_dpr); $this->cache->set('dapil_id:'.$id_dapil_dpr, json_encode($dapils)); return $dapils; }): null;
+            $dpd = $id_dapil_dpd ? (Cache::has('dapil_id:'.$id_dapil_dpd) ? json_decode($this->cache->get('dapil_id:'.$id_dapil_dpd)) : function() use ($id_dapil_dpd) { $dapils = Dapils::find($id_dapil_dpd); $this->cache->set('dapil_id:'.$id_dapil_dpd, json_encode($dapils)); return $dapils; }): null;
         }else{
             $dprdk = $id_dapil_dprdk ? $this->get_surat_suara_by_id_dapil($id_dapil_dprdk) : null;
             $dprdp = $id_dapil_dprdp ? $this->get_surat_suara_by_id_dapil($id_dapil_dprdp) : null;
@@ -1578,11 +1578,11 @@ class SuratSuaraController extends Controller
             ->toArray();
         }
 
-        if($dapil = Cache::get('dapil_id:'.$id_dapil)){
+        if($dapil = $this->cache->get('dapil_id:'.$id_dapil)){
             $dapil = json_decode($dapil);
         }else{
             $dapil = Dapils::find($id_dapil);
-            Cache::put('dapil_id:'.$id_dapil, json_encode($dapil));
+            $this->cache->set('dapil_id:'.$id_dapil, json_encode($dapil));
         }
 
 
