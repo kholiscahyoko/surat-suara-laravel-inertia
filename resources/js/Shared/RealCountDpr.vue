@@ -13,10 +13,10 @@
             </h4>
         </div>
         <div class="my-8">
-            <BarChartPartai v-if="higher_data.chart" :master="master_partai" :data="higher_data" :nasional="true" :id="`nasional`"/>
+            <BarChartPartai v-if="higher_data?.chart" :master="master_partai" :data="higher_data" :nasional="true" :id="`nasional`"/>
         </div>
         <div class="my-8">
-            <BarChartPartai v-if="lower_data.chart" :master="master_partai" :data="lower_data" :nasional="false" :id="`daerah`" :dapil="dapil"/>
+            <BarChartPartai v-if="lower_data?.chart" :master="master_partai" :data="lower_data" :nasional="false" :id="`daerah`" :dapil="dapil"/>
         </div>
         <div class="my-8">
             <h5 class="text-center font-bold md:text-2xl mt-10">Perolehan Suara Calon Legislatif</h5>
