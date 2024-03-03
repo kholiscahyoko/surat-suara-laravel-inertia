@@ -29,9 +29,9 @@ class CacheHelper {
 
     public function set(string $key, string $content, bool $useRedis = false) {
         if($this->useRedis || $useRedis){
-            return Redis::setex($key, $content);
+            return Redis::set($key, $content);
         }else{
-            return Cache::get($key, $content);
+            return Cache::set($key, $content);
         }
     }
 
