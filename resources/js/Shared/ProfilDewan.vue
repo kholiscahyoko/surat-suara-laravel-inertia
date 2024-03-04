@@ -75,22 +75,11 @@
                         <p>{{ calon.profil_data.hukum }}</p>
                     </div>
                 </div>
-                <div v-if="calon.profil_data && calon.profil_data.alamat" class="mb-4">
-                    <h5 class="font-bold lg:text-lg mb-1">ALAMAT</h5>
-                    <div class="border border-solid border-black px-4 py-2">
-                        <ul>
-                            <li v-for="alamat in calon.profil_data.alamat">
-                                {{ alamat }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_pendidikan && calon.profil_data.riwayat_pendidikan.length > 1" :data_riwayat="calon.profil_data.riwayat_pendidikan" :title="'RIWAYAT PENDIDIKAN'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_pekerjaan && calon.profil_data.riwayat_pekerjaan.length > 1" :data_riwayat="calon.profil_data.riwayat_pekerjaan" :title="'RIWAYAT PEKERJAAN'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_organisasi && calon.profil_data.riwayat_organisasi.length > 1" :data_riwayat="calon.profil_data.riwayat_organisasi" :title="'RIWAYAT ORGANISASI'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_kursus_diklat && calon.profil_data.riwayat_kursus_diklat.length > 1" :data_riwayat="calon.profil_data.riwayat_kursus_diklat" :title="'RIWAYAT KURSUS DAN DIKLAT'"/>
                 <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_penghargaan && calon.profil_data.riwayat_penghargaan.length > 1" :data_riwayat="calon.profil_data.riwayat_penghargaan" :title="'RIWAYAT PENGHARGAAN'"/>
-                <TableRiwayatBlock v-if="calon.profil_data && calon.profil_data.riwayat_pasangan && calon.profil_data.riwayat_pasangan.length > 1" :data_riwayat="calon.profil_data.riwayat_pasangan" :title="'RIWAYAT PASANGAN'"/>
                 <div>
                     <p class="font-semibold">Sumber Data</p>
                     <p>
