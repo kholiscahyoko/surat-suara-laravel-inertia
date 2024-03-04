@@ -978,7 +978,9 @@ class SuratSuaraController extends Controller
                     }else{
                         $jumlah_kursi = $kursi_dapil->jumlah_kursi;
 
-                        $alokasi = $this->sainteLague((array) $data_lower_level->chart, $jumlah_kursi);
+                        $alokasi = $this->sainteLague((array) $data_lower_level->chart, $jumlah_kursi, $partai_threshold);
+
+                        // print_r($alokasi);die();
     
                         $data_calon_lolos = [];
     
