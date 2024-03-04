@@ -557,6 +557,7 @@ class SuratSuaraController extends Controller
             $calon_keyword = "realcount hitung suara calon dewan perwakilan daerah provinsi ".strtolower($dapil->nama_dapil);
             $template = "RealCountDpd";
             $this->meta->setTitle("Real Count DPD {$dapil->nama_dapil}");
+            $this->meta->addMetaKeywords(['senator daerah']);
         }else{
             $master_partai = null;
             if($master_partai = $this->cache->get('hitung_suara:master_partai')){
@@ -631,6 +632,7 @@ class SuratSuaraController extends Controller
                     $template = "RealCountDpr";
                     $this->meta->setTitle("Real Count DPR RI Dapil {$dapil->nama_dapil}");
                     $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->addMetaKeywords(['ambang batas parlemen', 'parliamentary treshold', 'metode sainte lague']);
                     break;
                 
                 case 'dprdp':
@@ -670,6 +672,7 @@ class SuratSuaraController extends Controller
                     $nama_wilayah = implode(" ", $exp_dapil);
                     $this->meta->setTitle("Real Count DPRD Provinsi {$nama_wilayah} Dapil {$dapil->nama_dapil}");
                     $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->addMetaKeywords(['metode sainte lague']);
                     break;
                 
                 case 'dprdk':
@@ -713,6 +716,7 @@ class SuratSuaraController extends Controller
                     }
                     $this->meta->setTitle("Real Count DPRD {$nama_wilayah} Dapil {$dapil->nama_dapil}");
                     $calon_keyword = "realcount hitung suara calon dewan perwakilan rakyat kabupaten kota {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->addMetaKeywords(['metode sainte lague']);
                     break;
                 
                 default:
@@ -896,6 +900,7 @@ class SuratSuaraController extends Controller
             $calon_keyword = "calon dpd dewan perwakilan daerah terpilih ke senayan dapil provinsi ".strtolower($dapil->nama_dapil);
             $template = "CalonLolosDpd";
             $this->meta->setTitle("Daftar Calon DPD Terpilih Provinsi {$dapil->nama_dapil} Sementara");
+            $this->meta->addMetaKeywords(['senator daerah']);
         }else{
             $master_partai = null;
             if($master_partai = $this->cache->get('hitung_suara:master_partai')){
@@ -1054,6 +1059,7 @@ class SuratSuaraController extends Controller
                     $nama_wilayah = implode(" ", $exp_dapil);
                     $this->meta->setTitle("Calon Terpilih DPR RI Dapil {$dapil->nama_dapil} Sementara Ini");
                     $calon_keyword = "calon terpilih lolos ke senayan anggota dewan perwakilan rakyat republik indonesia DPR RI daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->addMetaKeywords(['metode sainte lague', 'parliamentary treshold', 'ambang batas parlemen']);
                     break;
                 
                 case 'dprdp':
@@ -1157,6 +1163,7 @@ class SuratSuaraController extends Controller
                     $nama_wilayah = implode(" ", $exp_dapil);
                     $this->meta->setTitle("Calon Terpilih DPRD Provinsi {$nama_wilayah} Dapil {$dapil->nama_dapil} Sementara Ini");
                     $calon_keyword = "calon terpilih lolos parlemen anggota dewan perwakilan rakyat provinsi {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->addMetaKeywords(['metode sainte lague']);
                     break;
                 
                 case 'dprdk':
@@ -1264,6 +1271,7 @@ class SuratSuaraController extends Controller
                     }
                     $this->meta->setTitle("Calon Terpilih DPRD Provinsi {$nama_wilayah} Dapil {$dapil->nama_dapil} Sementara Ini");
                     $calon_keyword = "calon terpilih lolos parlemen anggota dewan perwakilan rakyat kabupaten kota {$nama_wilayah} daerah pemilihan ".trim(strtolower($dapil->nama_dapil));
+                    $this->meta->addMetaKeywords(['metode sainte lague']);
                     break;
                 
                 default:
