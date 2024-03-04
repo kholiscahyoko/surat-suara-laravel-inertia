@@ -4,14 +4,18 @@
         <table class="table-auto w-full divide-y divide-gray-200 border-collapse border border-slate-500 mb-4 text-xs md:text-sm lg:text-base">
             <thead>
                 <tr>
-                    <th v-for="heading_label in data_riwayat[0]" class="border border-slate-600 p-1">{{ heading_label }}</th>
+                    <template v-for="heading_label, i in data_riwayat[0]">
+                        <th v-if="title!=='RIWAYAT PASANGAN' || i === 1" class="border border-slate-600 p-1">{{ heading_label }}</th>
+                    </template>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="row in data_riwayat.slice(1)">
-                    <td v-for="data in row" class="px-1 py-4 border border-slate-700 text-center">
-                        {{ data }}
-                    </td>
+                    <template v-for="data, i in row">
+                        <td v-if="title!=='RIWAYAT PASANGAN' || i === 1" class="px-1 py-4 border border-slate-700 text-center">
+                            {{ data }}
+                        </td>
+                    </template>
                 </tr>
             </tbody>
         </table>
