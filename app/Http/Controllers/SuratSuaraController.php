@@ -398,6 +398,7 @@ class SuratSuaraController extends Controller
             $this->meta->set_canonical("{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$kode_dapil}");
             if($calon = $this->cache->get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
+                $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
@@ -735,6 +736,7 @@ class SuratSuaraController extends Controller
             $this->meta->set_canonical("{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$kode_dapil}");
             if($calon = $this->cache->get('profil_calon_suara:'.$calon_id)){
                 $calon = json_decode($calon);
+                $metadata['description'] = "{$calon->nama}, {$calon_keyword}. Lihat Surat Suara disini.";
                 $this->meta->addMetaKeywords([
                     strtolower(str_replace(",", ".", $calon->nama))
                 ]);
@@ -747,8 +749,10 @@ class SuratSuaraController extends Controller
                     ]);
                 }
             }
-            $result["calon"] = $calon;
-            $this->meta->setTitle("Perolehan Suara {$calon->nama}");
+            if($calon){
+                $result["calon"] = $calon;
+                $this->meta->setTitle("Perolehan Suara {$calon->nama}");
+            }
         }
 
         $this->meta->setMeta($metadata);
@@ -980,8 +984,6 @@ class SuratSuaraController extends Controller
 
                         $alokasi = $this->sainteLague((array) $data_lower_level->chart, $jumlah_kursi, $partai_threshold);
 
-                        // print_r($alokasi);die();
-    
                         $data_calon_lolos = [];
     
                         foreach ($alokasi as $no_partai => $kursi_partai) {
