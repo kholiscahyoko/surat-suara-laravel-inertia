@@ -155,7 +155,7 @@ class FetchSirekapKpuData extends Command
     }
 
     private function hitRequest($url){
-        $response = Http::get($url);
+        $response = Http::retry(10, 200)->get($url);
         if($response->ok()){
             return $this->saveToFile($url, $response->object());
         }
