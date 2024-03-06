@@ -9,6 +9,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         Commands\GetCacheValue::class,
+        Commands\FetchSirekapKpuData::class,
         // Other commands...
     ];
 
