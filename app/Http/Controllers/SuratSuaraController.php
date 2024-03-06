@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Http;
 
 use App\Models\Calons;
 use App\Models\Desa;
@@ -469,7 +468,7 @@ class SuratSuaraController extends Controller
             if($master = $this->cache->get('hitung_suara:pilpres:calon')){
                 $master = json_decode($master);
             }else{
-                $response_master = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
+                $response_master = $this->sirekap->getData('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
                 if($response_master->ok()){
                     $master = $response_master->object();
                     $this->cache->set('hitung_suara:pilpres:calon', json_encode($master));
@@ -480,7 +479,7 @@ class SuratSuaraController extends Controller
             if($wilayah = $this->cache->get('hitung_suara:pilpres:wilayah')){
                 $wilayah = json_decode($wilayah);
             }else{
-                $response_wilayah = Http::get('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
+                $response_wilayah = $this->sirekap->getData('https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/0.json');
                 if($response_wilayah->ok()){
                     $wilayah = $response_wilayah->object();
                     $this->cache->set('hitung_suara:pilpres:wilayah', json_encode($wilayah));
@@ -491,7 +490,7 @@ class SuratSuaraController extends Controller
             if($data = $this->cache->get('hitung_suara:pilpres:data')){
                 $data = json_decode($data);
             }else{
-                $response_data = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
+                $response_data = $this->sirekap->getData('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
                 if($response_data->ok()){
                     $data = $response_data->object();
                     $this->cache->setex('hitung_suara:pilpres:data', 120, json_encode($data));
@@ -522,7 +521,7 @@ class SuratSuaraController extends Controller
                 $master = json_decode($master);
                 echo "MASTER CACHED<br>";
             }else{
-                $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
+                $response_master = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
                 if($response_master->ok()){
                     $master = $response_master->object();
                     $this->cache->setex("hitung_suara:dpd:calon:{$dapil->kode_dapil}", 120, json_encode($master));
@@ -534,7 +533,7 @@ class SuratSuaraController extends Controller
                 $wilayah = json_decode($wilayah);
                 echo "WILAYAH CACHED<br>";
             }else{
-                $response_wilayah = Http::get("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{$kode_dapil}.json");
+                $response_wilayah = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{$kode_dapil}.json");
                 if($response_wilayah->ok()){
                     $wilayah = $response_wilayah->object();
                     $this->cache->setex("hitung_suara:dpd:wilayah:{$dapil->kode_dapil}", 120, json_encode($wilayah));
@@ -546,7 +545,7 @@ class SuratSuaraController extends Controller
                 $data = json_decode($data);
                 echo "DATA CACHED<br>";
             }else{
-                $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
+                $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
                 if($response_data->ok()){
                     $data = $response_data->object();
                     $this->cache->setex("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", 120, json_encode($data));
@@ -563,7 +562,7 @@ class SuratSuaraController extends Controller
             if($master_partai = $this->cache->get('hitung_suara:master_partai')){
                 $master_partai = json_decode($master_partai);
             }else{
-                $response_master_partai = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
+                $response_master_partai = $this->sirekap->getData('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
                 if($response_master_partai->ok()){
                     $master_partai = $response_master_partai->object();
                     $this->cache->setex('hitung_suara:master_partai', 120, json_encode($master_partai));
@@ -592,7 +591,7 @@ class SuratSuaraController extends Controller
                     if($data_higher_level = $this->cache->get('hitung_suara:dpr:nasional')){
                         $data_higher_level = json_decode($data_higher_level);
                     }else{
-                        $response_data_higher_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
+                        $response_data_higher_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
                         if($response_data_higher_level->ok()){
                             $data_higher_level = $response_data_higher_level->object();
                             $this->cache->setex('hitung_suara:dpr:nasional', 120, json_encode($data_higher_level));
@@ -603,7 +602,7 @@ class SuratSuaraController extends Controller
                     if($data_lower_level = $this->cache->get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
                         $data_lower_level = json_decode($data_lower_level);
                     }else{
-                        $response_data_lower_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
+                        $response_data_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
                         if($response_data_lower_level->ok()){
                             $data_lower_level = $response_data_lower_level->object();
                             $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
@@ -614,7 +613,7 @@ class SuratSuaraController extends Controller
                     if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
-                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
                             $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
@@ -641,7 +640,7 @@ class SuratSuaraController extends Controller
                         $data = json_decode($data);
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
-                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
+                        $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
                             $this->cache->setex('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
@@ -652,7 +651,7 @@ class SuratSuaraController extends Controller
                     if($master_calon = $this->cache->get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
-                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
                             $this->cache->setex('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
@@ -682,7 +681,7 @@ class SuratSuaraController extends Controller
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
                         $kode_kabkota = substr($dapil->kode_dapil, 0, 4);
-                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
+                        $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
                             $this->cache->setex('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
@@ -693,7 +692,7 @@ class SuratSuaraController extends Controller
                     if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
-                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
                             $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
@@ -820,7 +819,7 @@ class SuratSuaraController extends Controller
                 if($master = $this->cache->get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
                     $master = json_decode($master);
                 }else{
-                    $response_master = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
+                    $response_master = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/dpd/{$kode_dapil}.json");
                     if($response_master->ok()){
                         $master = $response_master->object();
                         $this->cache->setex("hitung_suara:dpd:calon:{$dapil->kode_dapil}", 120, json_encode($master));
@@ -833,7 +832,7 @@ class SuratSuaraController extends Controller
                 if($data = $this->cache->get("hitung_suara:dpd:dapil:{$dapil->kode_dapil}")){
                     $data = json_decode($data);
                 }else{
-                    $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
+                    $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpd/{$kode_dapil}.json");
                     if($response_data->ok()){
                         $data = $response_data->object();
                         $this->cache->setex("hitung_suara:dpd:dapil:{$dapil->kode_dapil}", 120, json_encode($data));
@@ -906,7 +905,7 @@ class SuratSuaraController extends Controller
             if($master_partai = $this->cache->get('hitung_suara:master_partai')){
                 $master_partai = json_decode($master_partai);
             }else{
-                $response_master_partai = Http::get('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
+                $response_master_partai = $this->sirekap->getData('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
                 if($response_master_partai->ok()){
                     $master_partai = $response_master_partai->object();
                     $this->cache->setex('hitung_suara:master_partai', 120, json_encode($master_partai));
@@ -943,7 +942,7 @@ class SuratSuaraController extends Controller
                     if($data_higher_level = $this->cache->get('hitung_suara:dpr:nasional')){
                         $data_higher_level = json_decode($data_higher_level);
                     }else{
-                        $response_data_higher_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
+                        $response_data_higher_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
                         if($response_data_higher_level->ok()){
                             $data_higher_level = $response_data_higher_level->object();
                             $this->cache->setex('hitung_suara:dpr:nasional', 120, json_encode($data_higher_level));
@@ -963,7 +962,7 @@ class SuratSuaraController extends Controller
                     if($data_lower_level = $this->cache->get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
                         $data_lower_level = json_decode($data_lower_level);
                     }else{
-                        $response_data_lower_level = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
+                        $response_data_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
                         if($response_data_lower_level->ok()){
                             $data_lower_level = $response_data_lower_level->object();
                             $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
@@ -974,7 +973,7 @@ class SuratSuaraController extends Controller
                     if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
-                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
                             $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
@@ -1068,7 +1067,7 @@ class SuratSuaraController extends Controller
                         $data = json_decode($data);
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
-                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
+                        $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
                             $this->cache->setex('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
@@ -1079,7 +1078,7 @@ class SuratSuaraController extends Controller
                     if($master_calon = $this->cache->get('hitung_suara:dprdp:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
-                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
                             $this->cache->setex('hitung_suara:dprdp:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
@@ -1173,7 +1172,7 @@ class SuratSuaraController extends Controller
                     }else{
                         $kode_prov = substr($dapil->kode_dapil, 0, 2);
                         $kode_kabkota = substr($dapil->kode_dapil, 0, 4);
-                        $response_data = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
+                        $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/{$kode_prov}/{$kode_kabkota}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
                             $this->cache->setex('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
@@ -1184,7 +1183,7 @@ class SuratSuaraController extends Controller
                     if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
                         $master_calon = json_decode($master_calon);
                     }else{
-                        $response_master_calon = Http::get("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
                             $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
