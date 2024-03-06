@@ -69,7 +69,7 @@ class SirekapHelper {
             // File exists, so retrieve its contents
             $fileContents = Storage::get($filePath);
             // Output or process the file contents as needed
-            return json_decode($fileContents);
+            return (object) json_decode($fileContents);
         } else {
             // File does not exist
             return false;
