@@ -5,8 +5,9 @@
     <div class="mt-4">
         Mungkin yang kamu maksud wilayah ? <a :href="$setUrl('/wilayah')" class="text-indigo-600 font-semibold hover:text-indigo-900 text-nowrap">Cek disini</a>
     </div>
-    <div class="mt-4">
-        <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 min-w-full" @input="handleInput" :disabled="processing">
+    <div class="mt-4 flex space-x-2">
+        <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 w-full" v-on:keyup.native.enter="handleInput" :disabled="processing">
+        <button class="px-8 bg-blue-600 text-white font-semibold rounded-lg" @click="handleInput">Cari</button>
     </div>
     <div class="mt-4">
         <!-- table -->
@@ -127,20 +128,20 @@ const submitSearch = function(value){
 
 // Function to handle input events
 const handleInput = () => {
-  // Clear any existing timeout
-  clearTimeout(timerId);
+//   // Clear any existing timeout
+//   clearTimeout(timerId);
 
-  // Start a new timeout
-  timerId = setTimeout(() => {
-    // Perform action when user stops typing for 1 second
-    console.log('User stopped typing');
-    // You can call your submitForm method here if needed
-    if(search.value.length >= 4 && search.value.charAt(search.value.length - 1) !== ' '){
+//   // Start a new timeout
+//   timerId = setTimeout(() => {
+//     // Perform action when user stops typing for 1 second
+//     console.log('User stopped typing');
+//     // You can call your submitForm method here if needed
+//     if(search.value.length >= 4 && search.value.charAt(search.value.length - 1) !== ' '){
         submitSearch(search.value); // 1000 milliseconds = 1 second
-    }else{
-        console.log("MINIMAL 4 KARAKTER");
-    }
-  }, 2000); // Timeout duration in milliseconds
+//     }else{
+//         console.log("MINIMAL 4 KARAKTER");
+//     }
+//   }, 2000); // Timeout duration in milliseconds
 };
 // Initialize timerId variable
 let timerId;
