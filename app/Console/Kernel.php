@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('cache:clear-expired')->twiceDailyAt(8, 20, 5);
-        $schedule->command('sirekap:fetch')->twiceDailyAt(0, 12, 5);
+        $schedule->command('sirekap:fetch')->twiceDailyAt(11, 23, 5);
     }
 
     /**
