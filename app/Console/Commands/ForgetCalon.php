@@ -90,6 +90,15 @@ class ForgetCalon extends Command
         echo "REDIS\n";
         // $this->handeDelete($key, true);
         echo "===========================\n\n";
+
+        // FROM DATABASE
+        echo "DATABASE\n";
+        // if($calon->delete()){
+        //     echo "DATA ID CALON : {$id_calon} HAS BEEN SUCCESSFULLY DELETED FROM DATABASE\n";
+        // }else{
+        //     echo "DATA ID CALON : {$id_calon} HAS BEEN FAILED TO DELETED FROM DATABASE\n";
+        // }
+        echo "===========================\n\n";
     }
 
     private function handeDelete($key, $useRedis=false){
