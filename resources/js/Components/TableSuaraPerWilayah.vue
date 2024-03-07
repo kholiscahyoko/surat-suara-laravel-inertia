@@ -7,9 +7,9 @@
                         <th scope="col" class="px-1 py-1 md:px-6 md:py-2">
                             Wilayah
                         </th>
-                        <th v-for="item, key in master" scope="col" class="px-1 py-1 md:px-6 md:py-2" @click="console.log(item.nama);">
+                        <th v-for="item, k in master" scope="col" class="px-1 py-1 md:px-6 md:py-2" @click="console.log(item.nama);">
                             <div class="flex justify-end">
-                                {{ mapping_nomor_paslon[key] }}&nbsp;
+                                {{ mapping_nomor_paslon[k] }}&nbsp;
                                 <ChevronUpDownIcon class="h-4 w-4" aria-hidden="true"/>
                             </div>
                         </th>
@@ -17,13 +17,13 @@
                     </tr>
                     <tr class="bg-gray-200 border-b dark:bg-gray-800 dark:border-gray-700">
                         <th class="px-1 py-1 md:px-6 md:py-2" v-html="`Total`" />
-                        <th v-for="item, key in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof data.chart[key] == 'number' ? 'text-right': ''" v-html="(typeof data.chart[key] == 'number' ? data.chart[key].toLocaleString('en-US', { style: 'decimal',}) : data.chart[key]) " />
+                        <th v-for="item, k in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof data.chart[k] == 'number' ? 'text-right': ''" v-html="(typeof data.chart[k] == 'number' ? data.chart[k].toLocaleString('en-US', { style: 'decimal',}) : data.chart[k]) " />
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="row in tableData" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-1 py-1 md:px-6 md:py-2" v-html="row.nama_wilayah" />
-                        <td v-for="item, key in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof row[key] == 'number' ? 'text-right': ''" v-html="(typeof row[key] == 'number' ? row[key].toLocaleString('en-US', { style: 'decimal',}) : row[key]) " />
+                        <td v-for="item, k in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof row[k] == 'number' ? 'text-right': ''" v-html="(typeof row[k] == 'number' ? row[k].toLocaleString('en-US', { style: 'decimal',}) : row[k]) " />
                         <td class="px-1 py-1 md:px-6 md:py-2 text-center" v-html="`${row.persen}%`" />
                     </tr>
                 </tbody>
@@ -48,8 +48,8 @@ let mapping_nomor_paslon = {
 
 let default_table = function(data_wilayah, data_table){
     let data = [];
-    for (const key in data_table) {
-        const kode = key;
+    for (const k in data_table) {
+        const kode = k;
         const element = data_wilayah.find(item => item.kode === kode);
 
         let wilayah = data_table[kode];
@@ -68,22 +68,22 @@ let tableData = ref(default_table(props.wilayah, props.data.table));
 const sortKey = ref('');
 const sortOrder = ref('asc');
 
-const sortBy = (key) => {
-  if (key === sortKey.value) {
+const sortBy = (k) => {
+  if (k === sortKey.value) {
     sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
   } else {
-    sortKey.value = key;
+    sortKey.value = k;
     sortOrder.value = 'asc';
   }
 };
 
 const sortedData = computed(() => {
-  const key = sortKey.value;
+  const k = sortKey.value;
   const order = sortOrder.value === 'asc' ? 1 : -1;
 
   return [...tableData.value].sort((a, b) => {
-    if (a[key] < b[key]) return -order;
-    if (a[key] > b[key]) return order;
+    if (a[k] < b[k]) return -order;
+    if (a[k] > b[k]) return order;
     return 0;
   });
 });
