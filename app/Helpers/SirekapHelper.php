@@ -14,7 +14,9 @@ class SirekapHelper {
     public function getData($url){
         try {
             // Make the HTTP GET request
-            $response = Http::get($url);
+            $response = Http::withHeaders([
+                'Referer' => 'https://pemilu2024.kpu.go.id'
+            ])->get($url);
         
             // Check if the request was successful (status code 2xx)
             if ($response->ok()) {

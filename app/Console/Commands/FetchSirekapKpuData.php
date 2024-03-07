@@ -155,7 +155,9 @@ class FetchSirekapKpuData extends Command
     }
 
     private function hitRequest($url){
-        $response = Http::retry(10, 200)->get($url);
+        $response = Http::withHeaders([
+            'Referer' => 'https://pemilu2024.kpu.go.id'
+        ])->retry(10, 200)->get($url);
         if($response->ok()){
             return $this->saveToFile($url, $response->object());
         }
