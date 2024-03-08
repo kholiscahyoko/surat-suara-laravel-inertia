@@ -11,6 +11,7 @@ class Kernel extends ConsoleKernel
         Commands\GetCacheValue::class,
         Commands\FetchSirekapKpuData::class,
         Commands\ForgetCalon::class,
+        Commands\UpdateSitemaps::class,
         // Other commands...
     ];
 
