@@ -496,7 +496,7 @@ class SuratSuaraController extends Controller
                     $this->cache->setex('hitung_suara:pilpres:data', 120, json_encode($data));
                 }
             }
-            $result = ['data' => $data, 'master' => $master, 'wilayah' => $wilayah ];
+            $result = ['data' => $data, 'master' => $master, 'wilayah' => (array) $wilayah ];
             
             return Inertia::render('RealCountPilpres', $result);
             exit();
