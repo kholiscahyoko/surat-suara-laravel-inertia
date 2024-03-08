@@ -56,28 +56,14 @@ class UpdateSitemaps extends Command
                 }
             }
             if($changed){
-                $content->asXML($file);
-                echo "{$file} {$changed_count} CHANGED NODE(S)\n";
+                if($content->asXML($file)){
+                    echo "{$file} {$changed_count} CHANGED NODE(S)\n";
+                }else{
+                    echo "{$file} ERROR SAVE CHANGED\n";
+                }
             }else{
                 echo "{$file} NO CHANGED\n";
             }
         }
-    }
-
-    private function saveToFile($url, $data){
-        // Remove protocol and host
-        $directory = parse_url($url, PHP_URL_PATH);
-
-        $filename = basename($directory);
-        $directory = dirname($directory);
-
-        // Create the directory if it doesn't exist
-        Storage::makeDirectory($directory);
-
-        // Define the file path
-        $filePath = $directory . '/' . $filename;
-
-        // Store the data in the JSON file
-        return Storage::put($filePath, json_encode($data));
     }
 }
