@@ -16,12 +16,16 @@
         <div class="flex flex-wrap items-start justify-center my-8">
             <PieChart :master="master" :data="data"/>
         </div>
+        <div class="w-full my-8">
+            <HorizontalAds1 />
+        </div>
         <div class="px-3">
             <TableSuaraPerWilayah  :master="master" :data="data" :wilayah="wilayah"/>
         </div>
     </div>
 </template>
 <script setup>
+import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 import PieChart from '../Components/PieChart.vue';
 import TableSuaraPerWilayah from '../Components/TableSuaraPerWilayah.vue';
 

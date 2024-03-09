@@ -12,6 +12,7 @@
         ( Klik / sentuh untuk membuka )
     </div>
     <div class="flex flex-wrap justify-center">
+        <SquareAds1/>
         <RealCountSampul :surat_suara="null" :jenis="`pilpres`"/>
         <RealCountSampul v-if="dpd" :surat_suara="dpd" :jenis="`dpd`"/>
         <RealCountSampul v-if="dpr" :surat_suara="dpr" :jenis="`dpr`"/>
@@ -20,6 +21,7 @@
     </div>
 </template>
 <script setup>
+import SquareAds1 from '../Components/SquareAds1.vue';
 import RealCountSampul from '../Shared/RealCountSampul.vue';
 
 defineProps({

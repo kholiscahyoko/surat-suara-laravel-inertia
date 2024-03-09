@@ -12,6 +12,7 @@
         ( Klik / sentuh surat suara untuk membuka )
     </div>
     <div class="flex flex-wrap justify-center">
+        <SquareAds1 />
         <SuratSuaraSampul :surat_suara="null" :jenis="`pilpres`"/>
         <SuratSuaraSampul v-if="dpd" :surat_suara="dpd" :jenis="`dpd`"/>
         <SuratSuaraSampul v-if="dpr" :surat_suara="dpr" :jenis="`dpr`"/>
@@ -20,6 +21,7 @@
     </div>
 </template>
 <script setup>
+import SquareAds1 from '../Components/SquareAds1.vue';
 import SuratSuaraSampul from '../Shared/SuratSuaraSampul.vue';
 
 defineProps({

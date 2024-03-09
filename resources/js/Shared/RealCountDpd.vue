@@ -20,6 +20,9 @@
         <div class="flex flex-wrap items-start justify-center my-8">
             <BarChart :master="master" :data="data" :calon="calon"/>
         </div>
+        <div class="w-full my-8">
+            <HorizontalAds1 />
+        </div>
         <div class="flex flex-wrap items-start justify-center my-8">
             <TableSuaraDpdPerWilayah :master="master" :data="data" :wilayah="wilayah" :calon="calon" :dapil="dapil"/>
         </div>
@@ -27,6 +30,7 @@
 </template>
 <script setup>
 import BarChart from '../Components/BarChart.vue';
+import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 import TableSuaraDpdPerWilayah from '../Components/TableSuaraDpdPerWilayah.vue';
 import SumberPemilu2024 from './SumberPemilu2024.vue';
 

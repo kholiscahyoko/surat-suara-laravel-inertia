@@ -20,6 +20,9 @@
         </div>
         <h3 class="text-center text-sm md:text-xl mt-1">*menggunakan <a href="https://www.google.com/search?q=sainte+lague" target="_blank" rel="nofollow" class="hover:underline">metode sainte lague</a></h3>
         <div class="my-8">
+            <HorizontalAds1 />
+        </div>
+        <div class="my-8">
             <h5 class="text-center font-bold md:text-2xl mt-10">Perolehan Suara Calon Legislatif</h5>
             <div class="text-center mb-4"><SumberPemilu2024 /></div>
             <div class="flex flex-wrap items-start justify-center">
@@ -30,6 +33,7 @@
 </template>
 <script setup>
 import BarChartPartai from '../Components/BarChartPartai.vue';
+import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 import TableSuaraCaleg from '../Components/TableSuaraCaleg.vue';
 import SumberPemilu2024 from './SumberPemilu2024.vue';
 

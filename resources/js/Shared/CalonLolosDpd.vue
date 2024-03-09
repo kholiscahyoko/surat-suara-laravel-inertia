@@ -16,6 +16,9 @@
             {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
             <SumberPemilu2024 /><br>
         </div>
+        <div class="my-8">
+            <HorizontalAds1 />
+        </div>
         <div class="flex flex-wrap items-start justify-center mt-8 space-x-4 p-2">
             <CalonLolosDpdBlock v-for="calon in data.list" :calon="calon" />
         </div>
@@ -27,6 +30,7 @@
 </template>
 <script setup>
 import CalonLolosDpdBlock from '../Components/CalonLolosDpdBlock.vue';
+import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 import SumberPemilu2024 from './SumberPemilu2024.vue';
 
 let props = defineProps({

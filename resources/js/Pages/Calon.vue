@@ -5,6 +5,9 @@
     <div class="mt-4">
         <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg text-lg h-12 min-w-full" @input="handleInput" :disabled="processing">
     </div>
+    <div class="mt-4 w-full">
+        <HorizontalAds1/>
+    </div>
     <div class="mt-4">
         <!-- table -->
         <div class="flex flex-col">
@@ -81,6 +84,7 @@ import Pagination from '../Shared/Pagination.vue';
 import { ref } from "vue";
 import { router } from '@inertiajs/vue3';
 import KawalPemilu from '../Shared/KawalPemilu.vue';
+import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 
 let props = defineProps({
     users: Object,

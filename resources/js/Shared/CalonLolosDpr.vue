@@ -14,6 +14,9 @@
         <div class="my-8">
             <BarChartPartai v-if="nasional.chart" :master="master_partai" :data="nasional" :nasional="true" :id="`nasional`"/>
         </div>
+        <div class="my-8">
+            <HorizontalAds1 />
+        </div>
         <h2 class="text-center font-bold md:text-3xl mt-10">JUMLAH KURSI TERSEDIA</h2>
         <h2 class="text-center font-bold text-2xl md:text-5xl mt-2">{{ kursi_dapil.jumlah_kursi }}</h2>
         <h2 class="text-center font-bold md:text-3xl mt-10">PARTAI YANG LOLOS PARLEMEN</h2>
@@ -25,6 +28,9 @@
             {{ `Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)` }}<br>
             {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
             <SumberPemilu2024 /><br>
+        </div>
+        <div class="my-8">
+            <HorizontalAds2 />
         </div>
         <h2 class="text-center font-bold md:text-3xl mt-10">CALON YANG KEMUNGKINAN TERPILIH</h2>
         <h3 class="text-center text-sm md:text-xl mt-1">*berdasarkan raihan suara calon</h3>
@@ -42,6 +48,8 @@
 <script setup>
 import BarChartPartai from '../Components/BarChartPartai.vue';
 import CalonLolosDewanBlock from '../Components/CalonLolosDewanBlock.vue';
+import HorizontalAds1 from '../Components/HorizontalAds1.vue';
+import HorizontalAds2 from '../Components/HorizontalAds2.vue';
 import KursiPartaiBlock from '../Components/KursiPartaiBlock.vue';
 import SumberPemilu2024 from './SumberPemilu2024.vue';
 

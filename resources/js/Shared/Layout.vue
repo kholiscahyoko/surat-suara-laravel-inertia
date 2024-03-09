@@ -10,6 +10,9 @@
                 <slot />
             </main>
         </section>
+        <section class="w-full">
+            <MultiplexAds1 />
+        </section>
         <section class="p-0 bottom-0">
             <Footer />
         </section>
@@ -22,5 +25,6 @@
 <script setup>
 import Nav from './Nav.vue'
 import Footer from './Footer.vue'
+import MultiplexAds1 from '../Components/MultiplexAds1.vue'
 import BottomAds from '../Components/BottomAds.vue'
 </script>
