@@ -31,5 +31,8 @@
   </head>
   <body class="min-h-full">
     @inertia
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
   </body>
 </html>
