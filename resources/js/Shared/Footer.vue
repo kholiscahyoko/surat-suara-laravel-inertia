@@ -9,9 +9,5 @@
             <div class="text-base text-white text-center">&copy; 2024 <a href="https://me.kholiscahyoko.my.id/" target="_blank" class="hover:underline text-purple-500">Kholis Cahyoko </a>.
             </div>
         </div>
-        <BottomAds />
     </footer>
 </template>
-<script setup>
-import BottomAds from '../Components/BottomAds.vue';
-</script>

@@ -13,10 +13,14 @@
         <section class="p-0 bottom-0">
             <Footer />
         </section>
+        <section class="sticky bottom-0 text-red-600">
+            <BottomAds />
+        </section>
     </div>
 </template>
   
 <script setup>
 import Nav from './Nav.vue'
 import Footer from './Footer.vue'
+import BottomAds from '../Components/BottomAds.vue'
 </script>
