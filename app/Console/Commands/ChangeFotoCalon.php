@@ -100,7 +100,8 @@ class ChangeFotoCalon extends Command
 
         // FROM DATABASE
         echo "DATABASE\n";
-        // if($calon->update(['foto' => $url_foto])){
+        $calon->foto = $url_foto;
+        // if($calon->save()){
         //     echo "DATA ID CALON : {$id_calon} HAS BEEN SUCCESSFULLY UPDATED ON DATABASE\n";
         // }else{
         //     echo "DATA ID CALON : {$id_calon} HAS BEEN FAILED TO BE UPDATED ON DATABASE\n";
