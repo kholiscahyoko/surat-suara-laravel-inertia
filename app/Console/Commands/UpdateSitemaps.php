@@ -24,9 +24,9 @@ class UpdateSitemaps extends Command
     //configs
 
     protected $configs_files = [
-        'public/sitemap_page.xml' => 'changefreq:daily',
-        'public/sitemap_calon_terpilih.xml' => 'changefreq:daily',
-        'public/sitemap_hitung_suara.xml' => 'changefreq:daily',
+        'public/sitemap_page.xml' => 'changefreq:weekly',
+        'public/sitemap_calon_terpilih.xml' => 'changefreq:never',
+        'public/sitemap_hitung_suara.xml' => 'changefreq:never',
     ];
 
     public function __construct()
