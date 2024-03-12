@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel
         Commands\FetchSirekapKpuData::class,
         Commands\ForgetCalon::class,
         Commands\UpdateSitemaps::class,
+        Commands\ChangeFotoCalon::class,
         // Other commands...
     ];
 
