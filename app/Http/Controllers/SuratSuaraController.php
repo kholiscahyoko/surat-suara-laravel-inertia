@@ -646,6 +646,45 @@ class SuratSuaraController extends Controller
                         $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
+                        }
+                        $response_data_hr = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdprdp/{$kode_prov}/{$dapil->kode_dapil}dc.json");
+                        if($response_data_hr->ok()){
+                            $data_hr = $response_data_hr->object();
+                            $data_hr_table = json_decode(json_encode($data_hr->table), true);
+                            $data_table = json_decode(json_encode($data->table), true);
+
+                            if(!empty($data_table) && !empty($data_hr_table)){
+                                $chart = [];
+                                $partai = [];
+    
+                                foreach ((array) $data_hr->chart as $no_partai => $val) {
+                                    $chart[$no_partai] = $val->jml_suara_total;
+                                    $partai[$no_partai] = [
+                                        'jml_suara_total' => $val->jml_suara_total,
+                                        'jml_suara_partai' => $val->jml_suara_partai
+                                    ];
+                                }
+    
+                                $chart['persen'] = $data_hr->progress_d->db->persen;
+    
+                                foreach ($data_table as $no_partai => $val_partai) {
+                                    foreach ($val_partai as $id_calon => $suara_calon) {
+                                        if(!is_numeric($id_calon))
+                                            continue;
+                                        $partai[$no_partai][$id_calon] = 0;
+                                        foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                            $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                        }
+                                    }
+                                }
+    
+                                $data->table = (object) $partai;
+                                $data->chart = (object) $chart;
+                                $data->mode = $data_hr->mode;
+                                $data->ts = $data_hr->ts;
+                            }
+                        }
+                        if($data){
                             $this->cache->setex('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
                         }
                     }
@@ -1114,6 +1153,45 @@ class SuratSuaraController extends Controller
                         $response_data = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/{$kode_prov}/{$dapil->kode_dapil}.json");
                         if($response_data->ok()){
                             $data = $response_data->object();
+                        }
+                        $response_data_hr = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdprdp/{$kode_prov}/{$dapil->kode_dapil}dc.json");
+                        if($response_data_hr->ok()){
+                            $data_hr = $response_data_hr->object();
+                            $data_hr_table = json_decode(json_encode($data_hr->table), true);
+                            $data_table = json_decode(json_encode($data->table), true);
+
+                            if(!empty($data_table) && !empty($data_hr_table)){
+                                $chart = [];
+                                $partai = [];
+    
+                                foreach ((array) $data_hr->chart as $no_partai => $val) {
+                                    $chart[$no_partai] = $val->jml_suara_total;
+                                    $partai[$no_partai] = [
+                                        'jml_suara_total' => $val->jml_suara_total,
+                                        'jml_suara_partai' => $val->jml_suara_partai
+                                    ];
+                                }
+    
+                                $chart['persen'] = $data_hr->progress_d->db->persen;
+    
+                                foreach ($data_table as $no_partai => $val_partai) {
+                                    foreach ($val_partai as $id_calon => $suara_calon) {
+                                        if(!is_numeric($id_calon))
+                                            continue;
+                                        $partai[$no_partai][$id_calon] = 0;
+                                        foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                            $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                        }
+                                    }
+                                }
+    
+                                $data->table = (object) $partai;
+                                $data->chart = (object) $chart;
+                                $data->mode = $data_hr->mode;
+                                $data->ts = $data_hr->ts;
+                            }
+                        }
+                        if($data){
                             $this->cache->setex('hitung_suara:dprdp:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
                         }
                     }
@@ -1188,6 +1266,8 @@ class SuratSuaraController extends Controller
     
                         if(!empty($data_calon_lolos["list"])){
                             $data_calon_lolos["ts"] = $data->ts;
+                            $data_calon_lolos["mode"] = $data->mode;
+                            $data_calon_lolos["persen"] = $data->chart->persen;
                             $data_calon_lolos["progres"] = $data->progres;
                             $this->cache->setex("hitung_suara:dprdp:calon_lolos:{$dapil->kode_dapil}", 120, json_encode($data_calon_lolos));
                         }
