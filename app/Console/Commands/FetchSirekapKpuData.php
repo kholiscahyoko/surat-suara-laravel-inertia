@@ -38,6 +38,13 @@ class FetchSirekapKpuData extends Command
             'dprdp' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdp/[kode_provinsi]/[kode_dapil].json',
             'dprdk' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/[kode_provinsi]/[kode_kabkota]/[kode_dapil].json',
         ],
+        'rekap' => [
+            // 'pilpres' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json',
+            'dpd' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpd/[kode_dapil]dc.json',
+            'dpr' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr/[kode_dapil]dc.json',
+            'dprdp' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdprdp/[kode_provinsi]/[kode_dapil]dc.json',
+            'dprdk' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdprdk/[kode_provinsi]/[kode_kabkota]/[kode_dapil]db.json',
+        ],
         'wilayah' => 'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/[kode_wilayah].json'
     ];
 
@@ -150,6 +157,32 @@ class FetchSirekapKpuData extends Command
                 $this->getFromFile($url);
             }else{
                 echo "ERROR REQUEST SUARA CALEG {$dapil->jenis_dapil}; DAPIL :{$dapil->kode_dapil}\n";
+            }
+
+            // Fetch HASIL REKAP DAPIL
+            if(isset($this->configs_urls['rekap'][$dapil->jenis_dewan])){
+                $url = $this->configs_urls['rekap'][$dapil->jenis_dewan];
+                $url = preg_replace("/\[kode_dapil\]/", $dapil->kode_dapil, $url);
+                switch ($dapil->jenis_dewan) {
+                    case 'dprdp':
+                        $url = preg_replace("/\[kode_provinsi\]/", substr($dapil->kode_dapil, 0, 2), $url);
+                        break;
+    
+                    case 'dprdk':
+                        $url = preg_replace("/\[kode_provinsi\]/", substr($dapil->kode_dapil, 0, 2), $url);
+                        $url = preg_replace("/\[kode_kabkota\]/", substr($dapil->kode_dapil, 0, 4), $url);
+                        break;
+                    
+                    default:
+                        break;
+                }
+    
+                $result = $this->hitRequest($url);
+                if($result){
+                    $this->getFromFile($url);
+                }else{
+                    echo "ERROR REQUEST REKAP CALEG {$dapil->jenis_dapil}; DAPIL :{$dapil->kode_dapil}\n";
+                }
             }
         }
     }
