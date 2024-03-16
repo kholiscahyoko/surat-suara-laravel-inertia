@@ -608,6 +608,45 @@ class SuratSuaraController extends Controller
                         $response_data_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
                         if($response_data_lower_level->ok()){
                             $data_lower_level = $response_data_lower_level->object();
+                        }
+                        $response_data_hr_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr/{$dapil->kode_dapil}dc.json");
+                        if($response_data_hr_lower_level->ok()){
+                            $data_hr_lower_level = $response_data_hr_lower_level->object();
+                            $data_hr_table_lower_level = json_decode(json_encode($data_hr_lower_level->table), true);
+                            $data_table_lower_level = json_decode(json_encode($data_lower_level->table), true);
+
+                            if(!empty($data_table_lower_level) && !empty($data_hr_table_lower_level)){
+                                $chart = [];
+                                $partai = [];
+    
+                                foreach ((array) $data_hr_lower_level->chart as $no_partai => $val) {
+                                    $chart[$no_partai] = $val->jml_suara_total;
+                                    $partai[$no_partai] = [
+                                        'jml_suara_total' => $val->jml_suara_total,
+                                        'jml_suara_partai' => $val->jml_suara_partai
+                                    ];
+                                }
+    
+                                $chart['persen'] = $data_hr_lower_level->progress_d->db->persen;
+    
+                                foreach ($data_table_lower_level as $no_partai => $val_partai) {
+                                    foreach ($val_partai as $id_calon => $suara_calon) {
+                                        if(!is_numeric($id_calon))
+                                            continue;
+                                        $partai[$no_partai][$id_calon] = 0;
+                                        foreach ($data_hr_table_lower_level as $kode_wilayah => $wilayah_val) {
+                                            $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                        }
+                                    }
+                                }
+    
+                                $data_lower_level->table = (object) $partai;
+                                $data_lower_level->chart = (object) $chart;
+                                $data_lower_level->mode = $data_hr_lower_level->mode;
+                                $data_lower_level->ts = $data_hr_lower_level->ts;
+                            }
+                        }
+                        if($data_lower_level){
                             $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
                         }
                     }
@@ -1048,6 +1087,45 @@ class SuratSuaraController extends Controller
                         $response_data_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/{$dapil->kode_dapil}.json");
                         if($response_data_lower_level->ok()){
                             $data_lower_level = $response_data_lower_level->object();
+                        }
+                        $response_data_hr_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr/{$dapil->kode_dapil}dc.json");
+                        if($response_data_hr_lower_level->ok()){
+                            $data_hr_lower_level = $response_data_hr_lower_level->object();
+                            $data_hr_table_lower_level = json_decode(json_encode($data_hr_lower_level->table), true);
+                            $data_table_lower_level = json_decode(json_encode($data_lower_level->table), true);
+
+                            if(!empty($data_table_lower_level) && !empty($data_hr_table_lower_level)){
+                                $chart = [];
+                                $partai = [];
+    
+                                foreach ((array) $data_hr_lower_level->chart as $no_partai => $val) {
+                                    $chart[$no_partai] = $val->jml_suara_total;
+                                    $partai[$no_partai] = [
+                                        'jml_suara_total' => $val->jml_suara_total,
+                                        'jml_suara_partai' => $val->jml_suara_partai
+                                    ];
+                                }
+    
+                                $chart['persen'] = $data_hr_lower_level->progress_d->db->persen;
+    
+                                foreach ($data_table_lower_level as $no_partai => $val_partai) {
+                                    foreach ($val_partai as $id_calon => $suara_calon) {
+                                        if(!is_numeric($id_calon))
+                                            continue;
+                                        $partai[$no_partai][$id_calon] = 0;
+                                        foreach ($data_hr_table_lower_level as $kode_wilayah => $wilayah_val) {
+                                            $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                        }
+                                    }
+                                }
+    
+                                $data_lower_level->table = (object) $partai;
+                                $data_lower_level->chart = (object) $chart;
+                                $data_lower_level->mode = $data_hr_lower_level->mode;
+                                $data_lower_level->ts = $data_hr_lower_level->ts;
+                            }
+                        }
+                        if($data_lower_level){
                             $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
                         }
                     }
@@ -1122,6 +1200,8 @@ class SuratSuaraController extends Controller
     
                         if(!empty($data_calon_lolos["list"])){
                             $data_calon_lolos["ts"] = $data_lower_level->ts;
+                            $data_calon_lolos["mode"] = $data_lower_level->mode;
+                            $data_calon_lolos["persen"] = $data_lower_level->chart->persen;
                             $data_calon_lolos["progres"] = $data_lower_level->progres;
                             $this->cache->setex("hitung_suara:dpr:calon_lolos:{$dapil->kode_dapil}", 120, json_encode($data_calon_lolos));
                         }
