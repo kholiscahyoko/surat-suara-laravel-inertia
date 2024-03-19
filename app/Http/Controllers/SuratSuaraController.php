@@ -674,6 +674,9 @@ class SuratSuaraController extends Controller
                                             continue;
                                         $partai[$no_partai][$id_calon] = 0;
                                         foreach ($data_hr_table_lower_level as $kode_wilayah => $wilayah_val) {
+                                            if($wilayah_val === null){
+                                                continue;
+                                            }
                                             $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                         }
                                     }
@@ -751,6 +754,9 @@ class SuratSuaraController extends Controller
                                             continue;
                                         $partai[$no_partai][$id_calon] = 0;
                                         foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                            if($wilayah_val === null){
+                                                continue;
+                                            }
                                             $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                         }
                                     }
@@ -831,6 +837,9 @@ class SuratSuaraController extends Controller
                                             continue;
                                         $partai[$no_partai][$id_calon] = 0;
                                         foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                            if($wilayah_val === null){
+                                                continue;
+                                            }
                                             $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                         }
                                     }
@@ -1194,6 +1203,9 @@ class SuratSuaraController extends Controller
                                             continue;
                                         $partai[$no_partai][$id_calon] = 0;
                                         foreach ($data_hr_table_lower_level as $kode_wilayah => $wilayah_val) {
+                                            if($wilayah_val === null){
+                                                continue;
+                                            }
                                             $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                         }
                                     }
@@ -1340,6 +1352,9 @@ class SuratSuaraController extends Controller
                                             continue;
                                         $partai[$no_partai][$id_calon] = 0;
                                         foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                            if($wilayah_val === null){
+                                                continue;
+                                            }
                                             $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                         }
                                     }
@@ -1486,6 +1501,9 @@ class SuratSuaraController extends Controller
                                             continue;
                                         $partai[$no_partai][$id_calon] = 0;
                                         foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                            if($wilayah_val === null){
+                                                continue;
+                                            }
                                             $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                         }
                                     }
