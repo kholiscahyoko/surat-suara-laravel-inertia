@@ -495,7 +495,6 @@ class SuratSuaraController extends Controller
                 $response_data = $this->sirekap->getData('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
                 if($response_data->ok()){
                     $data = $response_data->object();
-                    $this->cache->setex('hitung_suara:pilpres:data', 120, json_encode($data));
                 }
 
                 $response_data_hr = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp.json");
@@ -534,6 +533,10 @@ class SuratSuaraController extends Controller
                         $data->mode = $data_hr->mode;
                         $data->ts = $data_hr->ts;
                     }
+                }
+
+                if($data){
+                    $this->cache->setex('hitung_suara:pilpres:data', 120, json_encode($data));
                 }
             }
             $result = ['data' => $data, 'master' => $master, 'wilayah' => (array) $wilayah ];
