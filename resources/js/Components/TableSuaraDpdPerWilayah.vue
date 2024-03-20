@@ -30,7 +30,7 @@
                         </a>
                     </td>
                     <td class="px-1 py-1 md:px-6 md:py-2 text-right" v-html="data.chart[kode_calon].toLocaleString('en-US', { style: 'decimal',})" />
-                    <td v-for="item, key in wilayah" class="px-1 py-1 md:px-6 md:py-2 text-right" v-html=" data.table[item.kode][kode_calon].toLocaleString('en-US', { style: 'decimal',}) " />
+                    <td v-for="item, key in wilayah" class="px-1 py-1 md:px-6 md:py-2 text-right" v-html=" typeof data.table[item.kode][kode_calon] !== 'undefined' ? data.table[item.kode][kode_calon].toLocaleString('en-US', { style: 'decimal',}) : 0 " />
                 </tr>
             </tbody>
             <tfoot class="sticky bottom-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

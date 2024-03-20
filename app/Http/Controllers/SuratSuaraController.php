@@ -518,6 +518,13 @@ class SuratSuaraController extends Controller
                 abort(404);
                 exit();
             }
+            if($jenis !== $dapil->jenis_dewan){
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$dapil->jenis_dewan}/{$nama_dapil}/{$kode_dapil}";
+                if(strlen($nama_calon)>0 && is_numeric($calon_id)){
+                    $url_redirect .= "/{$nama_calon}/{$calon_id}";
+                }
+                return redirect($url_redirect, 301);
+            }
 
             $master = null;
             if($master = $this->cache->get("hitung_suara:dpd:calon:{$dapil->kode_dapil}")){
@@ -619,10 +626,17 @@ class SuratSuaraController extends Controller
                 ->first();
                 $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
             }
-
             if(empty($dapil) || !isset($dapil->nama_dapil)){
                 abort(404);
                 exit();
+            }
+
+            if($jenis !== $dapil->jenis_dewan){
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$dapil->jenis_dewan}/{$nama_dapil}/{$kode_dapil}";
+                if(strlen($nama_calon)>0 && is_numeric($calon_id)){
+                    $url_redirect .= "/{$nama_calon}/{$calon_id}";
+                }
+                return redirect($url_redirect, 301);
             }
 
             switch ($jenis) {
@@ -980,6 +994,10 @@ class SuratSuaraController extends Controller
                     abort(404);
                     exit();
                 }
+                if($jenis !== $dapil->jenis_dewan){
+                    $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$dapil->jenis_dewan}/{$nama_dapil}/{$kode_dapil}";
+                    return redirect($url_redirect, 301);
+                }
             }
 
             if($data_calon_lolos = $this->cache->get("hitung_suara:dpd:calon_lolos:{$dapil->kode_dapil}")){
@@ -1144,6 +1162,11 @@ class SuratSuaraController extends Controller
             if(empty($dapil) || !isset($dapil->nama_dapil) || empty($kursi_dapil) || !isset($kursi_dapil->jumlah_kursi)){
                 abort(404);
                 exit();
+            }
+
+            if($jenis !== $dapil->jenis_dewan){
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$dapil->jenis_dewan}/{$nama_dapil}/{$kode_dapil}";
+                return redirect($url_redirect, 301);
             }
 
             switch ($jenis) {
