@@ -815,6 +815,17 @@ class SuratSuaraController extends Controller
                     break;
                 
                 case 'dprdk':
+                    $master_calon = null;
+                    if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
+                        }
+                    }
+
                     $data = null;
                     if($data = $this->cache->get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
                         $data = json_decode($data);
@@ -831,7 +842,8 @@ class SuratSuaraController extends Controller
                             $data_hr_table = json_decode(json_encode($data_hr->table), true);
                             $data_table = json_decode(json_encode($data->table), true);
 
-                            if(!empty($data_table) && !empty($data_hr_table)){
+                            if(!empty($data_hr_table)){
+
                                 $chart = [];
                                 $partai = [];
     
@@ -844,17 +856,35 @@ class SuratSuaraController extends Controller
                                 }
     
                                 $chart['persen'] = $data_hr->progress_d->db->persen;
-    
-                                foreach ($data_table as $no_partai => $val_partai) {
-                                    foreach ($val_partai as $id_calon => $suara_calon) {
-                                        if(!is_numeric($id_calon))
-                                            continue;
-                                        $partai[$no_partai][$id_calon] = 0;
-                                        foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
-                                            if($wilayah_val === null){
+
+                                if(!empty($data_table)){
+                                    foreach ($data_table as $no_partai => $val_partai) {
+                                        foreach ($val_partai as $id_calon => $suara_calon) {
+                                            if(!is_numeric($id_calon))
                                                 continue;
+                                            $partai[$no_partai][$id_calon] = 0;
+                                            foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                                if($wilayah_val === null){
+                                                    continue;
+                                                }
+                                                $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                             }
-                                            $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                        }
+                                    }
+                                }else{
+                                    foreach ($master_calon as $no_partai => $val_partai) {
+                                        if($val_partai !== null){
+                                            foreach ($val_partai as $id_calon => $data_calon) {
+                                                if(!is_numeric($id_calon))
+                                                    continue;
+                                                $partai[$no_partai][$id_calon] = 0;
+                                                foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                                    if($wilayah_val === null){
+                                                        continue;
+                                                    }
+                                                    $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -867,17 +897,6 @@ class SuratSuaraController extends Controller
                         }
                         if($data){
                             $this->cache->setex('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
-                        }
-                    }
-
-                    $master_calon = null;
-                    if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
-                        $master_calon = json_decode($master_calon);
-                    }else{
-                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
-                        if($response_master_calon->ok()){
-                            $master_calon = $response_master_calon->object();
-                            $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
@@ -1488,6 +1507,17 @@ class SuratSuaraController extends Controller
                     break;
                 
                 case 'dprdk':
+                    $master_calon = null;
+                    if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
+                        }
+                    }
+
                     $data = null;
                     if($data = $this->cache->get('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil)){
                         $data = json_decode($data);
@@ -1504,7 +1534,7 @@ class SuratSuaraController extends Controller
                             $data_hr_table = json_decode(json_encode($data_hr->table), true);
                             $data_table = json_decode(json_encode($data->table), true);
 
-                            if(!empty($data_table) && !empty($data_hr_table)){
+                            if(!empty($data_hr_table)){
                                 $chart = [];
                                 $partai = [];
     
@@ -1517,17 +1547,35 @@ class SuratSuaraController extends Controller
                                 }
     
                                 $chart['persen'] = $data_hr->progress_d->db->persen;
-    
-                                foreach ($data_table as $no_partai => $val_partai) {
-                                    foreach ($val_partai as $id_calon => $suara_calon) {
-                                        if(!is_numeric($id_calon))
-                                            continue;
-                                        $partai[$no_partai][$id_calon] = 0;
-                                        foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
-                                            if($wilayah_val === null){
+
+                                if(!empty($data_table)){
+                                    foreach ($data_table as $no_partai => $val_partai) {
+                                        foreach ($val_partai as $id_calon => $suara_calon) {
+                                            if(!is_numeric($id_calon))
                                                 continue;
+                                            $partai[$no_partai][$id_calon] = 0;
+                                            foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                                if($wilayah_val === null){
+                                                    continue;
+                                                }
+                                                $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
                                             }
-                                            $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                        }
+                                    }
+                                }else{
+                                    foreach ($master_calon as $no_partai => $val_partai) {
+                                        if($val_partai !== null){
+                                            foreach ($val_partai as $id_calon => $data_calon) {
+                                                if(!is_numeric($id_calon))
+                                                    continue;
+                                                $partai[$no_partai][$id_calon] = 0;
+                                                foreach ($data_hr_table as $kode_wilayah => $wilayah_val) {
+                                                    if($wilayah_val === null){
+                                                        continue;
+                                                    }
+                                                    $partai[$no_partai][$id_calon] += $wilayah_val[$id_calon];
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -1540,17 +1588,6 @@ class SuratSuaraController extends Controller
                         }
                         if($data){
                             $this->cache->setex('hitung_suara:dprdk:dapil:'.$dapil->kode_dapil, 120, json_encode($data));
-                        }
-                    }
-
-                    $master_calon = null;
-                    if($master_calon = $this->cache->get('hitung_suara:dprdk:calon:'.$dapil->kode_dapil)){
-                        $master_calon = json_decode($master_calon);
-                    }else{
-                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
-                        if($response_master_calon->ok()){
-                            $master_calon = $response_master_calon->object();
-                            $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
