@@ -39,8 +39,9 @@ class FetchSirekapKpuData extends Command
             'dprdk' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdprdk/[kode_provinsi]/[kode_kabkota]/[kode_dapil].json',
         ],
         'rekap' => [
-            // 'pilpres' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json',
+            'pilpres' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp.json',
             'dpd' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpd/[kode_dapil]dc.json',
+            'dpr_nasional' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr.json',
             'dpr' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr/[kode_dapil]dc.json',
             'dprdp' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdprdp/[kode_provinsi]/[kode_dapil]dc.json',
             'dprdk' => 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdprdk/[kode_provinsi]/[kode_kabkota]/[kode_dapil]db.json',
@@ -67,12 +68,23 @@ class FetchSirekapKpuData extends Command
             echo "ERROR REQUEST MASTER PILPRES\n";
         }
 
+
+        // FETCH REAL COUNT PILPRES
         $url_suara = $this->configs_urls['suara']['pilpres'];
         $result = $this->hitRequest($url_suara);
         if($result){
             $this->getFromFile($url_suara);
         }else{
             echo "ERROR REQUEST SUARA PILPRES\n";
+        }
+
+        // FETCH REKAP PILPRES
+        $url_suara = $this->configs_urls['rekap']['pilpres'];
+        $result = $this->hitRequest($url_suara);
+        if($result){
+            $this->getFromFile($url_suara);
+        }else{
+            echo "ERROR REQUEST REKAP PILPRES\n";
         }
 
         $url_wilayah = preg_replace('/\[kode_wilayah\]/', 0, $this->configs_urls['wilayah']);
@@ -100,6 +112,15 @@ class FetchSirekapKpuData extends Command
             $this->getFromFile($url);
         }else{
             echo "ERROR REQUEST SUARA NASIONAL DPR RI\n";
+        }
+
+        // Fetch REKAP Nasional DPR
+        $url = $this->configs_urls['rekap']['dpr_nasional'];
+        $result = $this->hitRequest($url);
+        if($result){
+            $this->getFromFile($url);
+        }else{
+            echo "ERROR REQUEST REKAP NASIONAL DPR RI\n";
         }
 
         // Fetch data from the database
