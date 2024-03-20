@@ -720,6 +720,11 @@ class SuratSuaraController extends Controller
                                 $data_higher_level->chart = (object) $chart;
                                 $data_higher_level->mode = $data_hr_higher_level->mode;
                                 $data_higher_level->ts = $data_hr_higher_level->ts;
+                            }elseif(empty($data_hr_higher_level->chart)){
+                                $chart = $this->getDprNasionalFromDapil();
+                                $data_higher_level->chart = (object) $chart;
+                                $data_higher_level->mode = "hr";
+                                $data_higher_level->ts = date("Y-m-d H:i:s");
                             }
                         }
 
@@ -1290,6 +1295,11 @@ class SuratSuaraController extends Controller
                                 $data_higher_level->chart = (object) $chart;
                                 $data_higher_level->mode = $data_hr_higher_level->mode;
                                 $data_higher_level->ts = $data_hr_higher_level->ts;
+                            }elseif(empty($data_hr_higher_level->chart)){
+                                $chart = $this->getDprNasionalFromDapil();
+                                $data_higher_level->chart = (object) $chart;
+                                $data_higher_level->mode = "hr";
+                                $data_higher_level->ts = date("Y-m-d H:i:s");
                             }
                         }
 
@@ -2295,5 +2305,44 @@ class SuratSuaraController extends Controller
 
         // Modify pagination links to include existing query string parameters
         return $paginator->withQueryString();
+    }
+
+    private function getDprNasionalFromDapil(){
+        $dapils = Dapils::where('jenis_dewan', 'dpr')->select(['kode_dapil'])->get();
+        $chart = [];
+        set_time_limit(500);
+        foreach($dapils as $dapil){
+            if($data_lower_level = $this->cache->get('hitung_suara:dpr:dapil:'.$dapil->kode_dapil)){
+                $data_lower_level = json_decode($data_lower_level);
+                if(!empty($data_lower_level->chart)){
+                    foreach ((array) $data_lower_level->chart as $no_partai => $suara) {
+                        if(!is_numeric($no_partai))
+                            continue;
+                        if(!isset($chart[$no_partai]))
+                            $chart[$no_partai] = 0;
+                        if(is_numeric($suara))
+                            $chart[$no_partai] += $suara;
+                    }
+                }
+            }else{
+                $response_data_hr_lower_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr/{$dapil->kode_dapil}dc.json");
+                if($response_data_hr_lower_level->ok()){
+                    $data_hr_lower_level = $response_data_hr_lower_level->object();
+                    if(!empty($data_hr_lower_level->chart)){
+                        foreach ((array) $data_hr_lower_level->chart as $no_partai => $val) {
+                            if(!isset($chart[$no_partai]))
+                                $chart[$no_partai] = 0;
+                            if(is_numeric($val->jml_suara_total))
+                                $chart[$no_partai] += $val->jml_suara_total;
+                        }
+                    }
+                }
+            }
+        }
+        if($chart){
+            $chart['persen'] = 100;
+        }
+
+        return $chart;
     }
 }
