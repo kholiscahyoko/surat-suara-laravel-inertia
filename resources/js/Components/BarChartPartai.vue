@@ -6,7 +6,7 @@
         <SumberPemilu2024 /><br>
     </div>
     <!-- Bar Chart -->
-    <div class="mx-auto w-full" :id="`bar-chart-${id}`"></div>
+    <div class="mx-auto w-full max-w-[640px] max-h-[200px]" :id="`bar-chart-${id}`"></div>
 </template>
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
@@ -123,12 +123,12 @@ let render_chart = function(){
     let options = {
         chart: {
               type: 'bar',
-              height: 640
+              height: 480
         },
         plotOptions: {
             bar: {
                 barHeight: '100%',
-                columnWidth: 40,
+                columnWidth: 20,
                 distributed: true,
                 horizontal: false,
                 borderRadiusApplication : 'end',
@@ -200,33 +200,8 @@ let render_chart = function(){
         },
         responsive: [
             {
-                breakpoint: 1024,
-                options: {
-                    plotOptions:{
-                        bar: {
-                            barHeight: '100%',
-                            columnWidth: 30,
-                        }
-                    }
-                }
-            },
-            {
-                breakpoint: 640,
-                options: {
-                    plotOptions:{
-                        bar: {
-                            barHeight: '100%',
-                            columnWidth: 20,
-                        }
-                    }
-                }
-            },
-            {
                 breakpoint: 480,
                 options: {
-                    chart: {
-                        height: 480
-                    },
                     plotOptions:{
                         bar: {
                             barHeight: '100%',
