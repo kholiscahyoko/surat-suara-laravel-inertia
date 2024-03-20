@@ -1,5 +1,5 @@
 <template>
-    <a :href="calon.url_profil" class="w-52 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max hover:scale-105 duration-300 cursor-pointer p-1 hover:text-indigo-800 mx-2">
+    <a :href="calon.url_profil" class="w-52 min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max hover:scale-105 duration-300 cursor-pointer p-1 hover:text-indigo-800 mx-2" :class="`partai-no-${partai.nomor_urut}`">
         <div class="flex justify-center px-4 py-2 border-b border-black text-center">
             <div class="font-semibold text-wrap text-sm lg:text-lg">{{ partai.nama }}</div>
         </div>
