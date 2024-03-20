@@ -8,7 +8,7 @@
         <a :href="$setUrl('/wilayah')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 md:p-5 align-middle bg-red-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cari Berdasarkan Wilayahmu Disini</a>
         <a :href="$setUrl('/dapil')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 md:p-5 align-middle bg-yellow-400 font-semibold text-black rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cari Berdasarkan Nama Dapil Disini</a>
         <a :href="$setUrl('/calon')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5 bg-blue-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cari Nama Calon Disini</a>
-        <a :href="$setUrl('/surat-suara/kecamatan/cikande/360415')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5 bg-green-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Contoh Surat Suara Disini</a>
+        <a :href="$setUrl('/hitung-suara/kecamatan/cikande/360415')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5 bg-green-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Contoh Hasil Rekap Disini</a>
     </div>
     <StatsBlock v-if="summary" :summary="summary"/>
     <div class="w-full">
