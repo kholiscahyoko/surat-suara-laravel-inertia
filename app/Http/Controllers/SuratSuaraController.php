@@ -680,6 +680,17 @@ class SuratSuaraController extends Controller
             switch ($jenis) {
                 case 'dpr':
 
+                    $master_calon = null;
+                    if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
+                        }
+                    }
+
                     $data_higher_level = null;
 
                     if($data_higher_level = $this->cache->get('hitung_suara:dpr:nasional')){
@@ -688,6 +699,28 @@ class SuratSuaraController extends Controller
                         $response_data_higher_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
                         if($response_data_higher_level->ok()){
                             $data_higher_level = $response_data_higher_level->object();
+                        }
+
+                        $response_data_hr_higher_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr.json");
+                        if($response_data_hr_higher_level->ok()){
+                            $data_hr_higher_level = $response_data_hr_higher_level->object();
+
+                            if(!empty($data_higher_level->chart) && !empty($data_hr_higher_level->chart)){
+                                $chart = [];
+    
+                                foreach ((array) $data_hr_higher_level->chart as $no_partai => $val) {
+                                    $chart[$no_partai] = $val->jml_suara_total;
+                                }
+    
+                                $chart['persen'] = $data_hr_higher_level->progress_d->db->persen;
+    
+                                $data_higher_level->chart = (object) $chart;
+                                $data_higher_level->mode = $data_hr_higher_level->mode;
+                                $data_higher_level->ts = $data_hr_higher_level->ts;
+                            }
+                        }
+
+                        if($data_higher_level){
                             $this->cache->setex('hitung_suara:dpr:nasional', 120, json_encode($data_higher_level));
                         }
                     }
@@ -742,17 +775,6 @@ class SuratSuaraController extends Controller
                         }
                         if($data_lower_level){
                             $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
-                        }
-                    }
-
-                    $master_calon = null;
-                    if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
-                        $master_calon = json_decode($master_calon);
-                    }else{
-                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
-                        if($response_master_calon->ok()){
-                            $master_calon = $response_master_calon->object();
-                            $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
@@ -1228,6 +1250,17 @@ class SuratSuaraController extends Controller
 
             switch ($jenis) {
                 case 'dpr':
+                    $master_calon = null;
+                    if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
+                        $master_calon = json_decode($master_calon);
+                    }else{
+                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
+                        if($response_master_calon->ok()){
+                            $master_calon = $response_master_calon->object();
+                            $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
+                        }
+                    }
+
                     $data_higher_level = null;
 
                     if($data_higher_level = $this->cache->get('hitung_suara:dpr:nasional')){
@@ -1236,6 +1269,28 @@ class SuratSuaraController extends Controller
                         $response_data_higher_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hhcd/pdpr/0.json");
                         if($response_data_higher_level->ok()){
                             $data_higher_level = $response_data_higher_level->object();
+                        }
+
+                        $response_data_hr_higher_level = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/hr/pdpr.json");
+                        if($response_data_hr_higher_level->ok()){
+                            $data_hr_higher_level = $response_data_hr_higher_level->object();
+
+                            if(!empty($data_higher_level->chart) && !empty($data_hr_higher_level->chart)){
+                                $chart = [];
+    
+                                foreach ((array) $data_hr_higher_level->chart as $no_partai => $val) {
+                                    $chart[$no_partai] = $val->jml_suara_total;
+                                }
+    
+                                $chart['persen'] = $data_hr_higher_level->progress_d->db->persen;
+    
+                                $data_higher_level->chart = (object) $chart;
+                                $data_higher_level->mode = $data_hr_higher_level->mode;
+                                $data_higher_level->ts = $data_hr_higher_level->ts;
+                            }
+                        }
+
+                        if($data_higher_level){
                             $this->cache->setex('hitung_suara:dpr:nasional', 120, json_encode($data_higher_level));
                         }
                     }
@@ -1299,17 +1354,6 @@ class SuratSuaraController extends Controller
                         }
                         if($data_lower_level){
                             $this->cache->setex('hitung_suara:dpr:dapil:'.$dapil->kode_dapil, 120, json_encode($data_lower_level));
-                        }
-                    }
-
-                    $master_calon = null;
-                    if($master_calon = $this->cache->get('hitung_suara:dpr:calon:'.$dapil->kode_dapil)){
-                        $master_calon = json_decode($master_calon);
-                    }else{
-                        $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
-                        if($response_master_calon->ok()){
-                            $master_calon = $response_master_calon->object();
-                            $this->cache->setex('hitung_suara:dpr:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
 
