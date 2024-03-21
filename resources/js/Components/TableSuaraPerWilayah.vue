@@ -24,7 +24,7 @@
                     <tr v-for="row in tableData" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-1 py-1 md:px-6 md:py-2" v-html="row.nama_wilayah" />
                         <td v-for="item, k in master" class="px-1 py-1 md:px-6 md:py-2" :class="typeof row[k] == 'number' ? 'text-right': ''" v-html="(typeof row[k] == 'number' ? row[k].toLocaleString('en-US', { style: 'decimal',}) : row[k]) " />
-                        <td class="px-1 py-1 md:px-6 md:py-2 text-center" v-html="`${row.persen}%`" />
+                        <td class="px-1 py-1 md:px-6 md:py-2 text-center" v-html="row.persen == 100 ? `Selesai`: `On Progress`" />
                     </tr>
                 </tbody>
             </table>

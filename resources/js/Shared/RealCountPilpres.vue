@@ -10,7 +10,7 @@
             </h3>
         </div>
         <div class="flex flex-wrap items-start justify-center text-center my-8">
-            {{ data.mode === 'hr' ? `Progress: ${(data.progres.total * (data.chart.persen/100)).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 0})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${(data.chart.persen).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)`:`Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)` }}<br>
+            {{ data.mode !== 'hr' ? `Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)<br>` : `` }}
             {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
         </div>
         <div class="flex flex-wrap items-start justify-center my-8">
