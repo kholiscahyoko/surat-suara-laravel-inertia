@@ -1234,7 +1234,7 @@ class SuratSuaraController extends Controller
                 $dapil = Dapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
+                $this->cache->setex('dapil:'.$kode_dapil, 120, json_encode($dapil));
             }
 
             if($kursi_dapil = $this->cache->get('kursi_dapil:'.$kode_dapil)){
@@ -1243,7 +1243,7 @@ class SuratSuaraController extends Controller
                 $kursi_dapil = Kursidapils::query()
                 ->where('kode_dapil', $kode_dapil)
                 ->first();
-                $this->cache->set('kursi_dapil:'.$kode_dapil, json_encode($kursi_dapil));
+                $this->cache->setex('kursi_dapil:'.$kode_dapil, 120, json_encode($kursi_dapil));
             }
 
             if(empty($dapil) || !isset($dapil->nama_dapil) || empty($kursi_dapil) || !isset($kursi_dapil->jumlah_kursi)){
