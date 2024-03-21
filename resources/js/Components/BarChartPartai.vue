@@ -1,7 +1,7 @@
 <template>
     <h4 class="text-center font-bold md:text-3xl mt-10" v-html="(nasional ? `Perolehan Suara Nasional`: `Perolehan Suara Dapil ${dapil.nama_dapil}`)"></h4>
     <div class="text-center my-8">
-        {{ data.mode === 'hr' ? `Progress: ${(data.progres.total * (data.chart.persen/100)).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 0})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${(data.chart.persen).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)`:`Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)` }}<br>
+        {{ data.mode === 'hr' ? `Progress: ${(data.chart.persen).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%`:`Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)` }}<br>
         {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
         <SumberPemilu2024 /><br>
     </div>
