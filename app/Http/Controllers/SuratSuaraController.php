@@ -343,13 +343,26 @@ class SuratSuaraController extends Controller
                 ->toArray();
                 $this->cache->set('partais_by_dapil:'.$kode_dapil, json_encode($partais));
             }
-            if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
-                $dapil = json_decode($dapil);
-            }else{
+            if(empty($kode_dapil)){
                 $dapil = Dapils::query()
-                ->where('kode_dapil', $kode_dapil)
+                ->where('nama_dapil', str_replace("-", " ", $nama_dapil))
+                ->where('jenis_dewan', $jenis)
                 ->first();
-                $this->cache->set('dapil:'.$kode_dapil, json_encode($dapil));
+                if(empty($dapil)){
+                    abort(404);
+                    exit();
+                }
+                $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/{$request->segment(1)}/{$request->segment(2)}/{$nama_dapil}/{$dapil->kode_dapil}";
+                return redirect($url_redirect, 301);
+            }else{
+                if($dapil = $this->cache->get('dapil:'.$kode_dapil)){
+                    $dapil = json_decode($dapil);
+                }else{
+                    $dapil = Dapils::query()
+                    ->where('kode_dapil', $kode_dapil)
+                    ->first();
+                    $this->cache->setex('dapil:'.$kode_dapil, 86400, json_encode($dapil));
+                }
             }
 
             switch ($jenis) {
