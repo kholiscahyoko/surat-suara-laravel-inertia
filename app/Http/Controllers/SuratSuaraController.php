@@ -2305,6 +2305,9 @@ class SuratSuaraController extends Controller
     }
 
     private function sainteLague($votes, $seatsAvailable, $partai_threshold = []){
+        if(empty($votes)){
+            return [];
+        }
         if(isset($votes['persen'])) unset($votes['persen']);
 
         if(!empty($partai_threshold)){
