@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
         Commands\ForgetCalon::class,
         Commands\UpdateSitemaps::class,
         Commands\ChangeFotoCalon::class,
+        Commands\UpdateCalonSitemaps::class,
         // Other commands...
     ];
 
