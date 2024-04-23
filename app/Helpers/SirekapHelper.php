@@ -13,17 +13,17 @@ class SirekapHelper {
 
     public function getData($url){
         try {
-            // Make the HTTP GET request
-            $response = Http::withHeaders([
-                'Referer' => 'https://pemilu2024.kpu.go.id'
-            ])->get($url);
+            // // Make the HTTP GET request
+            // $response = Http::withHeaders([
+            //     'Referer' => 'https://pemilu2024.kpu.go.id'
+            // ])->get($url);
         
-            // Check if the request was successful (status code 2xx)
-            if ($response->ok()) {
-                $this->ok = true;
-                return $response;
-            } else {
-                // Request failed (non-2xx status code), return the result from file
+            // // Check if the request was successful (status code 2xx)
+            // if ($response->ok()) {
+            //     $this->ok = true;
+            //     return $response;
+            // } else {
+            //     // Request failed (non-2xx status code), return the result from file
                 $this->object = $this->getFromFile($url);
                 if($this->object){
                     $this->ok = true;
@@ -31,7 +31,7 @@ class SirekapHelper {
                     $this->ok = false;
                 }
                 return $this;
-            }
+            // }
         } catch (\Throwable $e) {
             // An exception occurred during the request, return the result from file
             $this->object = $this->getFromFile($url);
