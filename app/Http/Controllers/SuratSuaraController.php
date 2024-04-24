@@ -1887,6 +1887,11 @@ class SuratSuaraController extends Controller
             exit();
         }
 
+        if(Str::slug(strtolower($calon->nama)) !== $nama_calon){
+            $url_redirect = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/{$jenis}/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
+            return redirect($url_redirect, 301);
+        }
+
         if(!empty(config('app.meta')['surat-suara'][$jenis]['description'])){
             $meta_desc = config('app.meta')['surat-suara'][$jenis]['description'];
         }
