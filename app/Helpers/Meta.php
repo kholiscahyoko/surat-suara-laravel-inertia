@@ -25,13 +25,13 @@ class Meta {
             'title' => config('app.name'),
             'image' => asset('assets/img/infopemilu-square-1.webp'),
             'description' => "Website Unofficial Info Pemilu, daftar calon anggota legislatif terlengkap di seluruh Indonesia. Cek surat suara dan cari tahu pilihanmu disini. Mari kita sukseskan Pemilu 2024.",
-            'url' => url()->current(),
+            'url' => url()->full(),
             'image:type' => 'image/webp',
             'image:width' => 366,
             'image:height' => 650,
         ];
 
-        $this->url_canonical = url()->current();
+        $this->url_canonical = url()->full();
     }
 
     public function generate() {
