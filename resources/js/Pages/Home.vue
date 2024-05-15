@@ -2,7 +2,6 @@
     <h1 class="text-4xl font-bold tracking-tight text-gray-900 mb-4">
         Temukan Siapa Calon Pilihanmu
     </h1>
-    <FiturBaru />
     <div class="md:flex md:justify-evenly mb-4 items-center">
         <a :href="$setUrl('/hitung-suara/pilpres')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 md:p-5 align-middle bg-gray-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Real Count Pilpres</a>
         <a :href="$setUrl('/wilayah')" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 md:p-5 align-middle bg-red-600 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cari Berdasarkan Wilayahmu Disini</a>
@@ -15,13 +14,10 @@
         <HorizontalAds1/>
     </div>
     <Leaflet v-if="summary && summary.data_provinsi && geo_provinsi" :data_provinsi="summary.data_provinsi" :geo_provinsi="geo_provinsi"/>
-    <KawalPemilu />
 </template>
 <script setup>
 import StatsBlock from '../Components/StatsBlock.vue';
 import Leaflet from '../Components/Leaflet.vue';
-import KawalPemilu from '../Shared/KawalPemilu.vue';
-import FiturBaru from '../Shared/FiturBaru.vue';
 import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 
 let props = defineProps({

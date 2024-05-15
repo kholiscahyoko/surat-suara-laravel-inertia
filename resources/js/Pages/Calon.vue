@@ -76,14 +76,12 @@
         </div>
 
     </div>
-    <KawalPemilu />
 </template>
 
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
 import { ref } from "vue";
 import { router } from '@inertiajs/vue3';
-import KawalPemilu from '../Shared/KawalPemilu.vue';
 import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 
 let props = defineProps({

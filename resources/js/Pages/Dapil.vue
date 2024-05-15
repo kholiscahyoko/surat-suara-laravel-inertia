@@ -94,7 +94,6 @@
             </div>
         </div>
     </div>
-    <KawalPemilu />
 </template>
 
 <script setup>
@@ -103,7 +102,6 @@ import {  onMounted, onUnmounted, ref, inject } from "vue";
 import { router } from '@inertiajs/vue3';
 import { initModals } from 'flowbite';
 import axios from 'axios';
-import KawalPemilu from '../Shared/KawalPemilu.vue';
 import HorizontalAds1 from '../Components/HorizontalAds1.vue';
 
 let props = defineProps({
