@@ -36,7 +36,7 @@
                                         Nama wilayah tidak ditemukan.<br>
                                         Saran : coba gunakan nama DESA/KELURAHAN saja atau tingkatan diatasnya (KECAMATAN atau KABUPATEN/KOTA).<br>
                                         Contoh : CIDENG , jika tidak ada coba GAMBIR, jika tidak ada coba JAKARTA PUSAT<br>
-                                        Jika masih tidak menemukan, coba alternatif pencarian <a :href="$setUrl(`/calon`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Calon</a> atau <a :href="$setUrl(`/dapil`)" class="text-indigo-600 hover:text-indigo-900 font-semibold">Nama Dapil</a>
+                                        Jika masih tidak menemukan, coba alternatif pencarian <a :href="`https://cse.google.com/cse?cx=819a22e0ed55841c3`" target="_blank" class="text-indigo-600 hover:text-indigo-900 font-semibold">Disini</a>
                                     </td>
                                 </tr>
                             </tbody>
