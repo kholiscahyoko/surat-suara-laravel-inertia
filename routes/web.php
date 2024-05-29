@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\SuratSuaraController;
 use Illuminate\Support\Facades\Route;
+use App\Helpers\Meta;
+
 use Inertia\Inertia;
 
 /*
@@ -17,6 +19,21 @@ use Inertia\Inertia;
 
 Route::get('/', [SuratSuaraController::class, 'index']);
 Route::get('/cari', function(){
+    $meta = new Meta();
+    view()->share('meta', $meta);
+
+    $meta->setMeta(config('app.meta')['cari']);
+    $meta->addMetaKeywords([
+        "cari calon anggota legislatif",
+        "cari caleg dpr",
+        "cari caleg dpd",
+        "cari caleg dprd provinsi",
+        "cari caleg dprd kabupaten",
+        "cari caleg dprd kota",
+        "cari surat suara",
+        "cari hasil pemilu",
+    ]);
+
     return Inertia::render('Cari'); 
  });
 
