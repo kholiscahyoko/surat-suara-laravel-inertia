@@ -50,7 +50,7 @@
                                 <tr v-else>
                                     <td class="px-5 lg:px-6 py-4 text-gray-700">
                                         Nama dapil tidak ditemukan.<br>
-                                        Coba alternatif pencarian <a :href="`https://cse.google.com/cse?cx=819a22e0ed55841c3`" target="_blank" class="text-indigo-600 hover:text-indigo-900 font-semibold">Disini</a>
+                                        Coba alternatif pencarian <a :href="$setUrl(`/cari`)" target="_blank" class="text-indigo-600 hover:text-indigo-900 font-semibold">Disini</a>
                                     </td>
                                 </tr>
                             </tbody>
