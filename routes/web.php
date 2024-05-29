@@ -16,6 +16,9 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [SuratSuaraController::class, 'index']);
+Route::get('/cari', function(){
+    return Inertia::render('Cari'); 
+ });
 
 Route::get('/calon', [SuratSuaraController::class, 'calon']);
 

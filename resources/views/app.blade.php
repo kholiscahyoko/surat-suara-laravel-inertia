@@ -17,10 +17,15 @@
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon_io/favicon.ico') }}" type="image/x-icon">
     <link rel="manifest" href="{{ asset('assets/img/favicon_io/site.webmanifest') }}">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3686539766588397"
-     data-overlays="bottom" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3686539766588397" crossorigin="anonymous"></script>
      <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH7DT4270T"></script>
+
+    @if(Request::segment(1) == 'cari')
+     <!-- Programmable Google Search -->
+     <script async src="https://cse.google.com/cse.js?cx=819a22e0ed55841c3"></script>
+    @endif
+
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
