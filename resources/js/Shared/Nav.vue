@@ -49,5 +49,6 @@ const navigation = [
     { name: 'Wilayah', href: '/wilayah' },
     { name: 'Dapil', href: '/dapil' },
     { name: 'Calon', href: '/calon' },
+    { name: 'Cari', href: '/cari' },
   ]
 </script>
