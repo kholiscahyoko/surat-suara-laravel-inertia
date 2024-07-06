@@ -2,10 +2,10 @@
     <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         Cari Surat Suara Berdasarkan Wilayah
     </h1>
-    <div class="mt-4 flex space-x-2">
-        <input v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 w-full" v-on:keyup.native.enter="handleInput" :disabled="processing">
-        <button class="px-8 bg-blue-600 text-white font-semibold rounded-lg" @click="handleInput">Cari</button>
-    </div>
+    <form class="mt-4 flex space-x-2" action="/wilayah">
+        <input name="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 w-full" v-on:keyup.native.enter="handleInput" :disabled="processing">
+        <button class="px-8 bg-blue-600 text-white font-semibold rounded-lg">Cari</button>
+    </form>
     <div class="mt-4 w-full">
         <HorizontalAds1/>
     </div>
