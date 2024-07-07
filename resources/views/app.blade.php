@@ -6,6 +6,9 @@
     @isset($meta)
     {!! $meta->generate() !!}
     @endisset
+    @isset($genhancement)
+    {!! $genhancement->generate() !!}
+    @endisset
     @vite(['resources/js/app.js', 'resources/css/app.css', 'resources/css/nprogress.css'])
     @inertiaHead
     <!-- Favicon Links -->
