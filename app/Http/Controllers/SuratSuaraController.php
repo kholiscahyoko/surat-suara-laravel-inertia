@@ -1962,6 +1962,17 @@ class SuratSuaraController extends Controller
 
         $this->meta->setMeta($metadata);
 
+        $this->genhancement->add([
+            '@type' => "ProfilePage",
+            'mainEntity' => [
+                '@type' => "Person",
+                'name' => $calon->nama,
+                'party' => !empty($calon->partai) && !empty($calon->partai->nama) ? $calon->partai->nama : null,
+                'image' => $foto_url,
+                'nationality' => "Indonesia",
+            ]
+        ]);
+
         return Inertia::render($template, $data);
     }
 
