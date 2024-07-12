@@ -1,6 +1,5 @@
 <template>
     <ProfilDewan :calon="calon" :header_title="header_title" />
-    <div class="text-lg">Perlu Bantuan ? <a :href="$setUrl('/hubungi-kami')" class="hover:underline text-purple-500">Hubungi Kami</a></div>
 </template>
 
 <script setup>
