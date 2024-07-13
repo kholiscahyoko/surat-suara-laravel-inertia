@@ -50,10 +50,12 @@
             <Pagination :data="wilayahs" />
         </div>
     </div>
+    <Donations />
 </template>
 
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
+import Donations from '../Components/Donations.vue';
 import { ref } from "vue";
 import { router } from '@inertiajs/vue3';
 import HorizontalAds1 from '../Components/HorizontalAds1.vue';

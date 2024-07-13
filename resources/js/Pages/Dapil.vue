@@ -95,10 +95,12 @@
             </div>
         </div>
     </div>
+    <Donations />
 </template>
 
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
+import Donations from '../Components/Donations.vue';
 import {  onMounted, onUnmounted, ref, inject } from "vue";
 import { router } from '@inertiajs/vue3';
 import { initModals } from 'flowbite';
