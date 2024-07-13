@@ -35,10 +35,6 @@
                         <div class="inline-block">{{ calon.profil_data.tempat_lahir }}</div>
                     </div>
                     <div v-if="calon.profil_data && calon.profil_data.tanggal_lahir" class="text-center p-1">
-                        <h5 class="font-bold">Tanggal Lahir</h5>
-                        <div>{{ calon.profil_data.tanggal_lahir }}</div>
-                    </div>
-                    <div v-if="calon.profil_data && calon.profil_data.tanggal_lahir" class="text-center p-1">
                         <h5 class="font-bold">Usia</h5>
                         <div v-text="`${getYearDifference(parseDate(props.calon.profil_data.tanggal_lahir), new Date())} Tahun`"></div>
                     </div>
@@ -87,7 +83,7 @@
                         <a href="https://infopemilu.kpu.go.id/Pemilu/Peserta_pemilu" rel="nofollow" target="_blank" class="text-indigo-600 hover:text-indigo-900">DCT Info Pemilu KPU</a>, terakhir akses tanggal 18 Januari 2024
                     </p>
                     <p class="text-lg">
-                        Perlu Bantuan ? <a :href="$setUrl('/hubungi-kami')" class="hover:underline text-purple-500">Hubungi Kami</a>
+                        Perlu Bantuan ? <a :href="$setUrl('/hubungi-kami')" class="hover:underline text-indigo-600 font-semibold">Hubungi Kami</a>
                     </p>
                 </div>
             </div>
