@@ -1,6 +1,6 @@
 <template>
     <h2 class="lg:text-3xl text-xl text-center font-bold mb-2">Dukung Kami</h2>
-    <div class="lg:text-xl text-lg text-center mb-2">Bantu Kami untuk Terus Berkembang</div>
+    <div class="lg:text-xl text-lg text-center mb-2">Bantu Kreator untuk Terus Berkembang</div>
     <div class="md:flex md:justify-evenly mb-4 items-center">
         <a class="font-mono flex items-center justify-center my-5 md:mx-10 mx-auto text-center text-lg lg:text-2xl lg:w-96 w-64 p-2 align-middle md:p-5 bg-yellow-300 text-black rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer border-2 border-black shadow-black shadow-[8px_8px]" href="https://saweria.co/kholiscahyoko" target="_blank">
             <img class="h-8 mr-2" src="https://saweria.co/_next/static/media/capy_happy.603c7293.svg">
