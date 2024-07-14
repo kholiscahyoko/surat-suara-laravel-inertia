@@ -19,10 +19,12 @@
         <SuratSuaraSampul v-if="dprdp" :surat_suara="dprdp" :jenis="`dprd-provinsi`"/>
         <SuratSuaraSampul v-if="dprdk" :surat_suara="dprdk" :jenis="`dprd-kabkota`"/>
     </div>
+    <Donations />
 </template>
 <script setup>
 import SquareAds1 from '../Components/SquareAds1.vue';
 import SuratSuaraSampul from '../Shared/SuratSuaraSampul.vue';
+import Donations from '../Components/Donations.vue';
 
 defineProps({
     'dprdk' : Object,

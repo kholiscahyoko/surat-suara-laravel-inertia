@@ -19,10 +19,12 @@
         <RealCountSampul v-if="dprdp" :surat_suara="dprdp" :jenis="`dprd-provinsi`"/>
         <RealCountSampul v-if="dprdk" :surat_suara="dprdk" :jenis="`dprd-kabkota`"/>
     </div>
+    <Donations />
 </template>
 <script setup>
 import SquareAds1 from '../Components/SquareAds1.vue';
 import RealCountSampul from '../Shared/RealCountSampul.vue';
+import Donations from '../Components/Donations.vue';
 
 defineProps({
     'dprdk' : Object,
