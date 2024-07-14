@@ -13,7 +13,7 @@
         </div>
         <div class="text-center my-8">
             {{ data.mode === 'hr' ? `Progress: ${(data.persen).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%`:`Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)` }}<br>
-            {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
+            <!-- {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br> -->
             <SumberPemilu2024 /><br>
         </div>
         <div class="my-8">

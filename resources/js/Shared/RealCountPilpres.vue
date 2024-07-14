@@ -11,7 +11,7 @@
         </div>
         <div class="flex flex-wrap items-start justify-center text-center my-8">
             {{ data.mode !== 'hr' ? `Progress: ${data.progres.progres.toLocaleString('en-US', { style: 'decimal',})} dari ${data.progres.total.toLocaleString('en-US', { style: 'decimal',})} TPS (${((data.progres.progres/data.progres.total)*100).toLocaleString('en-US', { style: 'decimal',maximumFractionDigits: 2})}%)<br>` : `` }}
-            {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br>
+            <!-- {{ `Diperbarui: ${getFormattedDate(data.ts)}` }}<br> -->
         </div>
         <div class="flex flex-wrap items-start justify-center my-8">
             <PieChart :master="master" :data="data"/>
