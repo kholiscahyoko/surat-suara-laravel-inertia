@@ -56,13 +56,14 @@
                 </div>
             </div>
         </div>
-        <div class="min-w-32 bg-white flex justify-center overflow-hidden m-2 mb-10">
-            <img v-bind:src="$setUrl('/assets/img/sura_dan_sulu-01.webp')" alt="Sura dan Sulu" loading="lazy">
-        </div>
+    </div>
+    <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border-2 border-slate-950 pt-4">
+        <Donations />
     </div>
 </template>
 <script setup>
 import ProfilDpdBlock from '../Components/ProfilDpdBlock.vue';
+import Donations from '../Components/Donations.vue';
 import TableRiwayatBlock from '../Components/TableRiwayatBlock.vue';
 
 let props = defineProps({
