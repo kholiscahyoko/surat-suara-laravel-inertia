@@ -1963,6 +1963,30 @@ class SuratSuaraController extends Controller
         $this->meta->setMeta($metadata);
 
         $this->genhancement->add([
+            '@type' => "BreadcrumbList",
+            'itemListElement' => [
+                [
+                    "@type" => "ListItem",
+                    "position" => 1,
+                    "name" => "Home",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/"
+                ],
+                [
+                    "@type" => "ListItem",
+                    "position" => 2,
+                    "name" => "Profil",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/calon"
+                ],
+                [
+                    "@type" => "ListItem",
+                    "position" => 3,
+                    "name" => "{$calon->nama}",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/{$jenis}/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}"
+                ],
+            ]
+        ]);
+
+        $this->genhancement->add([
             '@type' => "ProfilePage",
             'mainEntity' => [
                 '@type' => "Person",
