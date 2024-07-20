@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\Calons;
@@ -21,6 +22,11 @@ use Inertia\Inertia;
 
 class SuratSuaraController extends Controller
 {
+
+    public function __construct() {
+        parent::__construct(); // Call the parent class constructor
+        $this->setGeneralEnhancement(); // Call the necessary function
+    }
 
     /**
      * Display a listing of the resource.
@@ -2434,5 +2440,20 @@ class SuratSuaraController extends Controller
         }
 
         return $chart;
+    }
+
+    private function setGeneralEnhancement(){
+        $this->genhancement->add([
+            '@type' => "WebSite",
+            'url' => URL::to('/'),
+            'potentialAction' => [
+                "@type"=>"SearchAction",
+                "target" => [
+                    "@type"=>"EntryPoint",
+                    "urlTemplate"=> URL::to('/cari')."#gsc.q={search_term_string}"
+                ],
+                "query-input"=> "required name=search_term_string"
+            ]
+        ]);
     }
 }
