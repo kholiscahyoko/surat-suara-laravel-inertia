@@ -12,7 +12,7 @@
     <body class="min-h-full bg-blue-800 flex justify-center">
         <a href="https://www.google.com/search?q=peringatan+darurat" target="_blank" rel="noopener noreferrer">
             <div class="md:w-80 w-full pt-20">
-                <img src="{{ asset('assets/img/garuda-pancasila-removed.webp') }}" alt="">
+                <img src="{{ asset('assets/img/garuda-pancasila-removed.webp') }}" alt="peringatan darurat pancasila">
             </div>
             <div class="text-2xl text-white text-center mt-2 font-mono">Cari Tahu Disini</div>
         </a>
