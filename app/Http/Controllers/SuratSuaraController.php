@@ -44,6 +44,7 @@ class SuratSuaraController extends Controller
                     $request->session()->put('first_visit', true);
                     
                     // Show the special view for the first visit
+                    $this->meta->setTitle("PERINGATAN DARURAT");
                     return view('peringatan');
                 }
             }
