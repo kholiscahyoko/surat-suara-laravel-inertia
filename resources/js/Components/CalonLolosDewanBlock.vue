@@ -13,11 +13,11 @@
             <img
                 v-if="loaded"
                 :src="imageSrc"
-                @load="handleImageLoad"
-                class="object-cover w-32 rounded-md shadow-lg shadow-black mb-4" loading="lazy"
-                :alt="calon?.nama" 
+                class="object-cover w-32 h-44 rounded-md shadow-lg shadow-black mb-4" loading="lazy"
+                :alt="calon?.nama"
+                @error="onImageError"
                 />
-            <img v-else :src="$setUrl(`/assets/img/kpu_monochrome.webp`)" class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy" :alt="calon?.nama" />
+            <img v-else :src="$setUrl(`/assets/img/kpu_monochrome.webp`)" class="object-cover w-32 h-44 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy" :alt="calon?.nama" />
         </div>
         <div class="items-center font-semibold mb-4 px-2">
             <h2 class="text-sm md:text-base lg:text-lg font-semibold tracking-tight text-center mb-4">
@@ -48,20 +48,14 @@ export default{
         handleImageLoad() {
             this.loaded = true;
         },
+        onImageError() {
+            this.imageSrc = '/assets/img/kpu_monochrome.webp';
+        },
     },
     mounted() {
-        const actualImage = new Image();
-        actualImage.src = this.imageSrc;
-
-        actualImage.onload = () => {
-            // Actual image has loaded, switch to it
-            this.loaded = true;
-        };
-
-        actualImage.onerror = () => {
-            // Handle error if the image fails to load
-            console.error('Error loading actual image');
-        };
+        if(!this.loaded){
+            window.addEventListener('scroll', this.handleImageLoad);
+        }
     },
 
 };</script>
