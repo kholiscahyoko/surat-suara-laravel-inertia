@@ -31,8 +31,26 @@ class SuratSuaraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $campaign_from = env('CAMPAIGN_PERINGATAN_FROM', false);
+        $campaign_to = env('CAMPAIGN_PERINGATAN_TO', false);
+
+        if($campaign_from && date("Ymd") >= $campaign_from){
+            if(!$campaign_to || date("Ymd") <= $campaign_to){
+                // Check if the session variable 'first_visit' is set
+                if (!$request->session()->has('first_visit')) {
+                    // Set the session variable
+                    $request->session()->put('first_visit', true);
+                    
+                    // Show the special view for the first visit
+                    $this->meta->setTitle("PERINGATAN DARURAT");
+                    return view('peringatan');
+                }
+            }
+
+        }
+
         // $jenis_kelamin_summary = Calons::groupBy('jenis_kelamin')->select('jenis_kelamin', DB::raw('count(1) as jumlah'))->get();
         // $jenis_dewan_result = DB::table('calons')
         // ->join('dapils', 'calons.kode_dapil', '=', 'dapils.kode_dapil')
