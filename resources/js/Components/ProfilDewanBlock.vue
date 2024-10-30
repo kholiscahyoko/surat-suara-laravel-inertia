@@ -15,11 +15,11 @@
             <img
                 v-if="loaded"
                 :src="imageSrc"
-                @load="handleImageLoad"
-                class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy"
+                class="object-cover w-40 h-52 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy"
                 :alt="calon.nama" 
+                @error="onImageError"
                 />
-            <img v-else :src="$setUrl(`/assets/img/kpu_monochrome.webp`)" class="object-cover w-40 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy" :alt="calon.nama" />
+            <img v-else :src="$setUrl(`/assets/img/kpu_monochrome.webp`)" class="object-cover w-40 h-52 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy" :alt="calon.nama" />
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">
@@ -43,20 +43,14 @@ export default{
         handleImageLoad() {
             this.loaded = true;
         },
+        onImageError() {
+            this.imageSrc = '/assets/img/kpu_monochrome.webp';
+        },
     },
     mounted() {
-        const actualImage = new Image();
-        actualImage.src = this.imageSrc;
-
-        actualImage.onload = () => {
-            // Actual image has loaded, switch to it
-            this.loaded = true;
-        };
-
-        actualImage.onerror = () => {
-            // Handle error if the image fails to load
-            console.error('Error loading actual image');
-        };
+        if(!this.loaded){
+            window.addEventListener('scroll', this.handleImageLoad);
+        }
     },
 
 };</script>
