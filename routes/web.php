@@ -3,7 +3,7 @@
 use App\Http\Controllers\SuratSuaraController;
 use Illuminate\Support\Facades\Route;
 use App\Helpers\Meta;
-
+use App\Http\Controllers\PilkadaController;
 use Inertia\Inertia;
 
 /*
@@ -91,6 +91,13 @@ Route::get('/calon-terpilih/{jenis}/{nama_dapil}/{kode_dapil}', [SuratSuaraContr
     'kode_dapil' => '[0-9]+',
 ]);
 
+// Route::get('/anggota-baru/{jenis}/{nama_wilayah?}/{kode_wilayah?}', [SuratSuaraController::class, 'anggota_lengkap'])
+// ->where([
+//     'jenis', '(dpd|dpr|dprd-provinsi|dprd-kabkota)',
+//     'nama_wilayah' => '[a-z0-9-]+',
+//     'kode_wilayah' => '[0-9]+',
+// ]);
+
 Route::get('/cek-profil/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}', [SuratSuaraController::class, 'cari_profil'])
 ->where([
     'jenis', '(dpd|dpr|dprd-provinsi|dprd-kabkota)',
@@ -116,3 +123,29 @@ Route::get('/hubungi-kami', function(){
 });
 
 Route::get('/get_list_wilayah_by_dapil', [SuratSuaraController::class, 'get_list_wilayah_by_dapil']);
+
+
+// PILKADA
+Route::get('/pilkada', [PilkadaController::class, 'index']);
+Route::get('/pilkada/profil-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{calon_id}', [PilkadaController::class, 'profil'])
+->where([
+    'jenis', '(gubernur|wakil-gubernur|walikota|calon-walikota|bupati|wakil-bupati)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+',
+    'nama_calon' => '[a-z0-9-]+',
+    'calon_id' => '[0-9]+',
+]);
+Route::get('/pilkada/pasangan-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{paslon_id}', [PilkadaController::class, 'paslon'])
+->where([
+    'jenis', '(gubernur-dan-wakil-gubernur|walikota-dan-wakil-walikota|bupati-dan-wakil-bupati)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+',
+    'nama_calon' => '[a-z0-9-]+',
+    'paslon_id' => '[0-9]+',
+]);
+Route::get('/pilkada/surat-suara/{jenis}/{nama_dapil}/{kode_dapil}', [PilkadaController::class, 'surat_suara'])
+->where([
+    'jenis', '(gubernur-dan-wakil-gubernur|walikota-dan-wakil-walikota|bupati-dan-wakil-bupati)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+'
+]);

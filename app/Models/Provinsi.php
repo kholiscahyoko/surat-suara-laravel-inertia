@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Provinsi extends Model
 {
     use HasFactory;
+
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
+
+    public function pilkada_paslon()
+    {
+        return $this->hasMany(PilkadaPaslons::class, 'kode_wilayah', 'kode_wilayah');
+    }    
 }

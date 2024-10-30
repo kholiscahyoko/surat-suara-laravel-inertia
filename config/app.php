@@ -213,6 +213,22 @@ return [
             'dprdp' => ["title" => "Calon Dewan Perwakilan Rakyat Daerah Provinsi Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD Provinsi [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
             'dprdk' => ["title" => "Calon Perwakilan Rakyat Daerah Kabupaten Kota Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
         ],
+        'pilkada' => [
+            'surat-suara' => [
+                'gubernur' => ["title" => "Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Gubernur dan Wakil Gubernur [wilayah] Tahun 2024"],
+                'walikota' => ["title" => "Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Walikota dan Wakil Walikota [wilayah] Tahun 2024"],
+                'bupati' => ["title" => "Surat Suara Cabup dan Cawabup Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Bupati dan Wakil Bupati [wilayah] Tahun 2024"],
+            ],
+            'profil-calon' => [
+                "title" => "Profil [nama_calon]",
+                "description" => "Profil Lengkap [nama_calon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029"
+            ],
+            'pasangan-calon' => [
+                "title" => "Pasangan [nama_paslon]",
+                "description" => "Info Lengkap [nama_paslon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029"
+            ],
+        ]
+
     ],
     'profil_data_last_access' => "20240630", 
 ];

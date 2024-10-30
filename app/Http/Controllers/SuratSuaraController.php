@@ -26,6 +26,7 @@ class SuratSuaraController extends Controller
     public function __construct() {
         parent::__construct(); // Call the parent class constructor
         $this->setGeneralEnhancement(); // Call the necessary function
+        Inertia::share('appName', config('app.name'));
     }
 
     /**
@@ -1957,7 +1958,8 @@ class SuratSuaraController extends Controller
                     break;
             }
             if(!empty($calon->foto)){
-                $foto_url = $calon->foto;
+                $foto_url = $this->image->getUrl($calon->foto);
+                $calon->foto = $foto_url;
             }
         }
         if(!empty($foto_url)){

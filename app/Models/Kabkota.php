@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Kabkota extends Model
 {
     use HasFactory;
+    
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 
     public function provinsi(): BelongsTo
     {
