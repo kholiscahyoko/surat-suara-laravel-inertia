@@ -4,6 +4,7 @@ use App\Http\Controllers\SuratSuaraController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PilkadaController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\SitemapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,4 +123,13 @@ Route::get('/pilkada/surat-suara/{jenis}/{nama_dapil}/{kode_dapil}', [PilkadaCon
     'jenis', '(gubernur-dan-wakil-gubernur|walikota-dan-wakil-walikota|bupati-dan-wakil-bupati)',
     'nama_dapil' => '[a-z0-9-]+',
     'kode_dapil' => '[0-9]+'
+]);
+
+
+# SITEMAPS
+Route::get('/sitemap/pilkada/surat-suara', [SitemapController::class, 'pilkada_surat_suara']);
+Route::get('/sitemap/pilkada/pasangan-calon', [SitemapController::class, 'pilkada_pasangan_calon']);
+Route::get('/sitemap/pilkada/pasangan-calon/{kode_wilayah}', [SitemapController::class, 'pilkada_pasangan_calon'])
+->where([
+    'kode_wilayah' => '[0-9]+'
 ]);
