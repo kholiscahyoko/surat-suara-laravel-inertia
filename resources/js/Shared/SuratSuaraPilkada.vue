@@ -20,7 +20,7 @@
                 TAHUN 2024
             </h3>
         </div>
-        <div class="flex items-stretch justify-center mt-8">
+        <div class="flex flex-wrap items-start justify-center mt-8">
             <PilkadaBlock v-for="paslon in paslons.data" :paslon="paslon" :jumlah_paslon="paslons.data.length"/>
         </div>
     </div>

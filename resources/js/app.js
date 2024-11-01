@@ -39,6 +39,9 @@ createInertiaApp({
     // Provide the $setUrl function to components
     vueApp.provide('$setUrl', vueApp.config.globalProperties.$setUrl);
 
+    // Provide the menu list to your navigation component
+    vueApp.provide('menus', window.menus);
+
     vueApp.mount(el);
   },
   title: title => `${import.meta.env.VITE_APP_NAME} - ${title}`

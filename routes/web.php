@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\SuratSuaraController;
 use Illuminate\Support\Facades\Route;
-use App\Helpers\Meta;
 use App\Http\Controllers\PilkadaController;
-use Inertia\Inertia;
+use App\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,25 +16,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [SuratSuaraController::class, 'index']);
-Route::get('/cari', function(){
-    $meta = new Meta();
-    view()->share('meta', $meta);
+Route::get('/', [PilkadaController::class, 'index']);
+Route::get('/cari', [IndexController::class, 'cari']);
+Route::get('/tentang-kami',[IndexController::class, 'tentang_kami']);
+Route::get('/kebijakan-privasi',[IndexController::class, 'privasi']);
+Route::get('/hubungi-kami',[IndexController::class, 'hubungi_kami']);
 
-    $meta->setMeta(config('app.meta')['cari']);
-    $meta->addMetaKeywords([
-        "cari calon anggota legislatif",
-        "cari caleg dpr",
-        "cari caleg dpd",
-        "cari caleg dprd provinsi",
-        "cari caleg dprd kabupaten",
-        "cari caleg dprd kota",
-        "cari surat suara",
-        "cari hasil pemilu",
-    ]);
 
-    return Inertia::render('Cari'); 
- });
+// PEMILU
+Route::get('/pemilu', [SuratSuaraController::class, 'index']);
 
 Route::get('/calon', [SuratSuaraController::class, 'calon']);
 
@@ -106,27 +95,12 @@ Route::get('/cek-profil/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}', [SuratS
     'nama_calon' => '[a-z0-9-]+'
 ]);
 
-Route::post('/logout', function(){
-   dd(request('foo')); 
-});
-
-Route::get('/tentang-kami', function(){
-   return Inertia::render('TentangKami'); 
-});
-
-Route::get('/kebijakan-privasi', function(){
-   return Inertia::render('KebijakanPrivasi'); 
-});
-
-Route::get('/hubungi-kami', function(){
-   return Inertia::render('HubungiKami'); 
-});
-
 Route::get('/get_list_wilayah_by_dapil', [SuratSuaraController::class, 'get_list_wilayah_by_dapil']);
 
 
 // PILKADA
 Route::get('/pilkada', [PilkadaController::class, 'index']);
+Route::get('/pilkada/wilayah', [PilkadaController::class, 'wilayah']);
 Route::get('/pilkada/profil-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{calon_id}', [PilkadaController::class, 'profil'])
 ->where([
     'jenis', '(gubernur|wakil-gubernur|walikota|calon-walikota|bupati|wakil-bupati)',

@@ -1,5 +1,5 @@
 <template>
-    <a :href="paslon.url" :class="jumlah_paslon == 4 ? 'w-80 md:w-52' : 'w-80 md:w-52 lg:w-96'" class="min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 transition ease-in-out delay-150 hover:scale-105 duration-300 hover:-translate-y-1">
+    <a :href="paslon.url" :class="jumlah_paslon == 4 ? 'w-80 md:w-40 lg:w-52 xl:w-64' : 'w-80 md:w-52 lg:w-96'" class="min-h-max bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 transition ease-in-out delay-150 hover:scale-105 duration-300 hover:-translate-y-1">
         <div class="text-center px-4 py-4 font-bold text-5xl">
             {{ paslon.no_urut }}
         </div>

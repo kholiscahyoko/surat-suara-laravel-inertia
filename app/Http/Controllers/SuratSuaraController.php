@@ -27,6 +27,7 @@ class SuratSuaraController extends Controller
         parent::__construct(); // Call the parent class constructor
         $this->setGeneralEnhancement(); // Call the necessary function
         Inertia::share('appName', config('app.name'));
+        $this->setMenus('pemilu');
     }
 
     /**

@@ -187,6 +187,56 @@ return [
 
 
     // custom config
+    'menu' =>[
+        'pemilu' => [
+            "home" => [
+                "name" => "Halaman Utama",
+                "href" => "/pemilu"
+            ],
+            "pilkada" => [
+                "name" => "Pilkada",
+                "href" => "/pilkada"
+            ],
+            "wilayah" => [
+                "name" => "Wilayah",
+                "href" => "/wilayah"
+            ],
+            "dapil" => [
+                "name" => "Dapil",
+                "href" => "/dapil"
+            ],
+            "calon" => [
+                "name" => "Calon",
+                "href" => "/calon"
+            ],
+            "cari" => [
+                "name" => "Cari",
+                "href" => "/cari"
+            ],
+        ],
+        'pilkada' => [
+            "home" => [
+                "name" => "Halaman Utama",
+                "href" => "/"
+            ],
+            "pemilu" => [
+                "name" => "Pemilu",
+                "href" => "/pemilu"
+            ],
+            "wilayah" => [
+                "name" => "Wilayah",
+                "href" => "/pilkada/wilayah"
+            ],
+            // "calon" => [
+            //     "name" => "Calon",
+            //     "href" => "/calon"
+            // ],
+            "cari" => [
+                "name" => "Cari",
+                "href" => "/cari"
+            ],
+        ]
+    ],
     'meta' => [
         'home' => ["title" => "Website daftar calon legislatif terlengkap"],
         'cari' => ["title" => "Cari Nama Caleg, Wilayah, Daerah Pemilihan", "description" => "Temukan Nama Calon Legislatif, Surat Suara, Wilayah, Daerah Pemilihan, Semuanya Disini"],
@@ -208,12 +258,15 @@ return [
             'dprdk' => ["title" => "Real Count Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Real Count Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Cek Disini"],
         ],
         'calon-lolos' => [
+            'home' => ["title" => "Website daftar calon kepala daerah terlengkap"],
             'dpd' => ["title" => "Calon Dewan Perwakilan Daerah Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPD RI Provinsi [nama_dapil] Tahun 2024 Berdasarkan Perhitungan Sementara, Cek Disini"],
             'dpr' => ["title" => "Calon Dewan Perwakilan Rakyat Terpilih", "description" => "Ini Dia Daftar Cek Disini Calon Terpilih Pemilu DPR RI Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
             'dprdp' => ["title" => "Calon Dewan Perwakilan Rakyat Daerah Provinsi Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD Provinsi [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
             'dprdk' => ["title" => "Calon Perwakilan Rakyat Daerah Kabupaten Kota Terpilih", "description" => "Ini Dia Daftar Calon Terpilih Pemilu DPRD [nama_wilayah] Tahun 2024 Daerah Pemilihan [nama_dapil] Berdasarkan Perhitungan Sementara, Cek Disini"],
         ],
         'pilkada' => [
+            'home' => ["title" => "Website daftar calon kepala daerah terlengkap"],
+            'wilayah' => ["title" => "Cari Surat Suara Pilkada Berdasarkan Wilayah", "description" => "Cari Surat Suara Pilkada Berdasarkan Wilayahmu Disini"],
             'surat-suara' => [
                 'gubernur' => ["title" => "Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Gubernur dan Wakil Gubernur [wilayah] Tahun 2024"],
                 'walikota' => ["title" => "Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Walikota dan Wakil Walikota [wilayah] Tahun 2024"],

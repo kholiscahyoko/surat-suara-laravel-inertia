@@ -36,6 +36,11 @@
 
       gtag('config', 'G-CH7DT4270T');
     </script>
+    @isset($genhancement)
+    <script>
+      window.menus = @json($menus);
+    </script>
+    @endisset
   </head>
   <body class="min-h-full">
     @inertia

@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+import { inject } from 'vue';
 import NavLink from './NavLink.vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
@@ -44,11 +45,14 @@ imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 
-const navigation = [
-    { name: 'Halaman Utama', href: '/' },
-    { name: 'Wilayah', href: '/wilayah' },
-    { name: 'Dapil', href: '/dapil' },
-    { name: 'Calon', href: '/calon' },
-    { name: 'Cari', href: '/cari' },
-  ]
+// Inject the menu provided by the app
+const navigation = inject('menus');
+
+// const navigation = [
+//     { name: 'Halaman Utama', href: '/' },
+//     { name: 'Wilayah', href: '/wilayah' },
+//     { name: 'Dapil', href: '/dapil' },
+//     { name: 'Calon', href: '/calon' },
+//     { name: 'Cari', href: '/cari' },
+//   ]
 </script>

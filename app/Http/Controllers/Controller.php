@@ -23,6 +23,7 @@ class Controller extends BaseController
     public object $sirekap;
     public object $pilkada;
     public object $image;
+    public object $menus;
 
     public function __construct() {
         $this->meta = new Meta();
@@ -31,6 +32,7 @@ class Controller extends BaseController
         $this->sirekap = new SirekapHelper();
         $this->pilkada = new PilkadaHelper();
         $this->image = new ImageAssetHelper();
+        $this->setMenus();
         view()->share('meta', $this->meta);
         view()->share('genhancement', $this->genhancement);
     }
@@ -39,4 +41,8 @@ class Controller extends BaseController
 
     }
 
+    public function setMenus(string $type = "pilkada"){
+        $this->menus = (object) config('app.menu')[$type];
+        view()->share('menus', $this->menus);
+    }
 }

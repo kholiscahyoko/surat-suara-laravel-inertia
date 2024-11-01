@@ -38,6 +38,30 @@ class PilkadaHelper {
         }
     }
 
+    public function getAllWilayah(){
+        $key = 'pilkada_all_wilayah';
+        if(!($wilayahs = $this->getCache($key))){
+            $provinsis = Provinsi::where('kode_wilayah', '!=', 34)->select('kode_wilayah', 'nama')->get()->toArray();
+            $kabkotas = Kabkota::where('kode_wilayah', 'not like', "31%")->select('kode_wilayah', 'nama')->get()->toArray();
+            $wilayahs = array_merge($provinsis, $kabkotas);
+
+            foreach ($wilayahs as $key => $wilayah) {
+                $wilayah = (object) $wilayah;
+                $wilayah->title = $this->getWilayahTitle($wilayah);
+                $wilayah->title_kada = $this->getTitleKada($wilayah);
+                $type = "{$wilayah->title_kada} DAN WAKIL {$wilayah->title_kada}";
+    
+                $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
+
+                $wilayahs[$key] = $wilayah;
+            }
+
+            $this->setCache($key, $wilayahs);
+        }
+
+        return $wilayahs;
+    }
+
     public function getCalon($id){
         $key = 'pilkada_profil_calon_id:'.$id;
         if(!($calon = $this->getCache($key))){
