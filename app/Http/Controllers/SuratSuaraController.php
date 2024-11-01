@@ -1464,7 +1464,7 @@ class SuratSuaraController extends Controller
                                         $foto = null;
                                         $url_profil = '#';
                                     }else{
-                                        $foto = $calon->foto;
+                                        $foto = $this->image->getUrl($calon->foto);
                                         $url_profil = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/dpr/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
                                         $this->cache->set("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
                                     }
@@ -1631,7 +1631,7 @@ class SuratSuaraController extends Controller
                                         $foto = null;
                                         $url_profil = '#';
                                     }else{
-                                        $foto = $calon->foto;
+                                        $foto = $this->image->getUrl($calon->foto);
                                         $url_profil = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/dprd-provinsi/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
                                         $this->cache->set("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
                                     }
@@ -1798,7 +1798,7 @@ class SuratSuaraController extends Controller
                                         $foto = null;
                                         $url_profil = '#';
                                     }else{
-                                        $foto = $calon->foto;
+                                        $foto = $this->image->getUrl($calon->foto);
                                         $url_profil = "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/profil-calon/dprd-kabkota/".Str::slug(strtolower($calon->dapil->nama_dapil))."/{$kode_dapil}/".Str::slug(strtolower($calon->nama))."/{$calon->id}";
                                         $this->cache->set("cari_profil:{$kode_dapil}:{$no_partai}:{$master_calon->$no_partai->$key_calon->nomor_urut}", json_encode($calon));
                                     }
