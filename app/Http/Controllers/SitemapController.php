@@ -79,7 +79,7 @@ class SitemapController
                 $urls = [];
                 foreach ($wilayahs as $wilayah) {
                     $urls[] = [
-                        'loc' => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/sitemap/pilkada/pasangan-calon/{$wilayah->kode_wilayah}",
+                        'loc' => "{$request->getScheme()}://{$request->getHttpHost()}/sitemap/pilkada/pasangan-calon/{$wilayah->kode_wilayah}",
                         'lastmod' => "2024-11-01"
                     ];
                 }
