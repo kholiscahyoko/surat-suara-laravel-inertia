@@ -13,9 +13,11 @@
     <priority>{{ $url['priority'] }}</priority>
     @endisset
     @isset($url['image_loc'])
+    @if($url['image_loc'])
     <image:image>
       <image:loc>{{ $url['image_loc'] }}</image:loc>
     </image:image>
+    @endif
     @endisset
   </url>
 @endforeach
