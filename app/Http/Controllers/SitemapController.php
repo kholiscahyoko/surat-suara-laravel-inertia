@@ -18,21 +18,26 @@ class SitemapController
 
     use AuthorizesRequests, ValidatesRequests;
 
-    public object $cache;
-    public object $pilkada;
-    public object $image;
+    private object $cache;
+    private object $pilkada;
+    private object $image;
+    private int $ttl;
     
     public function __construct() {
         $this->pilkada = new PilkadaHelper();
         $this->image = new ImageAssetHelper();
         $this->cache = new CacheHelper();
+        $this->ttl = 60 * 60 * 24;
     }
 
-    public function pilkada_surat_suara()
+    public function pilkada_surat_suara(Request $request)
     {
         $key = "sitemap:pilkada:surat_suara";
+        if($request->input('flush')){
+            $cache = $this->cache->del($key);
+        }
         $cache = $this->cache->get($key);
-        if(!($cache = $this->cache->get($key))){
+        if($request->input('nocache') || !($cache = $this->cache->get($key))){
             $wilayahs = $this->pilkada->getAllWilayah();
 
             $urls = [];
@@ -44,7 +49,9 @@ class SitemapController
                     'priority' => "0.5",
                 ];
             }
-            $this->cache->setex($key, 30, json_encode($urls));
+            if(!$request->input('nocache')){
+                $this->cache->setex($key, $this->ttl, json_encode($urls));
+            }
         }else{
             $urls = json_decode($cache, true);
         }
@@ -90,7 +97,9 @@ class SitemapController
                     }
                 }
             }
-            $this->cache->setex($key, 30, json_encode($urls));
+            if(!$request->input('nocache')){
+                $this->cache->setex($key, $this->ttl, json_encode($urls));
+            }
         }else{
             $urls = json_decode($cache, true);
         }
@@ -101,21 +110,6 @@ class SitemapController
 
         return response($xmlContent, 200)
                 ->header('Content-Type', 'application/xml');        
-    }
-
-    private function setCache($key, $content, $ttl = null){
-        $ttl = $ttl ?? $this->ttl;
-        $this->cache->setex($key, $ttl, gettype($content) !== 'string' ? json_encode($content): $content);
-    }
-
-    private function getCache($key){
-        $cache = $this->cache->get($key);
-        if($cache){
-            $cache = json_decode($cache);
-            $cache->source = "cache";
-            $cache->key = $key;
-        }
-        return $cache;
     }
 
     private function detectProxy()
