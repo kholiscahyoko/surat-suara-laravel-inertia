@@ -2,9 +2,23 @@
 namespace App\Helpers;
 
 class ImageAssetHelper {
+
+    public array $hosts;
+
+    public function __construct() {
+        $this->hosts = [
+            'b-silonkada-prod.oss-ap-southeast-5.aliyuncs.com',
+            'cdn-sikadeka-pilkada.kpu.go.id',
+            'infopemilu.kpu.go.id',
+        ];
+    }
+
     public function getUrl($url){
         try {
             $parsed_foto = parse_url($url);
+            if(!in_array($parsed_foto['host'], $this->hosts)){
+                return $url;
+            }
             $dir_path = pathinfo($parsed_foto["path"], PATHINFO_DIRNAME);
             $filename = pathinfo($parsed_foto["path"], PATHINFO_FILENAME);
             $md5 = md5($dir_path);
