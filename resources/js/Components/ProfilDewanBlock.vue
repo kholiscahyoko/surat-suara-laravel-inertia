@@ -11,15 +11,10 @@
                 <span class="inline-block text-4xl">{{ calon.no_urut }}</span>
             </h3>
         </div>
-        <div class="w-full flex justify-center">
-            <img
-                v-if="loaded"
-                :src="imageSrc"
-                class="object-cover w-40 h-52 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy"
-                :alt="calon.nama" 
-                @error="onImageError"
-                />
-            <img v-else :src="$setUrl(`/assets/img/kpu_monochrome.webp`)" class="object-cover w-40 h-52 transition ease-in-out delay-150 hover:-translate-y-1 hover:h-max rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4" loading="lazy" :alt="calon.nama" />
+        <div class="w-full flex justify-center" :style="`background-image`">
+            <div class="relative w-40 h-52 flex items-center justify-center overflow-hidden transition ease-in-out delay-150 hover:-translate-y-1 rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4 bg-cover bg-center" :style="`background-image:url('`+$setUrl(`/assets/img/kpu_monochrome.webp`)+`');`">
+                <img :src="imageSrc" class="max-w-full object-contain" loading="lazy" :alt="calon.nama" onerror="this.style.display='none';"/>
+            </div>
         </div>
         <div class="items-center font-bold mb-4">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-center text-gray-900 mb-4">
