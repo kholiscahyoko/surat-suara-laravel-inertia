@@ -12,8 +12,8 @@
             </h3>
         </div>
         <div class="w-full flex justify-center" :style="`background-image`">
-            <div class="relative w-40 h-52 flex items-center justify-center overflow-hidden transition ease-in-out delay-150 hover:-translate-y-1 rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4 bg-cover bg-center" :style="`background-image:url('`+$setUrl(`/assets/img/kpu_monochrome.webp`)+`');`">
-                <img :src="imageSrc" class="max-w-full object-contain" loading="lazy" :alt="calon.nama" onerror="this.style.display='none';"/>
+            <div class="relative w-40 h-52 flex items-center justify-center overflow-hidden transition ease-in-out delay-150 hover:-translate-y-1 rounded-md hover:scale-105 duration-300 shadow-lg shadow-black mb-4 bg-cover bg-center" :style="{ backgroundImage: isImageLoaded ? 'none' : `url('`+$setUrl(`/assets/img/kpu_monochrome.webp`)+`')`}">
+                <img :src="imageSrc" class="max-w-full object-contain" loading="lazy" :alt="calon.nama" @load="handleImageLoad" onerror="this.style.display='none';"/>
             </div>
         </div>
         <div class="items-center font-bold mb-4">
@@ -30,22 +30,16 @@ export default{
     },
     data() {
         return {
-            loaded: false,
+            isImageLoaded : false,
             imageSrc: this.calon.foto,
         };
     },
     methods:{
         handleImageLoad() {
-            this.loaded = true;
+            this.isImageLoaded  = true;
         },
         onImageError() {
-            this.imageSrc = '/assets/img/kpu_monochrome.webp';
+            this.isImageLoaded = false;
         },
-    },
-    mounted() {
-        if(!this.loaded){
-            window.addEventListener('scroll', this.handleImageLoad);
-        }
-    },
-
+    }
 };</script>
