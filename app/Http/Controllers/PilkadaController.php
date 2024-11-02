@@ -261,6 +261,10 @@ class PilkadaController extends Controller
 
         $this->meta->setMeta($metadata);
 
+        if(empty($paslon->image_url)){
+            $paslon->image_url = "https://www.lezen.id/assets/img/infopemilu-square-1.webp";
+        }
+
         $metaimage = [
             'image' => $paslon->image_url,
             'image:type' => 'image/'.pathinfo($paslon->image_url, PATHINFO_EXTENSION),
