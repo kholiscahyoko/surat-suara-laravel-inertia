@@ -133,3 +133,8 @@ Route::get('/sitemap/pilkada/pasangan-calon/{kode_wilayah}', [SitemapController:
 ->where([
     'kode_wilayah' => '[0-9]+'
 ]);
+Route::get('/sitemap/pilkada/profil-calon', [SitemapController::class, 'pilkada_profil_calon']);
+Route::get('/sitemap/pilkada/profil-calon/{kode_wilayah}', [SitemapController::class, 'pilkada_profil_calon'])
+->where([
+    'kode_wilayah' => '[0-9]+'
+]);
