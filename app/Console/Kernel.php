@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateSitemaps::class,
         Commands\ChangeFotoCalon::class,
         Commands\UpdateCalonSitemaps::class,
+        Commands\UpdateFotoIndicator::class,
         // Other commands...
     ];
 
