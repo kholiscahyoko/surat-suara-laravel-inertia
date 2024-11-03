@@ -71,7 +71,6 @@ class PilkadaHelper {
                     $calon->image_url = $this->image->getUrl($data_profil->data->image_url);
                     $calon->details = $data_profil->data->details;
                     $calon->pekerjaan = $data_profil->data->Pekerjaan;
-                    $calon->status_hukum = $data_profil->data->{"Status Hukum"};
                     $calon->riwayat_pendidikan = $data_profil->data->{"Riwayat Pendidikan"};
                     $calon->riwayat_kursus_diklat = $data_profil->data->{"Riwayat Kursus/Diklat"};
                     $calon->riwayat_organisasi = $data_profil->data->{"Riwayat Organisasi"};
