@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\ConnectionException;
 
 use App\Helpers\ImageAssetHelper;
 
@@ -54,7 +55,13 @@ class UpdateFotoIndicator extends Command
     }
 
     private function hitRequest($url){
-        $response = Http::retry(10, 200)->get($url);
-        return $response->ok();
+        try {
+            $response = Http::retry(10, 200)->get($url);
+            return $response->ok();
+        } catch (ConnectionException $e) {
+            $this->error("Connection timeout.");
+            return false;
+        }
+
     }
 }
