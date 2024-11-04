@@ -138,3 +138,13 @@ Route::get('/sitemap/pilkada/profil-calon/{kode_wilayah}', [SitemapController::c
 ->where([
     'kode_wilayah' => '[0-9]+'
 ]);
+Route::get('/sitemap/pemilu/wilayah', [SitemapController::class, 'pemilu_wilayah']);
+Route::get('/sitemap/pemilu/dapil/{type}', [SitemapController::class, 'pemilu_dapil'])
+->where([
+    'type' => '(surat-suara|hitung-suara|calon-terpilih)'
+]);
+Route::get('/sitemap/pemilu/profil-calon', [SitemapController::class, 'pemilu_profil_calon']);
+Route::get('/sitemap/pemilu/profil-calon/{kode_wilayah}', [SitemapController::class, 'pemilu_profil_calon'])
+->where([
+    'kode_wilayah' => '[0-9]+'
+]);
