@@ -195,7 +195,8 @@ return [
             ],
             "pilkada" => [
                 "name" => "Pilkada",
-                "href" => "/pilkada"
+                "href" => "/pilkada",
+                "highlight" => true
             ],
             "wilayah" => [
                 "name" => "Wilayah",
@@ -221,16 +222,17 @@ return [
             ],
             "pemilu" => [
                 "name" => "Pemilu",
-                "href" => "/pemilu"
+                "href" => "/pemilu",
+                "highlight" => true
             ],
             "wilayah" => [
                 "name" => "Wilayah",
                 "href" => "/pilkada/wilayah"
             ],
-            // "calon" => [
-            //     "name" => "Calon",
-            //     "href" => "/calon"
-            // ],
+            "calon" => [
+                "name" => "Calon",
+                "href" => "/pilkada/calon"
+            ],
             "cari" => [
                 "name" => "Cari",
                 "href" => "/cari"
@@ -266,6 +268,7 @@ return [
         ],
         'pilkada' => [
             'home' => ["title" => "Website daftar calon kepala daerah terlengkap"],
+            'calon' => ["title" => "Cari Nama Calon Kepala Daerah", "description" => "Temukan Nama Calon Kepala Daerah Pilihanmu Disini"],
             'wilayah' => ["title" => "Cari Surat Suara Pilkada Berdasarkan Wilayah", "description" => "Cari Surat Suara Pilkada Berdasarkan Wilayahmu Disini"],
             'surat-suara' => [
                 'gubernur' => ["title" => "Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Gubernur dan Wakil Gubernur [wilayah] Tahun 2024"],

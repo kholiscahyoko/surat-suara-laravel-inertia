@@ -216,8 +216,8 @@ class PilkadaHelper {
         return strlen($wilayah->kode_wilayah) == 2 ? "GUBERNUR" : (preg_match("/^KOTA\s/i", $wilayah->nama) ? "WALIKOTA" : "BUPATI");
     }
 
-    public function getWilayah($data){
-        if(empty(get_object_vars($wilayah = $this->wilayah))){
+    public function getWilayah($data, $ignore_attr = false){
+        if($ignore_attr || empty(get_object_vars($wilayah = $this->wilayah))){
             $cacheKey = 'pilkada_wilayah:'.$data->kode_wilayah;
             if(!($wilayah = $this->getCache($cacheKey))){
                 $wilayah = strlen($data->kode_wilayah) == 2 ? Provinsi::where('kode_wilayah', $data->kode_wilayah)->select('nama', 'kode_wilayah')->first() : Kabkota::where('kode_wilayah', $data->kode_wilayah)->select('nama', 'kode_wilayah')->first();

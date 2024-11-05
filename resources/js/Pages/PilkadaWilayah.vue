@@ -3,7 +3,7 @@
         Cari Surat Suara Pilkada Berdasarkan Wilayah
     </h1>
     <form class="mt-4 flex space-x-2" action="/pilkada/wilayah">
-        <input name="search" v-model="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 w-full" v-on:keyup.native.enter="handleInput" :disabled="processing">
+        <input name="search" :value="search" type="text" placeholder="Cari" class="border px-2 rounded-lg text-lg h-12 w-full" v-on:keyup.native.enter="handleInput" :disabled="processing">
         <button class="px-8 bg-blue-600 text-white font-semibold rounded-lg">Cari</button>
     </form>
     <div class="mt-4 w-full">

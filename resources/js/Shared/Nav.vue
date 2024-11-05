@@ -7,7 +7,7 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <NavLink v-for="item in navigation" :key="item.name" :href="$setUrl(item.href)" :active="$page.component === item.name">
+                        <NavLink v-for="item in navigation" :key="item.name" :href="$setUrl(item.href)" :active="$page.component === item.name" :highlight="item.highlight">
                             {{ item.name }}
                         </NavLink>
                     </div>

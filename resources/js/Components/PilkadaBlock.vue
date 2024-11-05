@@ -34,7 +34,7 @@
                     <img v-for="partai in paslon.partais " :src="$setUrl(`/assets/img/partai/${partai.no_urut}.webp`)" :style="{ width: `${90 / paslon.partais.length}%` }" class="max-w-9 md:max-w-7 lg:max-w-9 object-contain mx-[1px]" :alt="partai.nama" loading="lazy">
                 </div>
                 <div class="flex justify-center mt-2">
-                    <a :href="paslon.url" class="font-semibold p-1 bg-blue-600 text-white rounded-md text-xs m-3 text-center">BACA VISI MISI DAN LAPORAN KAMPANYE</a>
+                    <a :href="paslon.url" class="font-semibold px-3 py-1 bg-blue-600 text-white rounded-md text-xs m-3 text-center">BACA VISI MISI</a>
                 </div>
             </div>
         </div>

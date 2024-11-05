@@ -102,6 +102,7 @@ Route::get('/get_list_wilayah_by_dapil', [SuratSuaraController::class, 'get_list
 // PILKADA
 Route::get('/pilkada', [PilkadaController::class, 'index']);
 Route::get('/pilkada/wilayah', [PilkadaController::class, 'wilayah']);
+Route::get('/pilkada/calon', [PilkadaController::class, 'calon']);
 Route::get('/pilkada/profil-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{calon_id}', [PilkadaController::class, 'profil'])
 ->where([
     'jenis', '(gubernur|wakil-gubernur|walikota|calon-walikota|bupati|wakil-bupati)',

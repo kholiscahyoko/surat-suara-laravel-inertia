@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use App\Models\PilkadaPaslons;
 
 use Inertia\Inertia;
 
@@ -148,7 +150,7 @@ class PilkadaController extends Controller
         if(!empty(config('app.meta')['pilkada']['profil-calon']['description'])){
             $meta_desc = config('app.meta')['pilkada']['profil-calon']['description'];
         }
-        $this->meta->setTitle("Profil {$calon->nama}");
+        $this->meta->setTitle("Profil {$calon->nama} Calon {$calon->type} {$wilayah->title}");
 
         $this->meta->addMetaKeywords([
             strtolower(str_replace(",", ".", $calon->nama))
@@ -240,7 +242,7 @@ class PilkadaController extends Controller
         if(!empty(config('app.meta')['pilkada']['pasangan-calon']['description'])){
             $meta_desc = config('app.meta')['pilkada']['pasangan-calon']['description'];
         }
-        $this->meta->setTitle("{$paslon->nama}");
+        $this->meta->setTitle("Visi Misi {$paslon->nama} Calon {$paslon->type} {$wilayah->title}");
 
         $this->meta->addMetaKeywords([
             strtolower(str_replace(",", ".", $paslon->nama))
@@ -310,6 +312,47 @@ class PilkadaController extends Controller
         return Inertia::render("PasanganCakada", [
             'paslon' => $paslon,
             'wilayah' => $wilayah
+        ]);
+    }
+
+    public function calon(Request $request){
+        $this->meta->setMeta(config('app.meta')['pilkada']['calon']);
+        $this->meta->addMetaKeywords([
+            "cari calon kepala daerah",
+            "cari calon gubernur",
+            "cari calon walikota",
+            "cari calon bupati",
+            "cari cagub cawagub",
+            "cari cawalkot",
+            "cari cabup cawabup",
+        ]);
+        $search = $request->input('search');
+        $page = $request->input('page');
+        if(!is_numeric($page)){
+            $page = 0;
+        }
+        $key = 'paslon_search:'.Str::slug($search).":".$page;
+        if($paslons = $this->cache->get($key)){
+            $paslons = json_decode($paslons);
+        }else{
+            $paslons = PilkadaPaslons::with("calon", "wakil_calon", "provinsi", "kabkota")
+            ->where('nama', 'like', "%{$search}%")
+            ->paginate(10)
+            ;
+
+            foreach ($paslons as $key => $data) {
+                $paslon = $this->pilkada->getPaslon($data->id);
+                $paslon->wilayah = $this->pilkada->getWilayah($paslon, true);
+                $paslons[$key] = $paslon;
+            }
+            $paslons = $paslons->withQueryString();
+
+            $this->cache->setex($key, 60*60, json_encode($paslons));
+        }
+
+        return Inertia::render('Paslon',[
+            'paslons' => $paslons,
+            'filters' => $request->only(['search'])
         ]);
     }
     
