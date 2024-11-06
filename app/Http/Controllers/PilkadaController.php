@@ -76,7 +76,7 @@ class PilkadaController extends Controller
         if(empty(get_object_vars($wilayah = $this->pilkada->wilayah))){
             $wilayah = $this->pilkada->getWilayah((object)['kode_wilayah' => $kode_wilayah]);
         }
-        
+
         if(!empty(config('app.meta')['pilkada']['surat-suara'][strtolower(explode(" ", $paslons->type)[0])]['description'])){
             $meta_desc = config('app.meta')['pilkada']['surat-suara'][strtolower(explode(" ", $paslons->type)[0])]['description'];
         }else{
@@ -101,6 +101,14 @@ class PilkadaController extends Controller
         $this->meta->addMetaKeywords($keywords);
 
         $this->meta->setMeta($metadata);
+
+        $metaimage = [
+            'image' => $wilayah->image_url,
+            'image:type' => 'image/'.pathinfo($wilayah->image_url, PATHINFO_EXTENSION),
+            'image:width' => 400,
+            'image:height' => 400
+        ];
+        $this->meta->setMeta($metaimage);
 
         $this->genhancement->add([
             '@type' => "BreadcrumbList",

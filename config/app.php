@@ -269,19 +269,19 @@ return [
         'pilkada' => [
             'home' => ["title" => "Website daftar calon kepala daerah terlengkap"],
             'calon' => ["title" => "Cari Nama Calon Kepala Daerah", "description" => "Temukan Nama Calon Kepala Daerah Pilihanmu Disini"],
-            'wilayah' => ["title" => "Cari Surat Suara Pilkada Berdasarkan Wilayah", "description" => "Cari Surat Suara Pilkada Berdasarkan Wilayahmu Disini"],
+            'wilayah' => ["title" => "Cari Surat Suara Pilkada Berdasarkan Wilayah", "description" => "Cari Surat Suara Pilkada Seluruh Indonesia Berdasarkan Wilayahmu Disini"],
             'surat-suara' => [
-                'gubernur' => ["title" => "Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Gubernur dan Wakil Gubernur [wilayah] Tahun 2024"],
-                'walikota' => ["title" => "Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Walikota dan Wakil Walikota [wilayah] Tahun 2024"],
-                'bupati' => ["title" => "Surat Suara Cabup dan Cawabup Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Bupati dan Wakil Bupati [wilayah] Tahun 2024"],
+                'gubernur' => ["title" => "Lihat Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Gubernur dan Wakil Gubernur [wilayah] Tahun 2024 disini"],
+                'walikota' => ["title" => "Lihat Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Walikota dan Wakil Walikota [wilayah] Tahun 2024 disini"],
+                'bupati' => ["title" => "Lihat Surat Suara Cabup dan Cawabup Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Bupati dan Wakil Bupati [wilayah] Tahun 2024 disini"],
             ],
             'profil-calon' => [
                 "title" => "Profil [nama_calon]",
-                "description" => "Profil Lengkap [nama_calon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029"
+                "description" => "Profil Lengkap [nama_calon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
             ],
             'pasangan-calon' => [
                 "title" => "Pasangan [nama_paslon]",
-                "description" => "Info Lengkap [nama_paslon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029"
+                "description" => "Info Lengkap [nama_paslon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
             ],
         ]
 
