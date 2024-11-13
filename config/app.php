@@ -241,16 +241,16 @@ return [
     ],
     'meta' => [
         'home' => ["title" => "Website daftar calon legislatif terlengkap"],
-        'cari' => ["title" => "Cari Nama Caleg, Wilayah, Daerah Pemilihan", "description" => "Temukan Nama Calon Legislatif, Surat Suara, Wilayah, Daerah Pemilihan, Semuanya Disini"],
-        'calon' => ["title" => "Cari Nama Calon", "description" => "Temukan Nama Calon Legislatif Pilihanmu Disini"],
-        'dapil' => ["title" => "Cari Berdasarkan Dapil", "description" => "Cari Surat Suara Berdasarkan Nama Daerah Pemilihan Disini"],
-        'wilayah' => ["title" => "Cari Berdasarkan Wilayah", "description" => "Cari Surat Suara Berdasarkan Wilayahmu Disini"],
+        'cari' => ["title" => "Cari Nama Caleg, Calon Kepala Daerah, Wilayah, Daerah Pemilihan", "description" => "Temukan Nama Calon Legislatif, Kepala Daerah, Surat Suara, Wilayah, Daerah Pemilihan, Semuanya Disini"],
+        'calon' => ["title" => "Cari Nama Calon Anggota Legislatif", "description" => "Temukan Nama Calon Legislatif Pilihanmu Disini"],
+        'dapil' => ["title" => "Cari Berdasarkan Dapil", "description" => "Cari Surat Suara Berdasarkan Nama Daerah Pemilihan Disini, Pemilihan Calon Anggota Legislatif"],
+        'wilayah' => ["title" => "Cari Surat Suara Pemilu Berdasarkan Wilayah", "description" => "Cari Surat Suara Pemilu 2024 Berdasarkan Wilayahmu Disini, Pemilihan Presiden dan Calon Anggota Legislatif"],
         'surat-suara' => [
-            'pilpres' => ["title" => "Surat Suara Capres dan Cawapres", "description" => "Surat Suara Pemilihan Umum Presiden dan Wakil Presiden Republik Indonesia Tahun 2024"],
-            'dpd' => ["title" => "Surat Suara Dewan Perwakilan Daerah", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Daerah Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
-            'dpr' => ["title" => "Surat Suara Dewan Perwakilan Rakyat", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
-            'dprdp' => ["title" => "Surat Suara Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
-            'dprdk' => ["title" => "Surat Suara Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'pilpres' => ["title" => "Surat Suara Pemilu Capres dan Cawapres", "description" => "Surat Suara Pemilihan Umum Presiden dan Wakil Presiden Republik Indonesia Tahun 2024"],
+            'dpd' => ["title" => "Surat Suara Pemilu Calon Dewan Perwakilan Daerah", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Daerah Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dpr' => ["title" => "Surat Suara Pemilu Calon Dewan Perwakilan Rakyat", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dprdp' => ["title" => "Surat Suara Pemilu Calon Dewan Perwakilan Rakyat Daerah Provinsi", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah Provinsi [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
+            'dprdk' => ["title" => "Surat Suara Pemilu Calon Dewan Perwakilan Rakyat Daerah Kabupaten Kota", "description" => "Surat Suara Pemilihan Umum Anggota Dewan Perwakilan Rakyat Daerah [nama_wilayah] Republik Indonesia Tahun 2024 Daerah Pemilihan [nama_dapil]"],
         ],
         'real-count' => [
             'pilpres' => ["title" => "Real Count Capres dan Cawapres", "description" => "Real Count Pemilihan Umum Presiden dan Wakil Presiden Republik Indonesia Tahun 2024"],
@@ -271,17 +271,21 @@ return [
             'calon' => ["title" => "Cari Nama Calon Kepala Daerah", "description" => "Temukan Nama Calon Kepala Daerah Pilihanmu Disini"],
             'wilayah' => ["title" => "Cari Surat Suara Pilkada Berdasarkan Wilayah", "description" => "Cari Surat Suara Pilkada Seluruh Indonesia Berdasarkan Wilayahmu Disini"],
             'surat-suara' => [
-                'gubernur' => ["title" => "Lihat Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Gubernur dan Wakil Gubernur [wilayah] Tahun 2024 disini"],
-                'walikota' => ["title" => "Lihat Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Walikota dan Wakil Walikota [wilayah] Tahun 2024 disini"],
-                'bupati' => ["title" => "Lihat Surat Suara Cabup dan Cawabup Pilkada [wilayah]", "description" => "Surat Suara Pemilihan Kepala Daerah Bupati dan Wakil Bupati [wilayah] Tahun 2024 disini"],
+                'gubernur' => ["title" => "Lihat Surat Suara Cagub dan Cawagub Pilkada [wilayah]", "description" => "Surat Suara Pilkada Gubernur dan Wakil Gubernur [wilayah] Tahun 2024 disini"],
+                'walikota' => ["title" => "Lihat Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pilkada Walikota dan Wakil Walikota [wilayah] Tahun 2024 disini"],
+                'bupati' => ["title" => "Lihat Surat Suara Cabup dan Cawabup Pilkada [wilayah]", "description" => "Surat Suara Pilkada Bupati dan Wakil Bupati [wilayah] Tahun 2024 disini"],
             ],
             'profil-calon' => [
                 "title" => "Profil [nama_calon]",
-                "description" => "Profil Lengkap [nama_calon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
+                "description" => "Profil Lengkap [nama_calon]. Tanggal Lahir, Alamat, Agama, Riwayat Pendidikan, Riwayat Organisasi Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
             ],
             'pasangan-calon' => [
                 "title" => "Pasangan [nama_paslon]",
-                "description" => "Info Lengkap [nama_paslon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
+                "description" => "Info Lengkap [nama_paslon], Visi Misi Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
+            ],
+            'agenda-kampanye' => [
+                "title" => "Agenda Kampanye [nama_paslon]",
+                "description" => "Riwayat Agenda Kampanye [nama_paslon], Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"
             ],
         ]
 
