@@ -344,7 +344,10 @@ class PilkadaController extends Controller
         if(!empty(config('app.meta')['pilkada']['agenda-kampanye']['description'])){
             $meta_desc = config('app.meta')['pilkada']['agenda-kampanye']['description'];
         }
-        $this->meta->setTitle("Visi Misi {$paslon->nama} Calon {$paslon->type} {$wilayah->title}");
+        $title = config('app.meta')['pilkada']['agenda-kampanye']['title'];
+        $title = preg_replace('/\[nama_paslon\]/', $paslon->nama, $title);
+
+        $this->meta->setTitle($title);
 
         $this->meta->addMetaKeywords([
             strtolower(str_replace(",", ".", $paslon->nama))
