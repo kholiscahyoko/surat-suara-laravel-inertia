@@ -5,7 +5,7 @@
                 <img v-bind:src="$setUrl('/assets/img/logo-kpu.webp')" class="z-20 object-contain w-12 lg:w-32 lg:h-32" alt="Komisi Pemilihan Umum" loading="lazy">
                 <div class="block text-center font-bold lg:text-4xl">
                     <h2 class="text-white">
-                        PASANGAN CALON
+                        AGENDA KAMPANYE PASANGAN CALON
                         <span class="block lg:text-3xl" v-html="paslon.type" />
                     </h2>
                 </div>
@@ -19,29 +19,21 @@
                 <span class="block lg:text-3xl">{{ wilayah.title }}</span>
             </h3>
             <div class="flex justify-center flex-wrap align-middle mt-2 space-x-2">
-                <a :href="wilayah.url" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 text-center focus:outline-none">Lihat Surat Suara</a>
+                <a :href="paslon.url" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 text-center focus:outline-none">Lihat Visi Misi</a>
             </div>
         </div>
-        <div class="flex flex-wrap items-start justify-center mt-4">
-            <PasanganCakadaBlock :paslon="paslon"/>
+        <div class="mt-4">
             <div class="w-full px-3 text-sm min-h-48 relative bg-cover bg-center " :style="`background-image: url('${paslon.image_url}');`">
                 <div class="absolute inset-0 bg-white opacity-90"></div>
-                <div class="relative z-10 text-black p-4">
-                    <h3 class="text-2xl lg:text-4xl text-center mt-4 font-bold">VISI DAN MISI</h3>
-                    <h4 class="text-xl lg:text-2xl mt-4 font-bold">VISI</h4>
-                    <div class="text-lg mt-4" v-html="convertToItems(paslon.visi_misi.visi)">
-                    </div>
-                    <h4 class="text-xl lg:text-2xl mt-4 font-bold">MISI</h4>
-                    <div class="text-lg mt-4" v-html="convertToItems(paslon.visi_misi.misi)">
-                    </div>
+                <div class="relative z-10 text-xl lg:text-3xl text-center font-semibold p-4">
+                    <h3>{{ paslon.calon.nama }}</h3>
+                    <span>dan</span>
+                    <h3>{{ paslon.wakil_calon.nama }}</h3>
                 </div>
             </div>
-            <!--
             <div class="w-full px-3">
-                <TableRiwayatCakadaBlock v-if="paslon.agenda_kampanye && paslon.agenda_kampanye.length >= 1" :data_riwayat="paslon.agenda_kampanye" :title="'LAPORAN KAMPANYE'"/>
+                <KampanyeBlock v-if="paslon.agenda_kampanye && paslon.agenda_kampanye.length >= 1" :data_kampanye="paslon.agenda_kampanye" :title="'LAPORAN KAMPANYE'" :filters="filters"/>
             </div>
-            -->
-            <a :href="`${paslon.url}/agenda-kampanye`" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Cek Agenda Kampanye</a>            
             <div class="w-full min-h-max rounded-lg bg-white overflow-hidden shadow-xl shadow-slate-600 m-2 mb-10 border-2 border-slate-950 duration-300 cursor-pointer p-4">
                 <div>
                     <p class="font-semibold">Sumber Data</p>
@@ -61,13 +53,13 @@
 </template>
 <script setup>
 import PasanganCakadaBlock from '../Components/PasanganCakadaBlock.vue';
-import TableRiwayatCakadaBlock from '../Components/TableRiwayatCakadaBlock.vue';
 import KampanyeBlock from '../Components/KampanyeBlock.vue';
 import Donations from '../Components/Donations.vue';
 
 let props = defineProps({
     paslon: Object,
     wilayah: Object,
+    filters: Object
 })
 
 function convertToItems(string) {

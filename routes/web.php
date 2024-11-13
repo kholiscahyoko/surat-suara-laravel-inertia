@@ -119,6 +119,14 @@ Route::get('/pilkada/pasangan-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calo
     'nama_calon' => '[a-z0-9-]+',
     'paslon_id' => '[0-9]+',
 ]);
+Route::get('/pilkada/pasangan-calon/{jenis}/{nama_dapil}/{kode_dapil}/{nama_calon}/{paslon_id}/agenda-kampanye', [PilkadaController::class, 'paslon_agenda_kampanye'])
+->where([
+    'jenis', '(gubernur-dan-wakil-gubernur|walikota-dan-wakil-walikota|bupati-dan-wakil-bupati)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+',
+    'nama_calon' => '[a-z0-9-]+',
+    'paslon_id' => '[0-9]+',
+]);
 Route::get('/pilkada/surat-suara/{jenis}/{nama_dapil}/{kode_dapil}', [PilkadaController::class, 'surat_suara'])
 ->where([
     'jenis', '(gubernur-dan-wakil-gubernur|walikota-dan-wakil-walikota|bupati-dan-wakil-bupati)',

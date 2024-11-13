@@ -265,6 +265,8 @@ class PilkadaController extends Controller
             $paslon->nama,
             "Pilkada {$wilayah->title} 2024",
             "Calon {$paslon->type}",
+            "Visi Misi",
+            "Pilkada Serentak 2024",
         ];
 
         $this->meta->addMetaKeywords($keywords);
@@ -320,6 +322,110 @@ class PilkadaController extends Controller
         return Inertia::render("PasanganCakada", [
             'paslon' => $paslon,
             'wilayah' => $wilayah
+        ]);
+    }
+
+    public function paslon_agenda_kampanye(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_paslon = "", string $paslon_id = "")
+    {
+
+        if(!is_numeric($paslon_id) || !($paslon = $this->pilkada->getAgendaKampanye($paslon_id, true))){
+            abort(404);
+            exit();
+        }
+
+        if(url()->current() != $paslon->url."/agenda-kampanye" ){
+            return redirect($paslon->url."/agenda-kampanye", 301);
+        }
+
+        if(empty(get_object_vars($wilayah = $this->pilkada->wilayah))){
+            $wilayah = $this->pilkada->getWilayah($paslon);
+        }
+
+        if(!empty(config('app.meta')['pilkada']['agenda-kampanye']['description'])){
+            $meta_desc = config('app.meta')['pilkada']['agenda-kampanye']['description'];
+        }
+        $this->meta->setTitle("Visi Misi {$paslon->nama} Calon {$paslon->type} {$wilayah->title}");
+
+        $this->meta->addMetaKeywords([
+            strtolower(str_replace(",", ".", $paslon->nama))
+        ]);
+
+        $meta_desc = preg_replace('/\[nama_paslon\]/', $paslon->nama, $meta_desc);
+        $meta_desc = preg_replace('/\[title\]/', ucwords($paslon->type), $meta_desc);
+        $meta_desc = preg_replace('/\[wilayah\]/', $wilayah->title, $meta_desc);
+        $metadata = ['description' => $meta_desc ];
+
+        $keywords = [
+            $paslon->nama,
+            "Pilkada {$wilayah->title} 2024",
+            "Calon {$paslon->type}",
+            "Agenda Kampanye",
+            "Pilkada Serentak 2024",
+        ];
+
+        $this->meta->addMetaKeywords($keywords);
+
+        $this->meta->setMeta($metadata);
+
+        if(empty($paslon->image_url)){
+            $paslon->image_url = "https://www.lezen.id/assets/img/infopemilu-square-1.webp";
+        }
+
+        // Define per page and current page parameters
+        $perPage = 5;
+
+        // Define filters data
+        $filters = [
+            'perPage' => $perPage,
+        ];
+
+
+        $metaimage = [
+            'image' => $paslon->image_url,
+            'image:type' => 'image/'.pathinfo($paslon->image_url, PATHINFO_EXTENSION),
+            'image:width' => 800,
+            'image:height' => 800
+        ];
+        $this->meta->setMeta($metaimage);
+
+        $this->genhancement->add([
+            '@type' => "BreadcrumbList",
+            'itemListElement' => [
+                [
+                    "@type" => "ListItem",
+                    "position" => 1,
+                    "name" => "Home",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/pilkada/"
+                ],
+                [
+                    "@type" => "ListItem",
+                    "position" => 2,
+                    "name" => "Profil",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/pilkada/pasangan-calon"
+                ],
+                [
+                    "@type" => "ListItem",
+                    "position" => 3,
+                    "name" => "{$paslon->nama}",
+                    "item" => $paslon->url
+                ],
+            ]
+        ]);
+
+        $this->genhancement->add([
+            '@type' => "ProfilePage",
+            'mainEntity' => [
+                '@type' => "Person",
+                'name' => $paslon->nama,
+                'image' => $paslon->image_url,
+                'nationality' => "Indonesia",
+            ]
+        ]);
+
+        return Inertia::render("AgendaKampanye", [
+            'paslon' => $paslon,
+            'wilayah' => $wilayah,
+            'filters' => $filters
         ]);
     }
 

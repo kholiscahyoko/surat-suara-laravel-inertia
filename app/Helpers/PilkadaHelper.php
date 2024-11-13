@@ -110,13 +110,6 @@ class PilkadaHelper {
                 if($all){
                     $visi_misi = $this->getData("pilkada_db/visi_misi/{$paslon->kode_paslon}.json");
                     $paslon->visi_misi = $visi_misi;
-                    $data_kampanye = $this->getData("pilkada_db/kampanye/{$paslon->kode_paslon}.json");
-                    $paslon->agenda_kampanye = "";
-                    if($data_kampanye){
-                        if(!empty($data_kampanye->{"LAPORAN KAMPANYE"})){
-                            $paslon->agenda_kampanye = $data_kampanye->{"LAPORAN KAMPANYE"};
-                        }
-                    }
                 }
                 $wilayah = $this->getWilayah($paslon);
                 $this->wilayah = $wilayah;
@@ -135,6 +128,29 @@ class PilkadaHelper {
                 $paslon->url = $this->getPaslonUrl($paslon, $wilayah);
                 $paslon->all = $all;
 
+                $this->setCache($key, $paslon);
+            }
+        }
+
+        return $paslon;
+    }
+
+    public function getAgendaKampanye($id){
+        $key = 'pilkada_agenda_kampanye_paslon:'.$id;
+        if(!($paslon = $this->getCache($key))){
+            if($paslon = $this->getPaslon($id)){
+                $data_kampanye = $this->getData("pilkada_db/kampanye/{$paslon->kode_paslon}.json");
+                $paslon->agenda_kampanye = "";
+                if($data_kampanye){
+                    if(!empty($data_kampanye->{"LAPORAN KAMPANYE"})){
+                        $agenda_kampanye = $data_kampanye->{"LAPORAN KAMPANYE"};
+                        usort($agenda_kampanye, function($a, $b) {
+                            return strtotime($b->Tanggal) - strtotime($a->Tanggal);
+                        });
+                        $paslon->agenda_kampanye = $agenda_kampanye;       
+
+                    }
+                }
                 $this->setCache($key, $paslon);
             }
         }
@@ -218,7 +234,7 @@ class PilkadaHelper {
     }
 
     public function getWilayah($data, $ignore_attr = false){
-        if($ignore_attr || empty(get_object_vars($wilayah = $this->wilayah))){
+        // if($ignore_attr || empty(get_object_vars($wilayah = $this->wilayah))){
             $cacheKey = 'pilkada_wilayah:'.$data->kode_wilayah;
             if(!($wilayah = $this->getCache($cacheKey))){
                 $wilayah = strlen($data->kode_wilayah) == 2 ? Provinsi::where('kode_wilayah', $data->kode_wilayah)->select('nama', 'kode_wilayah')->first() : Kabkota::where('kode_wilayah', $data->kode_wilayah)->select('nama', 'kode_wilayah')->first();
@@ -233,7 +249,7 @@ class PilkadaHelper {
                     $this->setCache($cacheKey, $wilayah);
                 }
             }
-        }
+        // }
 
         return $wilayah;
     }
