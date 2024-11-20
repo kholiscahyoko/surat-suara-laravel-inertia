@@ -5,11 +5,9 @@
       </h1>
     </div>
     <SuratSuaraPilkada :paslons="paslons" :wilayah="wilayah"/>
-    <FloatShare/>
 </template>
 <script setup>
 import SuratSuaraPilkada from '../Shared/SuratSuaraPilkada.vue';
-import FloatShare from '../Shared/FloatShare.vue';
 
 let props = defineProps({
     paslons: Object,

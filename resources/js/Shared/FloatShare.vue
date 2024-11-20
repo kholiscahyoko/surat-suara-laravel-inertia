@@ -40,6 +40,7 @@
         <!-- WhatsApp -->
         <a
           :href="`https://wa.me/?text=${title} ${url}`"
+          target="_blank"
           class="flex items-center p-2"
         >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 48 48">
