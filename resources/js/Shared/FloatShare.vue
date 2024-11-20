@@ -17,7 +17,7 @@
       >
         <!-- Facebook -->
         <a
-          :href="`https://www.facebook.com/sharer/sharer.php?u=${url}&title=${title}&description=${description}`"
+          :href="`https://www.facebook.com/sharer/sharer.php?u=${createUrl('facebook')}&title=${title}&description=${description}`"
           target="_blank"
           class="flex items-center p-2"
         >
@@ -28,7 +28,7 @@
   
         <!-- Twitter -->
         <a
-          :href="`https://twitter.com/intent/tweet?url=${url}&text=${title}`"
+          :href="`https://twitter.com/intent/tweet?url=${createUrl('twitter')}&text=${title}`"
           target="_blank"
           class="flex items-center p-2"
         >
@@ -39,7 +39,7 @@
   
         <!-- WhatsApp -->
         <a
-          :href="`https://wa.me/?text=${title} ${url}`"
+          :href="`https://wa.me/?text=${title} ${createUrl('whatsapp')}`"
           target="_blank"
           class="flex items-center p-2"
         >
@@ -77,9 +77,19 @@
         toggleActive.value = !toggleActive.value;
     };
 
+    const createUrl = (source) => {
+        let this_url = new URL(window.location.href);
+        const params = this_url.searchParams;
+        params.set('source', source);
+        console.log(this_url.origin);
+        console.log(this_url.pathname);
+        console.log(params.toString());
+        return encodeURIComponent(`${this_url.origin}${this_url.pathname}?${params.toString()}`);
+    };
+
     const copyUrl = async () => {
       try {
-        await navigator.clipboard.writeText(decodeURIComponent(url.value));
+        await navigator.clipboard.writeText(decodeURIComponent(createUrl('copy')));
         copied.value = true;
 
         // Reset to the copy icon after 2 seconds
@@ -92,7 +102,7 @@
     };
 
     onMounted(() => {
-        url.value = encodeURIComponent(window.location.href);
+        // url.value = encodeURIComponent(window.location.href);
         title.value = encodeURIComponent(document.title);
         const metaDescription = document.querySelector('meta[name="description"]');
         description.value = metaDescription ? encodeURIComponent(metaDescription.content) : '';
