@@ -38,6 +38,7 @@ class GeneratePilkadaSitemaps extends Command
 
     public function handle()
     {
+        $this->pilkada_realcount();
         $this->pilkada_surat_suara();
         $this->pilkada_pasangan_calon();
         $this->pilkada_profil_calon();
@@ -59,6 +60,29 @@ class GeneratePilkadaSitemaps extends Command
         $xmlContent = view('sitemap/sitemap', compact('urls'))->render();
 
         $filename = 'sitemap/pilkada_surat_suara.xml';
+
+        // Save the XML to the public storage
+        Storage::disk('public')->put($filename, $xmlContent);
+
+        $this->info("Sitemap {$filename} generated successfully.");
+    }
+
+    private function pilkada_realcount()
+    {
+        $wilayahs = $this->pilkada->getAllWilayah();
+        $urls = [];
+        foreach ($wilayahs as $wilayah) {
+            $urls[] = [
+                'loc' => $wilayah->realcount_url,
+                'lastmod' => "2024-11-28",
+                'changefreq' => "daily",
+                'priority' => "1",
+            ];
+        }
+
+        $xmlContent = view('sitemap/sitemap', compact('urls'))->render();
+
+        $filename = 'sitemap/pilkada_realcount.xml';
 
         // Save the XML to the public storage
         Storage::disk('public')->put($filename, $xmlContent);

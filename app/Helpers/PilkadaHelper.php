@@ -52,6 +52,7 @@ class PilkadaHelper {
                 $type = "{$wilayah->title_kada} DAN WAKIL {$wilayah->title_kada}";
     
                 $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
+                $wilayah->realcount_url = $this->getRealcountUrl($type, $wilayah);
                 $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($wilayah->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
 
                 $wilayahs[$key] = $wilayah;

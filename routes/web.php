@@ -143,6 +143,7 @@ Route::get('/pilkada/realcount/{jenis}/{nama_dapil}/{kode_dapil}', [PilkadaContr
 
 # SITEMAPS
 Route::get('/sitemap/pilkada/surat-suara', [SitemapController::class, 'pilkada_surat_suara']);
+Route::get('/sitemap/pilkada/realcount', [SitemapController::class, 'pilkada_realcount']);
 Route::get('/sitemap/pilkada/pasangan-calon', [SitemapController::class, 'pilkada_pasangan_calon']);
 Route::get('/sitemap/pilkada/pasangan-calon/{kode_wilayah}', [SitemapController::class, 'pilkada_pasangan_calon'])
 ->where([

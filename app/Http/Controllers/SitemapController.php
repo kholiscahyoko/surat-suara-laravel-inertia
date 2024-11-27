@@ -22,6 +22,17 @@ class SitemapController
 
     }
 
+    public function pilkada_realcount()
+    {
+
+        $sitemap = Storage::disk('public')->get('sitemap/pilkada_realcount.xml');
+
+        return response($sitemap, 200, [
+            'Content-Type' => 'application/xml'
+        ]);
+
+    }
+
     public function pilkada_pasangan_calon()
     {
         $sitemap = Storage::disk('public')->get('sitemap/pilkada_pasangan_calon.xml');
