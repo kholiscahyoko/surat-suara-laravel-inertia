@@ -275,6 +275,11 @@ return [
                 'walikota' => ["title" => "Lihat Surat Suara Cawalkot dan Cawawalkot Pilkada [wilayah]", "description" => "Surat Suara Pilkada Walikota dan Wakil Walikota [wilayah] Tahun 2024 disini"],
                 'bupati' => ["title" => "Lihat Surat Suara Cabup dan Cawabup Pilkada [wilayah]", "description" => "Surat Suara Pilkada Bupati dan Wakil Bupati [wilayah] Tahun 2024 disini"],
             ],
+            'realcount' => [
+                'gubernur' => ["title" => "Lihat Realcount Pilkada [wilayah]", "description" => "Realcount Pilkada Gubernur dan Wakil Gubernur [wilayah] Tahun 2024 disini"],
+                'walikota' => ["title" => "Lihat Realcount Pilkada [wilayah]", "description" => "Realcount Pilkada Walikota dan Wakil Walikota [wilayah] Tahun 2024 disini"],
+                'bupati' => ["title" => "Lihat Realcount Pilkada [wilayah]", "description" => "Realcount Pilkada Bupati dan Wakil Bupati [wilayah] Tahun 2024 disini"],
+            ],
             'profil-calon' => [
                 "title" => "Profil [nama_calon]",
                 "description" => "Profil Lengkap [nama_calon]. Tanggal Lahir, Alamat, Agama, Riwayat Pendidikan, Riwayat Organisasi Calon [title] [wilayah] Pemilihan Kepala Daerah Tahun 2024, Masa Bakti 2025 - 2029 disini"

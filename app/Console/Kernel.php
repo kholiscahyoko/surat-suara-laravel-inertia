@@ -10,6 +10,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\GetCacheValue::class,
         Commands\FetchSirekapKpuData::class,
+        Commands\FetchSirekapPilkadaKpuData::class,
         Commands\ForgetCalon::class,
         Commands\UpdateSitemaps::class,
         Commands\ChangeFotoCalon::class,

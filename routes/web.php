@@ -133,6 +133,12 @@ Route::get('/pilkada/surat-suara/{jenis}/{nama_dapil}/{kode_dapil}', [PilkadaCon
     'nama_dapil' => '[a-z0-9-]+',
     'kode_dapil' => '[0-9]+'
 ]);
+Route::get('/pilkada/realcount/{jenis}/{nama_dapil}/{kode_dapil}', [PilkadaController::class, 'realcount'])
+->where([
+    'jenis', '(gubernur-dan-wakil-gubernur|walikota-dan-wakil-walikota|bupati-dan-wakil-bupati)',
+    'nama_dapil' => '[a-z0-9-]+',
+    'kode_dapil' => '[0-9]+'
+]);
 
 
 # SITEMAPS

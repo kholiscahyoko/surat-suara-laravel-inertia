@@ -140,6 +140,90 @@ class PilkadaController extends Controller
         ]);
     }
 
+    public function realcount(Request $request, string $jenis, string $nama_dapil = "", string $kode_wilayah = "")
+    {
+        if(!is_numeric($kode_wilayah) || !($paslons = $this->pilkada->getRealcount($kode_wilayah))){
+            abort(404);
+            exit();
+        }
+
+        if(url()->current() != $paslons->url ){
+            return redirect($paslons->url, 301);
+        }
+
+        if(empty(get_object_vars($wilayah = $this->pilkada->wilayah))){
+            $wilayah = $this->pilkada->getWilayah((object)['kode_wilayah' => $kode_wilayah]);
+        }
+
+        if(!empty(config('app.meta')['pilkada']['realcount'][strtolower(explode(" ", $paslons->type)[0])]['description'])){
+            $meta_desc = config('app.meta')['pilkada']['realcount'][strtolower(explode(" ", $paslons->type)[0])]['description'];
+        }else{
+            $meta_desc = "";            
+        }
+        if(!empty(config('app.meta')['pilkada']['realcount'][strtolower(explode(" ", $paslons->type)[0])]['title'])){
+            $title = config('app.meta')['pilkada']['realcount'][strtolower(explode(" ", $paslons->type)[0])]['title'];
+            $title = preg_replace('/\[wilayah\]/', $wilayah->title, $title);
+        }else{
+            $title = "Realcount Calon {$paslons->type} {$wilayah->title} Pilkada 2024";
+        }
+        $this->meta->setTitle($title);
+
+        foreach ($paslons->data as $paslon) {
+            $this->meta->addMetaKeywords([
+                strtolower(str_replace(",", ".", $paslon->nama))
+            ]);
+        }
+
+        $meta_desc = preg_replace('/\[wilayah\]/', $wilayah->title, $meta_desc);
+        $metadata = ['description' => $meta_desc ];
+
+        $keywords = [
+            "Pilkada {$wilayah->title} 2024",
+            "Calon {$paslons->type}",
+        ];
+
+        $this->meta->addMetaKeywords($keywords);
+
+        $this->meta->setMeta($metadata);
+
+        $metaimage = [
+            'image' => $wilayah->image_url,
+            'image:type' => 'image/'.pathinfo($wilayah->image_url, PATHINFO_EXTENSION),
+            'image:width' => 400,
+            'image:height' => 400
+        ];
+        $this->meta->setMeta($metaimage);
+
+        $this->genhancement->add([
+            '@type' => "BreadcrumbList",
+            'itemListElement' => [
+                [
+                    "@type" => "ListItem",
+                    "position" => 1,
+                    "name" => "Home",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/pilkada/"
+                ],
+                [
+                    "@type" => "ListItem",
+                    "position" => 2,
+                    "name" => "Surat Suara",
+                    "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/pilkada/wilayah"
+                ],
+                [
+                    "@type" => "ListItem",
+                    "position" => 3,
+                    "name" => "{$wilayah->title}",
+                    "item" => $paslons->url
+                ],
+            ]
+        ]);
+
+        return Inertia::render("RealCountPilkada", [
+            'paslons' => $paslons,
+            'wilayah' => $wilayah
+        ]);
+    }
+
     public function profil(Request $request, string $jenis, string $nama_dapil = "", string $kode_dapil = "", string $nama_calon = "", string $calon_id = "")
     {
         if(!is_numeric($calon_id) || !($calon = $this->pilkada->getCalon($calon_id))){

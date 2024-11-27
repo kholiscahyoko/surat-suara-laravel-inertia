@@ -161,6 +161,14 @@ class PilkadaHelper {
     public function getPaslonWilayah($kode_wilayah){
         $key = 'pilkada_paslon_wilayah:'.$kode_wilayah;
         if(!($paslons = $this->getCache($key))){
+            $wilayah = $this->getWilayah((object)[ 'kode_wilayah' => $kode_wilayah]);
+
+            if($wilayah === null){
+                return false;
+            }
+            
+            $this->wilayah = $wilayah;
+            $title_kada = $this->getTitleKada($wilayah);
             $paslons_set = PilkadaPaslons::with('calon', 'wakil_calon')->where('kode_wilayah', $kode_wilayah)->get();
             if($paslons_set->count() >= 1){
                 $paslons = (object)[];
@@ -175,13 +183,37 @@ class PilkadaHelper {
                 }
 
             }
-            $wilayah = $this->getWilayah((object)[ 'kode_wilayah' => $kode_wilayah]);
-            
-            $this->wilayah = $wilayah;
-            $title_kada = $this->getTitleKada($wilayah);
             $paslons->type = "{$title_kada} DAN WAKIL {$title_kada}";
 
             $paslons->url = $this->getSuratSuaraUrl($paslons->type, $wilayah);
+
+            $this->setCache($key, $paslons);
+        }
+
+        return $paslons;
+    }
+
+    public function getRealcount($kode_wilayah){
+        $key = 'pilkada_realcount:'.$kode_wilayah;
+        if(!($paslons = $this->getCache($key))){
+            $wilayah = $this->getWilayah((object)[ 'kode_wilayah' => $kode_wilayah]);
+
+            if($wilayah === null){
+                return false;
+            }
+            
+            $this->wilayah = $wilayah;
+            $title_kada = $this->getTitleKada($wilayah);
+
+            $paslons = $this->getPaslonWilayah($kode_wilayah);
+
+            $paslons = $this->mappingMaster($wilayah, $paslons);
+            $paslons = $this->mappingRealcount($wilayah, $paslons);
+
+            $paslons->type = "{$title_kada} DAN WAKIL {$title_kada}";
+
+            $paslons->surat_suara_url = $paslons->url;
+            $paslons->url = $this->getRealcountUrl($paslons->type, $wilayah);
 
             $this->setCache($key, $paslons);
         }
@@ -227,6 +259,10 @@ class PilkadaHelper {
 
     public function getSuratSuaraUrl($title, $wilayah){
         return url("pilkada/surat-suara/".Str::slug($title)."/".Str::slug($wilayah->nama)."/{$wilayah->kode_wilayah}");
+    }
+
+    public function getRealcountUrl($title, $wilayah){
+        return url("pilkada/realcount/".Str::slug($title)."/".Str::slug($wilayah->nama)."/{$wilayah->kode_wilayah}");
     }
 
     public function getTitleKada($wilayah){
@@ -295,5 +331,121 @@ class PilkadaHelper {
             $cache->key = $key;
         }
         return $cache;
+    }
+
+    public function getDataSirekap($url){
+        // try {
+            // // Make the HTTP GET request
+            // $response = Http::withHeaders([
+            //     'Referer' => 'https://pilkada2024.kpu.go.id'
+            // ])->get($url);
+        
+            // // Check if the request was successful (status code 2xx)
+            // if ($response->ok()) {
+            //     $this->ok = true;
+            //     return $response;
+            // } else {
+                // Request failed (non-2xx status code), return the result from file
+                // $this->object = $this->getFromFile($url);
+                // if($this->object){
+                //     $this->ok = true;
+                // }else{
+                //     $this->ok = false;
+                // }
+            //     return $this;
+            // }
+        // } catch (\Throwable $e) {
+            // An exception occurred during the request, return the result from file
+            return $this->getFromFile($url);
+        // }
+        // Use or return $responseData as needed
+    }
+
+    private function getFromFile($url){
+        // Remove protocol and host
+        $directory = parse_url($url, PHP_URL_PATH);
+
+        $filename = basename($directory);
+        $directory = dirname($directory);
+
+        // Create the directory if it doesn't exist
+        Storage::makeDirectory($directory);
+
+        // Define the file path
+        $filePath = $directory . '/' . $filename;
+
+        // Check if the file exists
+        if (Storage::exists($filePath)) {
+            // File exists, so retrieve its contents
+            $fileContents = Storage::get($filePath);
+            // Output or process the file contents as needed
+            return (object) json_decode($fileContents);
+        } else {
+            // File does not exist
+            return false;
+        }
+    }
+
+    private function getMaster($wilayah){
+        $type = strlen($wilayah->kode_wilayah) == 2 ? "pkwkp" : "pkwkk";
+        $cacheKey = 'pilkada_master:all:'.$type;
+        if(!($master = $this->getCache($cacheKey))){
+            $url = "https://sirekappilkada-obj-data.kpu.go.id/pilkada/paslon/{$type}.json";
+            $master = $this->getDataSirekap($url);
+            $this->setCache($cacheKey, $master);
+        }
+        return $master;
+    }
+
+    private function getRealcountSirekap($wilayah){
+        $url = strlen($wilayah->kode_wilayah) == 2 ? "https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkp/{$wilayah->kode_wilayah}.json" : "https://sirekappilkada-obj-data.kpu.go.id/pilkada/hhcw/pkwkk/".substr($wilayah->kode_wilayah, 0, 2)."/{$wilayah->kode_wilayah}.json";
+        return $this->getDataSirekap($url);
+    }
+
+    private function mappingMaster($wilayah, $paslons){
+        $master = $this->getMaster($wilayah);
+        // $cacheKey = 'pilkada_master:mapping:'.$wilayah->kode_wilayah;
+        // if(!($mapping = $this->getCache($cacheKey))){
+
+            if(empty($master->{$wilayah->kode_wilayah})){
+                return false;
+            }
+            // dd($master->{$wilayah->kode_wilayah});
+            $arr_master = json_decode(json_encode($master->{$wilayah->kode_wilayah}), true);
+
+            foreach ($paslons->data as $paslon) {
+                foreach ($arr_master as $sirekap_id => $master_paslon) {
+                    if($paslon->no_urut === $master_paslon['nomor_urut']){
+                        $paslon->warna = $master_paslon['warna'];
+                        $paslon->sirekap_id = $sirekap_id;
+                        break;
+                    }
+                    
+                }
+            }
+
+            $mapping = $paslons;
+        //     $this->setCache($cacheKey, $mapping);
+        // }
+        return $mapping;
+    }
+
+    private function mappingRealcount($wilayah, $paslons){
+        $realcount = $this->getRealcountSirekap($wilayah);
+
+        if(empty($realcount)){
+            return false;
+        }
+        $paslons->total_suara = 0;
+        foreach ($paslons->data as $paslon) {
+            $paslon->suara = $realcount->tungsura->chart->{$paslon->sirekap_id};
+            $paslons->total_suara += $paslon->suara;
+        }
+
+        $paslons->progres = $realcount->tungsura->chart->progres;
+        $paslons->ts = $realcount->ts;
+
+        $mapping = $paslons;
+        return $mapping;
     }
 }
