@@ -15,7 +15,7 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div v-if="paginatedFilteredRegions.length > 0" class="flex flex-wrap justify-center" >
-                        <SuratSuaraPilkadaSampul v-for="wilayah in paginatedFilteredRegions" :wilayah="wilayah"/>
+                        <RealCountPilkadaSampul v-for="wilayah in paginatedFilteredRegions" :wilayah="wilayah"/>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,8 @@
 
 <script setup>
 import Pagination from '../Shared/Pagination.vue';
-import SuratSuaraPilkadaSampul from '../Shared/SuratSuaraPilkadaSampul.vue';
+// import SuratSuaraPilkadaSampul from '../Shared/SuratSuaraPilkadaSampul.vue';
+import RealCountPilkadaSampul from '../Shared/RealCountPilkadaSampul.vue';
 import Donations from '../Components/Donations.vue';
 import { ref, computed, watch } from "vue";
 import HorizontalAds1 from '../Components/HorizontalAds1.vue';
