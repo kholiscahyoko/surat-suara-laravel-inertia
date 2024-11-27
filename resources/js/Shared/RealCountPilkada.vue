@@ -30,9 +30,13 @@
             <a :href="paslons.surat_suara_url" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Lihat Surat Suara Disini</a>
         </div>
     </div>
+    <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border-2 border-slate-950 pt-4">
+        <Donations />
+    </div>
 </template>
 <script setup>
 import RealCountPilkadaBlock from '../Components/RealCountPilkadaBlock.vue';
+import Donations from '../Components/Donations.vue';
 let props = defineProps({
     paslons: Object,
     wilayah: Object,

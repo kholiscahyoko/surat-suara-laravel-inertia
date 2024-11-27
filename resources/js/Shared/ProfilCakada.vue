@@ -21,6 +21,7 @@
             <div class="flex justify-center flex-wrap align-middle mt-2 space-x-2">
                 <a :href="calon.paslon_url" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 text-center focus:outline-none">Lihat Visi Misi</a>
                 <a :href="wilayah.url" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 text-center focus:outline-none">Lihat Surat Suara</a>
+                <a :href="wilayah.realcount_url" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 text-center focus:outline-none">Lihat Real Count</a>
             </div>
         </div>
         <div class="flex flex-wrap items-start justify-center mt-4">

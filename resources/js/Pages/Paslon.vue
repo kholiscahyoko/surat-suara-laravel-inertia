@@ -47,6 +47,7 @@
                                             <a :href="paslon.calon.url" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Profil Calon</a>
                                             <a :href="paslon.wakil_calon.url" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Profil Wakil</a>
                                             <a :href="paslon.wilayah.url" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Surat Suara</a>
+                                            <a :href="paslon.wilayah.realcount_url" class="text-white hover:bg-teal-900 p-1 bg-teal-600 rounded-md block m-1 text-center">Real Count</a>
                                         </div>
                                     </td>
                                 </tr>

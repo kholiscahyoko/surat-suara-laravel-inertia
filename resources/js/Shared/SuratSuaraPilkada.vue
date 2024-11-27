@@ -19,6 +19,10 @@
                 {{ wilayah.title }}<br>
                 TAHUN 2024
             </h3>
+            <div class="mt-8 text-center">
+                <a v-if="paslons.realcount_url" :href="paslons.realcount_url" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-center text-sm px-5 py-2.5 mr-2 mb-3 focus:outline-none">Lihat Real Count</a>
+            </div>
+
         </div>
         <div class="flex flex-wrap items-start justify-center mt-8">
             <PilkadaBlock v-for="paslon in paslons.data" :paslon="paslon" :jumlah_paslon="paslons.data.length"/>

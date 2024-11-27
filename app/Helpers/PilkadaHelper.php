@@ -186,6 +186,7 @@ class PilkadaHelper {
             $paslons->type = "{$title_kada} DAN WAKIL {$title_kada}";
 
             $paslons->url = $this->getSuratSuaraUrl($paslons->type, $wilayah);
+            $paslons->realcount_url = $this->getRealcountUrl($paslons->type, $wilayah);
 
             $this->setCache($key, $paslons);
         }
@@ -280,6 +281,7 @@ class PilkadaHelper {
                     $type = "{$wilayah->title_kada} DAN WAKIL {$wilayah->title_kada}";
         
                     $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
+                    $wilayah->realcount_url = $this->getRealcountUrl($type, $wilayah);
                     $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($data->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
         
                     $this->setCache($cacheKey, $wilayah);
