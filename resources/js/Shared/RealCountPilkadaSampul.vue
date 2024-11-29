@@ -22,7 +22,6 @@
             </h2>
         </div>
         <div class="text-center text-xs py-2">
-            KOMISI PEMILIHAN UMUM
         </div>
     </a>
 </template>

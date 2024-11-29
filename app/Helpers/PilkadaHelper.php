@@ -17,6 +17,7 @@ class PilkadaHelper {
     public object $image;
     public object $calon;
     public object $wilayah;
+    private array $regions;
     public int $ttl;
 
     public function __construct() {
@@ -24,6 +25,15 @@ class PilkadaHelper {
         $this->image = new ImageAssetHelper();
         $this->wilayah = (object)[];
         $this->ttl = 30;
+        $this->regions = [
+            'sumatera' => [1, 2],
+            'jawa' => [3],
+            'bali-nusa' => [5],
+            'kalimantan' => [6],
+            'sulawesi' => [7],
+            'maluku' => [8],
+            'papua' => [9],
+        ];
     }
 
     public function getData($filePath){
@@ -53,7 +63,8 @@ class PilkadaHelper {
     
                 $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
                 $wilayah->realcount_url = $this->getRealcountUrl($type, $wilayah);
-                $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($wilayah->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
+                // $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($wilayah->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
+                $wilayah->image_url = asset('assets/img/shield.webp');
 
                 $wilayahs[$key] = $wilayah;
             }
@@ -283,7 +294,8 @@ class PilkadaHelper {
         
                     $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
                     $wilayah->realcount_url = $this->getRealcountUrl($type, $wilayah);
-                    $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($data->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
+                    // $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($data->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
+                    $wilayah->image_url = asset('assets/img/shield.webp');
         
                     $this->setCache($cacheKey, $wilayah);
                 }
@@ -292,6 +304,34 @@ class PilkadaHelper {
 
         return $wilayah;
     }
+
+    // public function getWilayahTerkait($data){
+    //     $cacheKey = 'pilkada_wilayah_terkait:'.$data->kode_wilayah;
+    //     if(!($terkait = $this->getCache($cacheKey))){
+    //         if (strlen($data->kode_wilayah) == 2) {
+    //             # code...
+    //         }
+    //         $terkait = strlen($data->kode_wilayah) == 2 ? 
+    //         Provinsi::where('kode_wilayah', 'like', substr($data->kode_wilayah, 0, 1)."%")
+    //         ->where('kode_wilayah', '!=', $data->kode_wilayah)
+    //         ->select('kode_wilayah')->get()
+    //         : Kabkota::where('kode_wilayah', $data->kode_wilayah)->select('nama', 'kode_wilayah')->first();
+    //         // dd($terkait->toJson());
+    //         if($terkait){
+    //             $wilayah->title = $this->getWilayahTitle($wilayah);
+    //             $wilayah->title_kada = $this->getTitleKada($wilayah);
+    //             $type = "{$wilayah->title_kada} DAN WAKIL {$wilayah->title_kada}";
+    
+    //             $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
+    //             $wilayah->realcount_url = $this->getRealcountUrl($type, $wilayah);
+    //             $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($data->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
+    
+    //             $this->setCache($cacheKey, $wilayah);
+    //         }
+    //     }
+
+    //     return $wilayah;
+    // }
 
     public function getPartais($no_urut){
         $cacheKey = 'pilkada_partai:'.$no_urut;
