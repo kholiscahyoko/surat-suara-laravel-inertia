@@ -4,13 +4,14 @@
         Real Count Pilkada {{ wilayah.title }}
       </h1>
     </div>
-    <RealCountPilkada :paslons="paslons" :wilayah="wilayah"/>
+    <RealCountPilkada :paslons="paslons" :wilayah="wilayah" :terkait="terkait"/>
 </template>
 <script setup>
 import RealCountPilkada from '../Shared/RealCountPilkada.vue';
 
 let props = defineProps({
     paslons: Object,
+    terkait: Object,
     wilayah: Object,
 })
 

@@ -26,8 +26,12 @@
         <div class="flex flex-wrap items-start justify-center mt-8">
             <RealCountPilkadaBlock v-for="paslon in paslons.data" :paslon="paslon" :jumlah_paslon="paslons.data.length" :total_suara="paslons.total_suara"/>
         </div>
+        <h3 class="text-center font-bold md:text-3xl">Wilayah Lainnya</h3>
         <div class="md:flex md:justify-evenly mb-4 items-center">
-            <a :href="paslons.surat_suara_url" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Lihat Surat Suara Disini</a>
+            <a v-for="wilayah_terkait in terkait"  :href="wilayah_terkait.realcount_url" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">{{ wilayah_terkait.title }}</a>
+        </div>
+        <div class="md:flex md:justify-evenly mb-4 items-center">
+            <a :href="paslons.surat_suara_url" class="block my-5 mx-20 md:mx-2 text-center text-lg lg:text-xl md:w-50 p-2 align-middle md:p-5  bg-red-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer">Lihat Surat Suara Disini</a>
         </div>
     </div>
     <div class="bg-white overflow-hidden shadow-xl shadow-slate-600 mb-10 border-2 border-slate-950 pt-4">
@@ -39,6 +43,7 @@ import RealCountPilkadaBlock from '../Components/RealCountPilkadaBlock.vue';
 import Donations from '../Components/Donations.vue';
 let props = defineProps({
     paslons: Object,
+    terkait: Object,
     wilayah: Object,
 })
 

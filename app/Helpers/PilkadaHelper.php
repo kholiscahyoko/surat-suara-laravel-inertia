@@ -31,8 +31,7 @@ class PilkadaHelper {
             'bali-nusa' => [5],
             'kalimantan' => [6],
             'sulawesi' => [7],
-            'maluku' => [8],
-            'papua' => [9],
+            'maluku-papua' => [8, 9]
         ];
     }
 
@@ -305,33 +304,47 @@ class PilkadaHelper {
         return $wilayah;
     }
 
-    // public function getWilayahTerkait($data){
-    //     $cacheKey = 'pilkada_wilayah_terkait:'.$data->kode_wilayah;
-    //     if(!($terkait = $this->getCache($cacheKey))){
-    //         if (strlen($data->kode_wilayah) == 2) {
-    //             # code...
-    //         }
-    //         $terkait = strlen($data->kode_wilayah) == 2 ? 
-    //         Provinsi::where('kode_wilayah', 'like', substr($data->kode_wilayah, 0, 1)."%")
-    //         ->where('kode_wilayah', '!=', $data->kode_wilayah)
-    //         ->select('kode_wilayah')->get()
-    //         : Kabkota::where('kode_wilayah', $data->kode_wilayah)->select('nama', 'kode_wilayah')->first();
-    //         // dd($terkait->toJson());
-    //         if($terkait){
-    //             $wilayah->title = $this->getWilayahTitle($wilayah);
-    //             $wilayah->title_kada = $this->getTitleKada($wilayah);
-    //             $type = "{$wilayah->title_kada} DAN WAKIL {$wilayah->title_kada}";
-    
-    //             $wilayah->url = $this->getSuratSuaraUrl($type, $wilayah);
-    //             $wilayah->realcount_url = $this->getRealcountUrl($type, $wilayah);
-    //             $wilayah->image_url = "https://images.lezen.id/logo_pemda/{$wilayah->kode_wilayah}-".(strlen($data->kode_wilayah) == 2 ? Str::slug($wilayah->nama) :Str::slug($wilayah->title)).".webp";
-    
-    //             $this->setCache($cacheKey, $wilayah);
-    //         }
-    //     }
+    public function getWilayahTerkait($data){
+        $cacheKey = 'pilkada_wilayah_terkait:'.$data->kode_wilayah;
+        if(!($terkait = $this->getCache($cacheKey))){
+            if (strlen($data->kode_wilayah) == 2) {
+                foreach ($this->regions as $ids) {
+                    if (in_array(substr($data->kode_wilayah, 0, 1), $ids)) {
+                        if (count($ids) === 2) {
+                            $wilayahs = Provinsi::where('kode_wilayah', 'like', $ids[0]."%")
+                            ->orWhere('kode_wilayah', 'like', $ids[1]."%")
+                            ->where('kode_wilayah', '!=', $data->kode_wilayah)
+                            ->where('kode_wilayah', '!=', "34")
+                            ->select('kode_wilayah')->inRandomOrder()->get();
+                        }else{
+                            $wilayahs = Provinsi::where('kode_wilayah', 'like', $ids[0]."%")
+                            ->where('kode_wilayah', '!=', $data->kode_wilayah)
+                            ->where('kode_wilayah', '!=', "34")
+                            ->select('kode_wilayah')->inRandomOrder()->get();
+                        }
+                        break;
+                    }
+                }
+            }else{
+                $wilayahs = Kabkota::where('kode_wilayah', 'like', substr($data->kode_wilayah, 0, 2)."%")
+                ->where('kode_wilayah', '!=', $data->kode_wilayah)
+                ->select('kode_wilayah')->inRandomOrder()->get();
+            }
+            $terkait = [];
+            foreach ($wilayahs as $row) {
+                $terkait[] = $this->getWilayah($row);
+                if (count($terkait)>=3) {
+                    break;
+                }
+            }
+            if($terkait){
+                (object) $terkait;
+                $this->setCache($cacheKey, $terkait);
+            }
+        }
 
-    //     return $wilayah;
-    // }
+        return $terkait;
+    }
 
     public function getPartais($no_urut){
         $cacheKey = 'pilkada_partai:'.$no_urut;
@@ -367,13 +380,17 @@ class PilkadaHelper {
     }
 
     private function getCache($key){
-        $cache = $this->cache->get($key);
-        if($cache){
-            $cache = json_decode($cache);
-            $cache->source = "cache";
-            $cache->key = $key;
+        try {
+            $cache = $this->cache->get($key);
+            if($cache){
+                $cache = json_decode($cache);
+                // $cache->source = "cache";
+                // $cache->key = $key;
+            }
+            return $cache;
+        } catch (\Throwable $e) {
+            return false;
         }
-        return $cache;
     }
 
     public function getDataSirekap($url){

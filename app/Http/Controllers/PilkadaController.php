@@ -155,6 +155,8 @@ class PilkadaController extends Controller
             $wilayah = $this->pilkada->getWilayah((object)['kode_wilayah' => $kode_wilayah]);
         }
 
+        $terkait = $this->pilkada->getWilayahTerkait((object)['kode_wilayah' => $kode_wilayah]);
+
         if(!empty(config('app.meta')['pilkada']['realcount'][strtolower(explode(" ", $paslons->type)[0])]['description'])){
             $meta_desc = config('app.meta')['pilkada']['realcount'][strtolower(explode(" ", $paslons->type)[0])]['description'];
         }else{
@@ -206,7 +208,7 @@ class PilkadaController extends Controller
                 [
                     "@type" => "ListItem",
                     "position" => 2,
-                    "name" => "Surat Suara",
+                    "name" => "Real Count",
                     "item" => "{$request->getScheme()}://{$request->getHttpHost()}{$this->detectProxy()}/pilkada/wilayah"
                 ],
                 [
@@ -220,6 +222,7 @@ class PilkadaController extends Controller
 
         return Inertia::render("RealCountPilkada", [
             'paslons' => $paslons,
+            'terkait' => $terkait,
             'wilayah' => $wilayah
         ]);
     }
