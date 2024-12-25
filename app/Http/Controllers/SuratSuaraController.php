@@ -946,6 +946,7 @@ class SuratSuaraController extends Controller
                         $response_master_calon = $this->sirekap->getData("https://sirekap-obj-data.kpu.go.id/pemilu/caleg/partai/{$dapil->kode_dapil}.json");
                         if($response_master_calon->ok()){
                             $master_calon = $response_master_calon->object();
+                            $master_calon = $this->hideRealcount($kode_dapil, $master_calon);
                             $this->cache->setex('hitung_suara:dprdk:calon:'.$dapil->kode_dapil, 120, json_encode($master_calon));
                         }
                     }
@@ -2461,6 +2462,24 @@ class SuratSuaraController extends Controller
         }
 
         return $chart;
+    }
+
+    private function hideRealcount($dapil, $data){
+        $list = [
+            '210104' => [
+                '2' => ['214978']
+            ]
+        ];
+
+        if (isset($list[$dapil])) {
+            foreach ($list[$dapil] as $no_partai => $v_partai) {
+                foreach ($v_partai as $kode_calon) {
+                    $data->{$no_partai}->{$kode_calon}->nama = "nama calon";
+                }
+            }
+        }
+
+        return $data;
     }
 
     private function setGeneralEnhancement(){
